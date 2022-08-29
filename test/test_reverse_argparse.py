@@ -110,6 +110,7 @@ def parser() -> ArgumentParser:
     )
     p.add_argument("--verbose", "-v", action="count", default=2)
     p.add_argument("--ext", action="extend", nargs="*")
+    p.add_argument("--bool-opt", action=BooleanOptionalAction, default=False)
     return p
 
 
@@ -167,7 +168,8 @@ def test_get_effective_command_line_invocation(parser, args) -> None:
         "app1-val1 --app1 app1-val2 --app2 app2-val1 --app2 app2-val2 "
         "--app-nargs app-nargs1-val1 app-nargs1-val2 --app-nargs "
         "app-nargs2-val --const --app-const1 --app-const2 -vv --ext "
-        "ext-val1 ext-val2 ext-val3 -- pos1-val1 pos1-val2 pos2-val"
+        "ext-val1 ext-val2 ext-val3 --no-bool-opt -- pos1-val1 pos1-val2 "
+        "pos2-val"
     )
     assert unparser.get_effective_command_line_invocation() == expected
 
@@ -195,6 +197,7 @@ __main__.py \\
     --app-const2 \\
     -vv \\
     --ext ext-val1 ext-val2 ext-val3 \\
+    --no-bool-opt \\
     -- \\
     pos1-val1 pos1-val2 \\
     pos2-val
@@ -258,7 +261,7 @@ __main__.py \\
         ["--foo"],
         {"action": BooleanOptionalAction},
         "--foo",
-        "NotImplemented"
+        ["--foo"]
     )]
 )  # yapf: disable
 def test__unparse_action(add_args, add_kwargs, args, expected) -> None:
@@ -530,9 +533,53 @@ def test__unparse_extend_action() -> None:
     assert unparser._unparse_extend_action(action) == expected
 
 
-def test__unparse_boolean_optional_action() -> None:
+@pytest.mark.parametrize(
+    "default, args, expected",
+    [(
+        None,
+        "",
+        []
+    ), (
+        None,
+        "--bool-opt",
+        ["--bool-opt"]
+    ), (
+        None,
+        "--no-bool-opt",
+        ["--no-bool-opt"]
+    ), (
+        True,
+        "",
+        ["--bool-opt"]
+    ), (
+        True,
+        "--bool-opt",
+        ["--bool-opt"]
+    ), (
+        True,
+        "--no-bool-opt",
+        ["--no-bool-opt"]
+    ), (
+        False,
+        "",
+        ["--no-bool-opt"]
+    ), (
+        False,
+        "--bool-opt",
+        ["--bool-opt"]
+    ), (
+        False,
+        "--no-bool-opt",
+        ["--no-bool-opt"]
+    )]
+)
+def test__unparse_boolean_optional_action(default, args, expected) -> None:
     parser = ArgumentParser()
-    action = parser.add_argument("--foo", action=BooleanOptionalAction)
-    unparser = ReverseArgumentParser(parser, Namespace())
-    with pytest.raises(NotImplementedError):
-        unparser._unparse_boolean_optional_action(action)
+    action = parser.add_argument(
+        "--bool-opt",
+        action=BooleanOptionalAction,
+        default=default
+    )
+    namespace = parser.parse_args(shlex.split(args))
+    unparser = ReverseArgumentParser(parser, namespace)
+    assert unparser._unparse_boolean_optional_action(action) == expected

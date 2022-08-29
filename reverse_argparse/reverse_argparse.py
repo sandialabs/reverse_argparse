@@ -434,4 +434,16 @@ class ReverseArgumentParser:
                 else [self._get_option_string(action)] + values)
 
     def _unparse_boolean_optional_action(self, action: Action) -> list[str]:
-        raise NotImplementedError
+        """
+        Generate the list of arguments that correspond to
+        ``action=BooleanOptionalAction``.
+
+        Args:
+            action:  The :class:`BooleanOptionalAction` in question.
+
+        Returns:
+            The associated list of arguments.
+        """
+        value = getattr(self.namespace, action.dest)
+        flag_index = 0 if getattr(self.namespace, action.dest) else 1
+        return [] if value is None else [action.option_strings[flag_index]]
