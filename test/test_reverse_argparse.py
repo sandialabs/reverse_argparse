@@ -108,6 +108,7 @@ def parser() -> ArgumentParser:
         action="append_const",
         const=53
     )
+    p.add_argument("--verbose", "-v", action="count", default=2)
     return p
 
 
@@ -117,6 +118,7 @@ COMPLETE_ARGS = [
     "--app-nargs app-nargs1-val1 app-nargs1-val2 "
     "--app-const1 "
     "--opt1 opt1-val "
+    "-vv "
     "--app1 app1-val1 "
     "--app1 app1-val2 "
     "--opt2 opt2-val1 opt2-val2 "
@@ -132,6 +134,7 @@ COMPLETE_ARGS = [
     "--app-nargs app-nargs1-val1 app-nargs1-val2 "
     "--app-const1 "
     "--opt1 opt1-val "
+    "-vv "
     "--app1 app1-val1 "
     "--app1 app1-val2 "
     "--opt2 opt2-val1 opt2-val2 "
@@ -158,7 +161,7 @@ def test_get_effective_command_line_invocation(parser, args) -> None:
         "--store-false --needs-quotes \'hello world\' --default 42 --app1 "
         "app1-val1 --app1 app1-val2 --app2 app2-val1 --app2 app2-val2 "
         "--app-nargs app-nargs1-val1 app-nargs1-val2 --app-nargs "
-        "app-nargs2-val --const --app-const1 --app-const2 -- pos1-val1 "
+        "app-nargs2-val --const --app-const1 --app-const2 -vv -- pos1-val1 "
         "pos1-val2 pos2-val"
     )
     assert unparser.get_effective_command_line_invocation() == expected
@@ -185,6 +188,7 @@ __main__.py \\
     --const \\
     --app-const1 \\
     --app-const2 \\
+    -vv \\
     -- \\
     pos1-val1 pos1-val2 \\
     pos2-val
@@ -225,10 +229,10 @@ __main__.py \\
         "--foo",
         ["--foo"]
     ), (
-        ["--foo"],
+        ["--foo", "-f"],
         {"action": "count", "default": 0},
         "--foo --foo",
-        "NotImplemented"
+        ["-ff"]
     ), (
         ["--foo"],
         {"action": "help"},
@@ -303,11 +307,26 @@ def test__get_short_option_strings(strings, expected) -> None:
         (["-x"], "-x"),
     ]
 )  # yapf: disable
-def test__get_options_string(strings, expected) -> None:
+def test__get_option_string(strings, expected) -> None:
     parser = ArgumentParser()
     action = parser.add_argument(*strings)
     unparser = ReverseArgumentParser(parser, Namespace())
     assert unparser._get_option_string(action) == expected
+
+
+@pytest.mark.parametrize(
+    "strings, expected",
+    [
+        (["-v", "--verbose"], "-v"),
+        (["-f", "--foo", "-b"], "-f"),
+        (["--foo"], "--foo"),
+    ]
+)  # yapf: disable
+def test__get_option_string_prefer_short(strings, expected) -> None:
+    parser = ArgumentParser()
+    action = parser.add_argument(*strings)
+    unparser = ReverseArgumentParser(parser, Namespace())
+    assert unparser._get_option_string(action, prefer_short=True) == expected
 
 
 @pytest.mark.parametrize(
@@ -462,12 +481,31 @@ def test__unparse_append_const_action(args, expected) -> None:
     assert unparser._unparse_append_const_action(action) == expected
 
 
-def test__unparse_count_action() -> None:
+@pytest.mark.parametrize(
+    "add_args, add_kwargs, args, expected",
+    [(
+        ["--foo"],
+        {"action": "count"},
+        "--foo --foo --foo",
+        ["--foo", "--foo", "--foo"]
+    ), (
+        ["--verbose", "-v"],
+        {"action": "count"},
+        "--verbose -v --verbose",
+        ["-vvv"]
+    ), (
+        ["--verbose", "-v"],
+        {"action": "count", "default": 2},
+        "-vv",
+        ["-vv"]
+    )]
+)
+def test__unparse_count_action(add_args, add_kwargs, args, expected) -> None:
     parser = ArgumentParser()
-    action = parser.add_argument("--foo", action="count", default=0)
-    unparser = ReverseArgumentParser(parser, Namespace())
-    with pytest.raises(NotImplementedError):
-        unparser._unparse_count_action(action)
+    action = parser.add_argument(*add_args, **add_kwargs)
+    namespace = parser.parse_args(shlex.split(args))
+    unparser = ReverseArgumentParser(parser, namespace)
+    assert unparser._unparse_count_action(action) == expected
 
 
 def test__unparse_sub_parsers_action() -> None:

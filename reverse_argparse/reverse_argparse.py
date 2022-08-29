@@ -226,26 +226,39 @@ class ReverseArgumentParser:
                 if len(option) == 2
                 and option[0] in self.parser.prefix_chars]
 
-    def _get_option_string(self, action: Action) -> str | None:
+    def _get_option_string(
+        self,
+        action: Action,
+        prefer_short: bool = False
+    ) -> str | None:
         """
         Get the first of the long options corresponding to a given
         :class:`Action`.  If no long options are available, get the
-        first of the short options.
+        first of the short options.  If :arg:`prefer_short` is ``True``,
+        search the short options first, and fall back to the long ones
+        if necessary.
 
         Args:
             action:  The :class:`Action` in question.
+            prefer_short:  Whether to prefer the short options over the
+                long ones.
 
         Returns:
             The option string, or ``None`` if there are none.
         """
-        long_options = self._get_long_option_strings(action.option_strings)
         short_options = self._get_short_option_strings(action.option_strings)
-        if long_options:
-            return long_options[0]
-        elif short_options:
-            return short_options[0]
+        long_options = self._get_long_option_strings(action.option_strings)
+        if prefer_short:
+            if short_options:
+                return short_options[0]
+            elif long_options:
+                return long_options[0]
         else:
-            return None
+            if long_options:
+                return long_options[0]
+            elif short_options:
+                return short_options[0]
+        return None
 
     @staticmethod
     def _quote_arg_if_necessary(arg: str) -> str:
@@ -385,7 +398,23 @@ class ReverseArgumentParser:
                 else [self._get_option_string(action)])
 
     def _unparse_count_action(self, action: Action) -> list[str]:
-        raise NotImplementedError
+        """
+        Generate the list of arguments that correspond to
+        ``action="count"``.
+
+        Args:
+            action:  The :class:`_CountAction` in question.
+
+        Returns:
+            The associated list of arguments.
+        """
+        value = getattr(self.namespace, action.dest)
+        count = value if action.default is None else (value - action.default)
+        flag = self._get_option_string(action, prefer_short=True)
+        if len(flag) == 2 and flag[0] in self.parser.prefix_chars:
+            return [flag[0] + flag[1] * count]
+        else:
+            return [flag for _ in range(count)]
 
     def _unparse_sub_parsers_action(self, action: Action) -> list[str]:
         raise NotImplementedError
