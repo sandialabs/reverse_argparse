@@ -370,7 +370,19 @@ class ReverseArgumentParser:
         return result
 
     def _unparse_append_const_action(self, action: Action) -> list[str]:
-        raise NotImplementedError
+        """
+        Generate the list of arguments that correspond to
+        ``action="append_const"``.
+
+        Args:
+            action:  The :class:`_AppendConstAction` in question.
+
+        Returns:
+            The associated list of arguments.
+        """
+        values = getattr(self.namespace, action.dest)
+        return ([] if values is None or action.const not in values
+                else [self._get_option_string(action)])
 
     def _unparse_count_action(self, action: Action) -> list[str]:
         raise NotImplementedError

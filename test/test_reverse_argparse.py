@@ -96,6 +96,18 @@ def parser() -> ArgumentParser:
     p.add_argument("--app2", action="append")
     p.add_argument("--app-nargs", action="append", nargs="*")
     p.add_argument("--const", action="store_const", const=42)
+    p.add_argument(
+        "--app-const1",
+        dest="app_const",
+        action="append_const",
+        const=42
+    )
+    p.add_argument(
+        "--app-const2",
+        dest="app_const",
+        action="append_const",
+        const=53
+    )
     return p
 
 
@@ -103,6 +115,7 @@ COMPLETE_ARGS = [
     "pos1-val1 pos1-val2 "
     "pos2-val "
     "--app-nargs app-nargs1-val1 app-nargs1-val2 "
+    "--app-const1 "
     "--opt1 opt1-val "
     "--app1 app1-val1 "
     "--app1 app1-val2 "
@@ -112,10 +125,12 @@ COMPLETE_ARGS = [
     "--store-true "
     "--app2 app2-val2 "
     "--store-false "
+    "--app-const2 "
     "--app-nargs app-nargs2-val "
     "--needs-quotes 'hello world'",
 
     "--app-nargs app-nargs1-val1 app-nargs1-val2 "
+    "--app-const1 "
     "--opt1 opt1-val "
     "--app1 app1-val1 "
     "--app1 app1-val2 "
@@ -125,6 +140,7 @@ COMPLETE_ARGS = [
     "--store-true "
     "--app2 app2-val2 "
     "--store-false "
+    "--app-const2 "
     "--app-nargs app-nargs2-val "
     "--needs-quotes 'hello world' "
     "-- "
@@ -142,7 +158,8 @@ def test_get_effective_command_line_invocation(parser, args) -> None:
         "--store-false --needs-quotes \'hello world\' --default 42 --app1 "
         "app1-val1 --app1 app1-val2 --app2 app2-val1 --app2 app2-val2 "
         "--app-nargs app-nargs1-val1 app-nargs1-val2 --app-nargs "
-        "app-nargs2-val --const -- pos1-val1 pos1-val2 pos2-val"
+        "app-nargs2-val --const --app-const1 --app-const2 -- pos1-val1 "
+        "pos1-val2 pos2-val"
     )
     assert unparser.get_effective_command_line_invocation() == expected
 
@@ -166,6 +183,8 @@ __main__.py \\
     --app-nargs app-nargs1-val1 app-nargs1-val2 \\
     --app-nargs app-nargs2-val \\
     --const \\
+    --app-const1 \\
+    --app-const2 \\
     -- \\
     pos1-val1 pos1-val2 \\
     pos2-val
@@ -202,9 +221,9 @@ __main__.py \\
         [["--foo", "bar"], ["--foo", "baz"]]
     ), (
         ["--foo"],
-        {"action": "append_const", "const": 42},
-        "--foo --foo",
-        "NotImplemented"
+        {"dest": "append_const", "action": "append_const", "const": 42},
+        "--foo",
+        ["--foo"]
     ), (
         ["--foo"],
         {"action": "count", "default": 0},
@@ -426,12 +445,21 @@ def test__unparse_append_action(add_args, add_kwargs, args, expected) -> None:
     assert unparser._unparse_append_action(action) == expected
 
 
-def test__unparse_append_const_action() -> None:
+@pytest.mark.parametrize(
+    "args, expected",
+    [("--foo", ["--foo"]), ("", [])]
+)
+def test__unparse_append_const_action(args, expected) -> None:
     parser = ArgumentParser()
-    action = parser.add_argument("--foo", action="append_const", const=42)
-    unparser = ReverseArgumentParser(parser, Namespace())
-    with pytest.raises(NotImplementedError):
-        unparser._unparse_append_const_action(action)
+    action = parser.add_argument(
+        "--foo",
+        dest="append_const",
+        action="append_const",
+        const=42
+    )
+    namespace = parser.parse_args(shlex.split(args))
+    unparser = ReverseArgumentParser(parser, namespace)
+    assert unparser._unparse_append_const_action(action) == expected
 
 
 def test__unparse_count_action() -> None:
