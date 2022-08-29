@@ -295,7 +295,19 @@ class ReverseArgumentParser:
         return result
 
     def _unparse_store_const_action(self, action: Action) -> list[str]:
-        raise NotImplementedError
+        """
+        Generate the list of arguments that correspond to
+        ``action="store_const"``.
+
+        Args:
+            action:  The :class:`_StoreConstAction` in question.
+
+        Returns:
+            The associated list of arguments.
+        """
+        value = getattr(self.namespace, action.dest)
+        return ([self._get_option_string(action)]
+                if value == action.const else [])
 
     def _unparse_store_true_action(self, action: Action) -> list[str]:
         """
@@ -307,10 +319,6 @@ class ReverseArgumentParser:
 
         Returns:
             The associated list of arguments.
-
-        Note:
-            There is only a single argument associated with this action,
-            but it's returned as a list to match the more general case.
         """
         value = getattr(self.namespace, action.dest)
         return [self._get_option_string(action)] if value is True else []
@@ -325,10 +333,6 @@ class ReverseArgumentParser:
 
         Returns:
             The associated list of arguments.
-
-        Note:
-            There is only a single argument associated with this action,
-            but it's returned as a list to match the more general case.
         """
         value = getattr(self.namespace, action.dest)
         return [self._get_option_string(action)] if value is False else []
