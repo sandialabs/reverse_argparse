@@ -230,7 +230,7 @@ class ReverseArgumentParser:
         self,
         action: Action,
         prefer_short: bool = False
-    ) -> str | None:
+    ) -> str:
         """
         Get the first of the long options corresponding to a given
         :class:`Action`.  If no long options are available, get the
@@ -244,7 +244,7 @@ class ReverseArgumentParser:
                 long ones.
 
         Returns:
-            The option string, or ``None`` if there are none.
+            The option string.
         """
         short_options = self._get_short_option_strings(action.option_strings)
         long_options = self._get_long_option_strings(action.option_strings)
@@ -258,7 +258,6 @@ class ReverseArgumentParser:
                 return long_options[0]
             elif short_options:
                 return short_options[0]
-        return None
 
     @staticmethod
     def _quote_arg_if_necessary(arg: str) -> str:
@@ -420,7 +419,19 @@ class ReverseArgumentParser:
         raise NotImplementedError
 
     def _unparse_extend_action(self, action: Action) -> list[str]:
-        raise NotImplementedError
+        """
+        Generate the list of arguments that correspond to
+        ``action="extend"``.
+
+        Args:
+            action:  The :class:`_ExtendAction` in question.
+
+        Returns:
+            The associated list of arguments.
+        """
+        values = getattr(self.namespace, action.dest)
+        return ([] if values is None
+                else [self._get_option_string(action)] + values)
 
     def _unparse_boolean_optional_action(self, action: Action) -> list[str]:
         raise NotImplementedError

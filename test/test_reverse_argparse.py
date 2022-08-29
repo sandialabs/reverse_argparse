@@ -109,14 +109,17 @@ def parser() -> ArgumentParser:
         const=53
     )
     p.add_argument("--verbose", "-v", action="count", default=2)
+    p.add_argument("--ext", action="extend", nargs="*")
     return p
 
 
 COMPLETE_ARGS = [
     "pos1-val1 pos1-val2 "
     "pos2-val "
+    "--ext ext-val1 "
     "--app-nargs app-nargs1-val1 app-nargs1-val2 "
     "--app-const1 "
+    "--ext ext-val2 ext-val3 "
     "--opt1 opt1-val "
     "-vv "
     "--app1 app1-val1 "
@@ -131,8 +134,10 @@ COMPLETE_ARGS = [
     "--app-nargs app-nargs2-val "
     "--needs-quotes 'hello world'",
 
+    "--ext ext-val1 "
     "--app-nargs app-nargs1-val1 app-nargs1-val2 "
     "--app-const1 "
+    "--ext ext-val2 ext-val3 "
     "--opt1 opt1-val "
     "-vv "
     "--app1 app1-val1 "
@@ -161,8 +166,8 @@ def test_get_effective_command_line_invocation(parser, args) -> None:
         "--store-false --needs-quotes \'hello world\' --default 42 --app1 "
         "app1-val1 --app1 app1-val2 --app2 app2-val1 --app2 app2-val2 "
         "--app-nargs app-nargs1-val1 app-nargs1-val2 --app-nargs "
-        "app-nargs2-val --const --app-const1 --app-const2 -vv -- pos1-val1 "
-        "pos1-val2 pos2-val"
+        "app-nargs2-val --const --app-const1 --app-const2 -vv --ext "
+        "ext-val1 ext-val2 ext-val3 -- pos1-val1 pos1-val2 pos2-val"
     )
     assert unparser.get_effective_command_line_invocation() == expected
 
@@ -189,6 +194,7 @@ __main__.py \\
     --app-const1 \\
     --app-const2 \\
     -vv \\
+    --ext ext-val1 ext-val2 ext-val3 \\
     -- \\
     pos1-val1 pos1-val2 \\
     pos2-val
@@ -245,9 +251,9 @@ __main__.py \\
         []
     ), (
         ["--foo"],
-        {"action": "extend"},
-        "--foo bar --foo baz",
-        "NotImplemented"
+        {"action": "extend", "nargs": "*"},
+        "--foo bar --foo baz bif",
+        ["--foo", "bar", "baz", "bif"]
     ), (
         ["--foo"],
         {"action": BooleanOptionalAction},
@@ -517,10 +523,11 @@ def test__unparse_sub_parsers_action() -> None:
 
 def test__unparse_extend_action() -> None:
     parser = ArgumentParser()
-    action = parser.add_argument("--foo", action="extend")
-    unparser = ReverseArgumentParser(parser, Namespace())
-    with pytest.raises(NotImplementedError):
-        unparser._unparse_extend_action(action)
+    action = parser.add_argument("--foo", action="extend", nargs="*")
+    namespace = parser.parse_args(shlex.split("--foo bar --foo baz bif"))
+    unparser = ReverseArgumentParser(parser, namespace)
+    expected = ["--foo", "bar", "baz", "bif"]
+    assert unparser._unparse_extend_action(action) == expected
 
 
 def test__unparse_boolean_optional_action() -> None:
