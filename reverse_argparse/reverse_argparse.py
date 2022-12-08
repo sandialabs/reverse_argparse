@@ -18,14 +18,17 @@ class ReverseArgumentParser:
     such that they're able to reproduce a prior run of a script exactly.
 
     Attributes:
-        parser:  The :class:`argparse.ArgumentParser` that was used to
-            generate the parsed arguments.
-        namespace:  The :class:`argparse.Namespace` containing the
-            parsed arguments.
+        parsers (list[ArgumentParser]):  The parser that was used to
+            generate the parsed arguments.  This is a ``list``
+            (conceptually a stack) to allow for sub-parsers, so the
+            root-level parser is the first item in the list, and
+            sub-parsers are pushed onto and popped off of the stack as
+            they are processed.
+        namespace (Namespace):  The parsed arguments.
     """
 
     def __init__(self, parser: ArgumentParser, namespace: Namespace):
-        self.parser = parser
+        self.parsers = [parser]
         self.namespace = namespace
 
     def _get_args(self, actions: list[Action]) -> list[list[str]]:
@@ -61,7 +64,7 @@ class ReverseArgumentParser:
             represents the command line arguments that generate the
             :class:`Action`.
         """
-        return self._get_args(self.parser._get_optional_actions())
+        return self._get_args(self.parsers[-1]._get_optional_actions())
 
     def get_positional_args(self) -> list[list[str]]:
         """
@@ -73,7 +76,7 @@ class ReverseArgumentParser:
             represents the command line arguments that generate the
             :class:`Action`.
         """
-        return self._get_args(self.parser._get_positional_actions())
+        return self._get_args(self.parsers[-1]._get_positional_actions())
 
     @staticmethod
     def _flatten_list(list_of_lists: list[list[Any]]) -> list[Any]:
@@ -110,7 +113,7 @@ class ReverseArgumentParser:
             what was run before.
         """
         command_line = (
-            f"{self.parser.prog} "
+            f"{self.parsers[-1].prog} "
             + " ".join(self._flatten_list(self.get_optional_args()))
         )
         if positional_args := self.get_positional_args():
@@ -132,7 +135,7 @@ class ReverseArgumentParser:
             what was run before.
         """
         indent_str = " " * indent
-        command_line = self.parser.prog
+        command_line = self.parsers[-1].prog
         for action_args in self.get_optional_args():
             command_line += f" \\\n{indent_str}" + " ".join(action_args)
         if positional_args := self.get_positional_args():
@@ -204,8 +207,8 @@ class ReverseArgumentParser:
         """
         return [option for option in option_strings
                 if len(option) > 2
-                and option[0] in self.parser.prefix_chars
-                and option[1] in self.parser.prefix_chars]
+                and option[0] in self.parsers[-1].prefix_chars
+                and option[1] in self.parsers[-1].prefix_chars]
 
     def _get_short_option_strings(
         self,
@@ -224,7 +227,7 @@ class ReverseArgumentParser:
         """
         return [option for option in option_strings
                 if len(option) == 2
-                and option[0] in self.parser.prefix_chars]
+                and option[0] in self.parsers[-1].prefix_chars]
 
     def _get_option_string(
         self,
@@ -410,7 +413,7 @@ class ReverseArgumentParser:
         value = getattr(self.namespace, action.dest)
         count = value if action.default is None else (value - action.default)
         flag = self._get_option_string(action, prefer_short=True)
-        if len(flag) == 2 and flag[0] in self.parser.prefix_chars:
+        if len(flag) == 2 and flag[0] in self.parsers[-1].prefix_chars:
             return [flag[0] + flag[1] * count]
         else:
             return [flag for _ in range(count)]
