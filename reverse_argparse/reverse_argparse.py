@@ -54,18 +54,6 @@ class ReverseArgumentParser:
                     result.append(arg)
         return result
 
-    def get_optional_args(self) -> list[list[str]]:
-        """
-        Get all the optional arguments.
-
-        Returns:
-            A list of lists, where each element of the outer list
-            corresponds to an :class:`Action`, and each inner list
-            represents the command line arguments that generate the
-            :class:`Action`.
-        """
-        return self._get_args(self.parsers[-1]._get_optional_actions())
-
     def get_positional_args(self) -> list[list[str]]:
         """
         Get all the positional arguments.
@@ -77,6 +65,18 @@ class ReverseArgumentParser:
             :class:`Action`.
         """
         return self._get_args(self.parsers[-1]._get_positional_actions())
+
+    def get_optional_args(self) -> list[list[str]]:
+        """
+        Get all the optional arguments.
+
+        Returns:
+            A list of lists, where each element of the outer list
+            corresponds to an :class:`Action`, and each inner list
+            represents the command line arguments that generate the
+            :class:`Action`.
+        """
+        return self._get_args(self.parsers[-1]._get_optional_actions())
 
     @staticmethod
     def _flatten_list(list_of_lists: list[list[Any]]) -> list[Any]:
@@ -112,14 +112,11 @@ class ReverseArgumentParser:
             What you would need to run on the command line to reproduce
             what was run before.
         """
-        command_line = (
-            f"{self.parsers[-1].prog} "
-            + " ".join(self._flatten_list(self.get_optional_args()))
+        return (
+            self.parsers[-1].prog
+            + " " + " ".join(self._flatten_list(self.get_positional_args()))
+            + " " + " ".join(self._flatten_list(self.get_optional_args()))
         )
-        if positional_args := self.get_positional_args():
-            command_line += (" -- "
-                             + " ".join(self._flatten_list(positional_args)))
-        return command_line
 
     def get_pretty_command_line_invocation(self, indent: int = 4) -> str:
         """
@@ -136,11 +133,9 @@ class ReverseArgumentParser:
         """
         indent_str = " " * indent
         command_line = self.parsers[-1].prog
-        for action_args in self.get_optional_args():
+        for action_args in self.get_positional_args():
             command_line += f" \\\n{indent_str}" + " ".join(action_args)
-        if positional_args := self.get_positional_args():
-            command_line += f" \\\n{indent_str}--"
-        for action_args in positional_args:
+        for action_args in self.get_optional_args():
             command_line += f" \\\n{indent_str}" + " ".join(action_args)
         return command_line
 

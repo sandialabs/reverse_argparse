@@ -163,13 +163,12 @@ def test_get_effective_command_line_invocation(parser, args) -> None:
     namespace = parser.parse_args(shlex.split(args))
     unparser = ReverseArgumentParser(parser, namespace)
     expected = (
-        "__main__.py --opt1 opt1-val --opt2 opt2-val1 opt2-val2 --store-true "
-        "--store-false --needs-quotes \'hello world\' --default 42 --app1 "
-        "app1-val1 --app1 app1-val2 --app2 app2-val1 --app2 app2-val2 "
-        "--app-nargs app-nargs1-val1 app-nargs1-val2 --app-nargs "
-        "app-nargs2-val --const --app-const1 --app-const2 -vv --ext "
-        "ext-val1 ext-val2 ext-val3 --no-bool-opt -- pos1-val1 pos1-val2 "
-        "pos2-val"
+        "__main__.py pos1-val1 pos1-val2 pos2-val --opt1 opt1-val --opt2 "
+        "opt2-val1 opt2-val2 --store-true --store-false --needs-quotes "
+        "\'hello world\' --default 42 --app1 app1-val1 --app1 app1-val2 "
+        "--app2 app2-val1 --app2 app2-val2 --app-nargs app-nargs1-val1 "
+        "app-nargs1-val2 --app-nargs app-nargs2-val --const --app-const1 "
+        "--app-const2 -vv --ext ext-val1 ext-val2 ext-val3 --no-bool-opt"
     )
     assert unparser.get_effective_command_line_invocation() == expected
 
@@ -180,6 +179,8 @@ def test_get_pretty_command_line_invocation(parser, args) -> None:
     unparser = ReverseArgumentParser(parser, namespace)
     expected = """
 __main__.py \\
+    pos1-val1 pos1-val2 \\
+    pos2-val \\
     --opt1 opt1-val \\
     --opt2 opt2-val1 opt2-val2 \\
     --store-true \\
@@ -197,10 +198,7 @@ __main__.py \\
     --app-const2 \\
     -vv \\
     --ext ext-val1 ext-val2 ext-val3 \\
-    --no-bool-opt \\
-    -- \\
-    pos1-val1 pos1-val2 \\
-    pos2-val
+    --no-bool-opt
 """.strip()
     assert unparser.get_pretty_command_line_invocation() == expected
 
