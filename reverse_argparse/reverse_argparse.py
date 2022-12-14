@@ -2,7 +2,6 @@
 
 import re
 from argparse import Action, ArgumentParser, Namespace
-from typing import Any
 
 
 class ReverseArgumentParser:
@@ -18,88 +17,79 @@ class ReverseArgumentParser:
     such that they're able to reproduce a prior run of a script exactly.
 
     Attributes:
+        args (list[str]):  The list of arguments corresponding to each
+            :class:`Action` in the given parser, which is built up as
+            the arguments are "unparsed".
+        indent (int):  The number of spaces with which to indent
+            subsequent lines when pretty-printing the effective command
+            line invocation.
         parsers (list[ArgumentParser]):  The parser that was used to
             generate the parsed arguments.  This is a ``list``
             (conceptually a stack) to allow for sub-parsers, so the
-            root-level parser is the first item in the list, and
+            outer-most parser is the first item in the list, and
             sub-parsers are pushed onto and popped off of the stack as
             they are processed.
         namespace (Namespace):  The parsed arguments.
     """
 
-    def __init__(self, parser: ArgumentParser, namespace: Namespace):
+    def __init__(
+        self,
+        parser: ArgumentParser,
+        namespace: Namespace,
+        indent: int = 4
+    ):
+        self._unparsed = False
+        self.args = [parser.prog]
+        self.indent = indent
         self.parsers = [parser]
         self.namespace = namespace
 
-    def _get_args(self, actions: list[Action]) -> list[list[str]]:
+    def _unparse_args(self) -> None:
         """
-        Get the arguments associated with each argument in the given
-        list of actions.
+        Loop over the positional and then optional actions, generating
+        the command line arguments associated with each, and appending
+        them to the list of arguments.
 
-        Args:
-            actions:  The actions in question.
-
-        Returns:
-            A list of lists, where each element of the outer list
-            corresponds to an :class:`Action`, and each inner list
-            represents the command line arguments that generate the
-            :class:`Action`.
+        Raises:
+            NotImplementedError:  If there is not currently an
+                implementation for "un-parsing" the given action.
         """
-        result = []
+        if self._unparsed:
+            return
+        actions = (self.parsers[-1]._get_positional_actions()
+                   + self.parsers[-1]._get_optional_actions())
         for action in actions:
-            if arg := self._unparse_action(action):
-                if type(arg) is list and type(arg[0]) is list:
-                    result.extend(arg)
-                else:
-                    result.append(arg)
-        return result
-
-    def get_positional_args(self) -> list[list[str]]:
-        """
-        Get all the positional arguments.
-
-        Returns:
-            A list of lists, where each element of the outer list
-            corresponds to an :class:`Action`, and each inner list
-            represents the command line arguments that generate the
-            :class:`Action`.
-        """
-        return self._get_args(self.parsers[-1]._get_positional_actions())
-
-    def get_optional_args(self) -> list[list[str]]:
-        """
-        Get all the optional arguments.
-
-        Returns:
-            A list of lists, where each element of the outer list
-            corresponds to an :class:`Action`, and each inner list
-            represents the command line arguments that generate the
-            :class:`Action`.
-        """
-        return self._get_args(self.parsers[-1]._get_optional_actions())
-
-    @staticmethod
-    def _flatten_list(list_of_lists: list[list[Any]]) -> list[Any]:
-        """
-        Flatten a list of lists.  E.g.,
-
-            [[1, 2, 3], [4, 5, 6], [7], [8, 9]]
-
-        becomes
-
-            [1, 2, 3, 4, 5, 6, 7, 8, 9]
-
-        Args:
-            list_of_lists:  The input list of lists.
-
-        Returns:
-            The list resulting from the flattening.
-
-        Note:
-            This only flattens the top two layers.  If an inner list
-            also contains a list, it will not be flattened recursively.
-        """
-        return [item for sublist in list_of_lists for item in sublist]
+            match type(action).__name__:
+                case "_AppendAction":
+                    self._unparse_append_action(action)
+                case "_AppendConstAction":
+                    self._unparse_append_const_action(action)
+                case "_CountAction":
+                    self._unparse_count_action(action)
+                case "_ExtendAction":
+                    self._unparse_extend_action(action)
+                case "_HelpAction":
+                    continue
+                case "_StoreAction":
+                    self._unparse_store_action(action)
+                case "_StoreConstAction":
+                    self._unparse_store_const_action(action)
+                case "_StoreFalseAction":
+                    self._unparse_store_false_action(action)
+                case "_StoreTrueAction":
+                    self._unparse_store_true_action(action)
+                case "_SubParsersAction":
+                    self._unparse_sub_parsers_action(action)
+                case "_VersionAction":
+                    continue
+                case "BooleanOptionalAction":
+                    self._unparse_boolean_optional_action(action)
+                case _:
+                    raise NotImplementedError(
+                        f"{__class__.__name__} does not yet support the "
+                        f"un-parsing of {type(action).__name__} objects."
+                    )
+        self._unparsed = True
 
     def get_effective_command_line_invocation(self) -> str:
         """
@@ -112,78 +102,21 @@ class ReverseArgumentParser:
             What you would need to run on the command line to reproduce
             what was run before.
         """
-        return (
-            self.parsers[-1].prog
-            + " " + " ".join(self._flatten_list(self.get_positional_args()))
-            + " " + " ".join(self._flatten_list(self.get_optional_args()))
-        )
+        self._unparse_args()
+        return " ".join(_.strip() for _ in self.args if _.strip())
 
-    def get_pretty_command_line_invocation(self, indent: int = 4) -> str:
+    def get_pretty_command_line_invocation(self) -> str:
         """
         Similar to :func:`get_effective_command_line_invocation`, but
         generate a string ready for "pretty-printing", with escaped
         newlines between each of the arguments.
 
-        Args:
-            indent:  How many spaces to indent each subsequent line.
-
         Returns:
             What you would need to run on the command line to reproduce
             what was run before.
         """
-        indent_str = " " * indent
-        command_line = self.parsers[-1].prog
-        for action_args in self.get_positional_args():
-            command_line += f" \\\n{indent_str}" + " ".join(action_args)
-        for action_args in self.get_optional_args():
-            command_line += f" \\\n{indent_str}" + " ".join(action_args)
-        return command_line
-
-    def _unparse_action(self, action: Action) -> list[str] | list[list[str]]:
-        """
-        Given an action, generate the list of command line arguments
-        that correspond to it.
-
-        Args:
-            action:  The action to be "un-parsed".
-
-        Raises:
-            NotImplementedError:  If there is not currently an
-                implementation for "un-parsing" the given action.
-
-        Returns:
-            The list of command line arguments.
-        """
-        match type(action).__name__:
-            case "_StoreAction":
-                return self._unparse_store_action(action)
-            case "_StoreConstAction":
-                return self._unparse_store_const_action(action)
-            case "_StoreTrueAction":
-                return self._unparse_store_true_action(action)
-            case "_StoreFalseAction":
-                return self._unparse_store_false_action(action)
-            case "_AppendAction":
-                return self._unparse_append_action(action)
-            case "_AppendConstAction":
-                return self._unparse_append_const_action(action)
-            case "_CountAction":
-                return self._unparse_count_action(action)
-            case "_HelpAction":
-                return []
-            case "_VersionAction":
-                return []
-            case "_SubParsersAction":
-                return self._unparse_sub_parsers_action(action)
-            case "_ExtendAction":
-                return self._unparse_extend_action(action)
-            case "BooleanOptionalAction":
-                return self._unparse_boolean_optional_action(action)
-            case _:
-                raise NotImplementedError(
-                    f"{__class__.__name__} does not yet support the "
-                    f"un-parsing of {type(action).__name__} objects."
-                )
+        self._unparse_args()
+        return " \\\n".join(_ for _ in self.args if _.strip())
 
     def _get_long_option_strings(
         self,
@@ -276,20 +209,33 @@ class ReverseArgumentParser:
         else:
             return arg
 
-    def _unparse_store_action(self, action: Action) -> list[str]:
+    def _append(self, args: list[str] | list[list[str]]) -> None:
+        """
+        Given a list of command line arguments corresponding to a
+        particular action, append them to the list of arguments, taking
+        into account indentation and the sub-parser nesting level.
+
+        Args:
+            args:  The command line arguments to be appended.
+        """
+        indent_str = " " * self.indent * len(self.parsers)
+        if type(args) is list and len(args) > 0 and type(args[0]) is list:
+            for line in args:
+                self.args.append(indent_str + " ".join(line))
+        else:
+            self.args.append(indent_str + " ".join(args))
+
+    def _unparse_store_action(self, action: Action) -> None:
         """
         Generate the list of arguments that correspond to
         ``action="store"``.
 
         Args:
             action:  The :class:`_StoreAction` in question.
-
-        Returns:
-            The associated list of arguments.
         """
         values = getattr(self.namespace, action.dest)
         if values is None:
-            return []
+            return
         flag = self._get_option_string(action)
         result = []
         if flag:
@@ -302,66 +248,58 @@ class ReverseArgumentParser:
             if needs_quotes_regex.search(values[i]):
                 values[i] = needs_quotes_regex.sub(r"'\1'", values[i])
         result.extend(values)
-        return result
+        self._append(result)
 
-    def _unparse_store_const_action(self, action: Action) -> list[str]:
+    def _unparse_store_const_action(self, action: Action) -> None:
         """
         Generate the list of arguments that correspond to
         ``action="store_const"``.
 
         Args:
             action:  The :class:`_StoreConstAction` in question.
-
-        Returns:
-            The associated list of arguments.
         """
         value = getattr(self.namespace, action.dest)
-        return ([self._get_option_string(action)]
-                if value == action.const else [])
+        self._append(
+            [self._get_option_string(action)] if value == action.const else []
+        )
 
-    def _unparse_store_true_action(self, action: Action) -> list[str]:
+    def _unparse_store_true_action(self, action: Action) -> None:
         """
         Generate the list of arguments that correspond to
         ``action="store_true"``.
 
         Args:
             action:  The :class:`_StoreTrueAction` in question.
-
-        Returns:
-            The associated list of arguments.
         """
         value = getattr(self.namespace, action.dest)
-        return [self._get_option_string(action)] if value is True else []
+        self._append(
+            [self._get_option_string(action)] if value is True else []
+        )
 
-    def _unparse_store_false_action(self, action: Action) -> list[str]:
+    def _unparse_store_false_action(self, action: Action) -> None:
         """
         Generate the list of arguments that correspond to
         ``action="store_false"``.
 
         Args:
             action:  The :class:`_StoreFalseAction` in question.
-
-        Returns:
-            The associated list of arguments.
         """
         value = getattr(self.namespace, action.dest)
-        return [self._get_option_string(action)] if value is False else []
+        self._append(
+            [self._get_option_string(action)] if value is False else []
+        )
 
-    def _unparse_append_action(self, action: Action) -> list[list[str]]:
+    def _unparse_append_action(self, action: Action) -> None:
         """
         Generate the list of arguments that correspond to
         ``action="append"``.
 
         Args:
             action:  The :class:`_AppendAction` in question.
-
-        Returns:
-            The associated list of arguments, broken up into sub-lists,
-            one per flag.
         """
         values = getattr(self.namespace, action.dest)
         if values is None:
-            return []
+            return
         flag = self._get_option_string(action)
         if type(values) is not list:
             values = [values]
@@ -377,71 +315,65 @@ class ReverseArgumentParser:
             for value in values:
                 value = self._quote_arg_if_necessary(str(value))
                 result.append([flag, value])
-        return result
+        self._append(result)
 
-    def _unparse_append_const_action(self, action: Action) -> list[str]:
+    def _unparse_append_const_action(self, action: Action) -> None:
         """
         Generate the list of arguments that correspond to
         ``action="append_const"``.
 
         Args:
             action:  The :class:`_AppendConstAction` in question.
-
-        Returns:
-            The associated list of arguments.
         """
         values = getattr(self.namespace, action.dest)
-        return ([] if values is None or action.const not in values
-                else [self._get_option_string(action)])
+        self._append(
+            [] if values is None or action.const not in values
+            else [self._get_option_string(action)]
+        )
 
-    def _unparse_count_action(self, action: Action) -> list[str]:
+    def _unparse_count_action(self, action: Action) -> None:
         """
         Generate the list of arguments that correspond to
         ``action="count"``.
 
         Args:
             action:  The :class:`_CountAction` in question.
-
-        Returns:
-            The associated list of arguments.
         """
         value = getattr(self.namespace, action.dest)
         count = value if action.default is None else (value - action.default)
         flag = self._get_option_string(action, prefer_short=True)
         if len(flag) == 2 and flag[0] in self.parsers[-1].prefix_chars:
-            return [flag[0] + flag[1] * count]
+            self._append([flag[0] + flag[1] * count])
         else:
-            return [flag for _ in range(count)]
+            self._append([flag for _ in range(count)])
 
-    def _unparse_sub_parsers_action(self, action: Action) -> list[str]:
+    def _unparse_sub_parsers_action(self, action: Action) -> None:
         raise NotImplementedError
 
-    def _unparse_extend_action(self, action: Action) -> list[str]:
+    def _unparse_extend_action(self, action: Action) -> None:
         """
         Generate the list of arguments that correspond to
         ``action="extend"``.
 
         Args:
             action:  The :class:`_ExtendAction` in question.
-
-        Returns:
-            The associated list of arguments.
         """
         values = getattr(self.namespace, action.dest)
-        return ([] if values is None
-                else [self._get_option_string(action)] + values)
+        self._append(
+            [] if values is None
+            else [self._get_option_string(action)] + values
+        )
 
-    def _unparse_boolean_optional_action(self, action: Action) -> list[str]:
+    def _unparse_boolean_optional_action(self, action: Action) -> None:
         """
         Generate the list of arguments that correspond to
         ``action=BooleanOptionalAction``.
 
         Args:
             action:  The :class:`BooleanOptionalAction` in question.
-
-        Returns:
-            The associated list of arguments.
         """
         value = getattr(self.namespace, action.dest)
         flag_index = 0 if getattr(self.namespace, action.dest) else 1
-        return [] if value is None else [action.option_strings[flag_index]]
+        self._append(
+            [] if value is None else [action.option_strings[flag_index]]
+        )
