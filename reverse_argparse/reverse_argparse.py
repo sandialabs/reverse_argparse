@@ -22,7 +22,7 @@ class ReverseArgumentParser:
             unparsed.
         args (list[str]):  The list of arguments corresponding to each
             :class:`Action` in the given parser, which is built up as
-            the arguments are "unparsed".
+            the arguments are unparsed.
         indent (int):  The number of spaces with which to indent
             subsequent lines when pretty-printing the effective command
             line invocation.
@@ -55,7 +55,7 @@ class ReverseArgumentParser:
 
         Raises:
             NotImplementedError:  If there is not currently an
-                implementation for "un-parsing" the given action.
+                implementation for unparsing the given action.
         """
         if self._unparsed[-1]:
             return
@@ -93,7 +93,7 @@ class ReverseArgumentParser:
                 case _:
                     raise NotImplementedError(
                         f"{__class__.__name__} does not yet support the "
-                        f"un-parsing of {type(action).__name__} objects."
+                        f"unparsing of {type(action).__name__} objects."
                     )
         self._unparsed[-1] = True
 
