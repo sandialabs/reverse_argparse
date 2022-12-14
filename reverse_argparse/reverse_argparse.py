@@ -17,6 +17,9 @@ class ReverseArgumentParser:
     such that they're able to reproduce a prior run of a script exactly.
 
     Attributes:
+        _unparsed (list[bool]):  A list in which the elements indicate
+            whether the corresponding parser in :attr:`parsers` has been
+            unparsed.
         args (list[str]):  The list of arguments corresponding to each
             :class:`Action` in the given parser, which is built up as
             the arguments are "unparsed".
@@ -38,7 +41,7 @@ class ReverseArgumentParser:
         namespace: Namespace,
         indent: int = 4
     ):
-        self._unparsed = False
+        self._unparsed = [False]
         self.args = [parser.prog]
         self.indent = indent
         self.parsers = [parser]
@@ -54,11 +57,14 @@ class ReverseArgumentParser:
             NotImplementedError:  If there is not currently an
                 implementation for "un-parsing" the given action.
         """
-        if self._unparsed:
+        if self._unparsed[-1]:
             return
-        actions = (self.parsers[-1]._get_positional_actions()
-                   + self.parsers[-1]._get_optional_actions())
+        actions = (self.parsers[-1]._get_optional_actions()
+                   + self.parsers[-1]._get_positional_actions())
         for action in actions:
+            if (type(action).__name__ != "_SubParsersAction" and
+                    not hasattr(self.namespace, action.dest)):
+                continue
             match type(action).__name__:
                 case "_AppendAction":
                     self._unparse_append_action(action)
@@ -89,7 +95,7 @@ class ReverseArgumentParser:
                         f"{__class__.__name__} does not yet support the "
                         f"un-parsing of {type(action).__name__} objects."
                     )
-        self._unparsed = True
+        self._unparsed[-1] = True
 
     def get_effective_command_line_invocation(self) -> str:
         """
@@ -348,7 +354,32 @@ class ReverseArgumentParser:
             self._append([flag for _ in range(count)])
 
     def _unparse_sub_parsers_action(self, action: Action) -> None:
-        raise NotImplementedError
+        """
+        Generate the list of arguments that correspond to a subparser
+        action.  This is done by:
+
+        * looping over the commands and corresponding parsers in the
+          given subparser action,
+        * recursively unparsing the subparser, and
+        * if the subparser wasn't used to parse the command line
+          arguments, removing it before continuing with the next
+          subcommand-subparser pair.
+
+        Args:
+            action:  The :class:`_SubParsersAction` in question.
+        """
+        for subcommand, subparser in action.choices.items():
+            self.parsers.append(subparser)
+            self._unparsed.append(False)
+            self.args.append(
+                " " * self.indent * (len(self.parsers) - 1) + subcommand
+            )
+            args_before = self.args.copy()
+            self._unparse_args()
+            if self.args == args_before:
+                self.parsers.pop()
+                self._unparsed.pop()
+                self.args.pop()
 
     def _unparse_extend_action(self, action: Action) -> None:
         """
