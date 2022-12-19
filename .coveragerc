@@ -1,0 +1,30 @@
+[run]
+omit =
+    */test/*
+branch = True
+dynamic_context = test_function
+
+[paths]
+source = reverse_argparse
+
+[report]
+skip_covered = False
+fail_under = 94
+show_missing = True
+exclude_lines =
+    pragma: no cover
+    if 0:
+    if False:
+
+[html]
+directory = test/htmlcov
+title = reverse_argparse Coverage Report
+show_contexts = True
+
+[xml]
+output = test/coverage.xml
+
+[json]
+output = test/coverage.json
+pretty_print = True
+show_contexts = True
