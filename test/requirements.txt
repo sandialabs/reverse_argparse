@@ -1,0 +1,8 @@
+# Requirements for testing `reverse_argparse`.
+
+coverage
+flake8
+pytest
+pytest-mock
+toml
+yapf
