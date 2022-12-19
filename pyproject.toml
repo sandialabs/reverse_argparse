@@ -32,7 +32,7 @@ classifiers = [
 packages = [
     { include = "reverse_argparse" },
 ]
-# include = ["CHANGELOG.md"]  UNCOMMENT WHEN WE ADD A CHANGELOG
+include = ["CHANGELOG.md"]
 
 
 [tool.poetry.urls]
