@@ -1,0 +1,58 @@
+[tool.poetry]
+name = "reverse_argparse"
+version = "1.0.0"
+license = "INSERT LICENSE FILENAME HERE"
+readme = "README.md"
+keywords = ["argparse", "argument", "parse", "parsing", "command line"]
+repository = "INSERT URL HERE"
+description = "Generate the effective command line invocation for a script."
+documentation = "INSERT URL HERE"
+authors = [
+    "Jason M. Gates <jmgate@sandia.gov>"
+]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Information Technology",
+    "Intended Audience :: System Administrators",
+    # "Licence :: FILL THIS OUT",  UNCOMMENT AFTER ADDING LICENSE
+    "Natural Language :: English",
+    "Operating System :: MacOS",
+    "Operating System :: POSIX",
+    "Operating System :: UNIX",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.10",
+    "Topic :: Software Development",
+    "Topic :: Software Development :: Debuggers",
+    "Topic :: Software Development :: Documentation",
+    "Topic :: Software Development :: User Interfaces",
+    "Typing :: Typed"
+]
+packages = [
+    { include = "reverse_argparse" },
+]
+# include = ["CHANGELOG.md"]  UNCOMMENT WHEN WE ADD A CHANGELOG
+
+
+[tool.poetry.urls]
+CI = "INSERT URL HERE"
+Issues = "INSERT URL HERE"
+
+
+[tool.poetry.dependencies]
+python = "^3.10"
+
+
+[tool.poetry.dev-dependencies]
+coverage = "^6.3.1"
+pytest = "^7.1.1"
+pytest-mock = "^3.7.0"
+# sphinx = "^4.0"  UNCOMMENT AFTER CREATING DOCS
+# sphinx-argparse = "^0.2"
+# sphinx-rtd-theme = "^0.5"
+
+
+[build-system]
+requires = ["poetry-core>=1.0"]
+build-backend = "poetry.core.masonry.api"
