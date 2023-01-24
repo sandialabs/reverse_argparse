@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 import shlex
-from argparse import ArgumentParser, BooleanOptionalAction, Namespace
+from argparse import ArgumentParser, BooleanOptionalAction, Namespace, SUPPRESS
 
 import pytest
 from python.reverse_argparse.reverse_argparse.reverse_argparse import \
@@ -230,6 +230,14 @@ def test__unparse_args_already_unparsed() -> None:
     unparser._unparsed = [True]
     unparser._unparse_args()
     assert unparser.args == args_before
+
+
+def test__arg_is_default_and_help_is_suppressed() -> None:
+    parser = ArgumentParser()
+    parser.add_argument("--suppressed", default=10, help=SUPPRESS)
+    namespace = parser.parse_args(shlex.split(""))
+    unparser = ReverseArgumentParser(parser, namespace)
+    assert unparser.get_effective_command_line_invocation() == "__main__.py"
 
 
 @pytest.mark.parametrize(

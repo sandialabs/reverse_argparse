@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 import re
-from argparse import Action, ArgumentParser, Namespace
+from argparse import Action, ArgumentParser, Namespace, SUPPRESS
 
 
 class ReverseArgumentParser:
@@ -62,8 +62,9 @@ class ReverseArgumentParser:
         actions = (self.parsers[-1]._get_optional_actions()
                    + self.parsers[-1]._get_positional_actions())
         for action in actions:
-            if (type(action).__name__ != "_SubParsersAction" and
-                    not hasattr(self.namespace, action.dest)):
+            if (type(action).__name__ != "_SubParsersAction"
+                and (not hasattr(self.namespace, action.dest)
+                     or self._arg_is_default_and_help_is_suppressed(action))):
                 continue
             match type(action).__name__:
                 case "_AppendAction":
@@ -96,6 +97,25 @@ class ReverseArgumentParser:
                         f"unparsing of {type(action).__name__} objects."
                     )
         self._unparsed[-1] = True
+
+    def _arg_is_default_and_help_is_suppressed(self, action: Action) -> bool:
+        """
+        Determine whether the argument matches the default value and the
+        corresponding help text has been suppressed.  Such cases
+        indicate that a parser author has hidden an argument from users,
+        and the user hasn't modified the value on the command line, so
+        to match the author's intent, we should omit the argument from
+        the effective command line invocation.
+
+        Args:
+            action:  The command line argument in question.
+
+        Returns:
+            ``True`` if the argument should be omitted; ``False``
+            otherwise.
+        """
+        value = getattr(self.namespace, action.dest)
+        return value == action.default and action.help == SUPPRESS
 
     def get_effective_command_line_invocation(self) -> str:
         """
