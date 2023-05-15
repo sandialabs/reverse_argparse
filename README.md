@@ -62,8 +62,7 @@ contributors](INSERT URL HERE) include:
 
 ## License
 
-License information will be added after `reverse_argparse` makes it through our
-open-sourcing process.
+See [LICENSE.md](https://github.com/sandialabs/reverse_argparse/blob/master/LICENSE.md).
 
 ## Credits
 
