@@ -15,7 +15,7 @@ users are able to reproduce a prior run of a script exactly.
 
 To get up and running with `reverse_argparse`, simply:
 ```bash
-pip install reverse_argparse
+python3 -m pip install reverse_argparse
 ```
 
 > **Note:**  This won't actually work until the package has been published to
@@ -49,16 +49,19 @@ documentation](INSERT URL HERE).
 ## Where to Get Help
 
 If you're having trouble with `reverse_argparse`, or just want to ask a
-question, head on over to [our issue board](INSERT URL HERE).  If a quick
+question, head on over to [our issue
+board](https://github.com/sandialabs/reverse_argparse/issues).  If a quick
 search doesn't yield what you're looking for, feel free to file an issue.
 
 ## Contributing
 
 If you're interested in contributing to the development of `reverse_argparse`,
 we'd love to have your help :grinning:  Check out our [contributing
-guidelines](INSERT URL HERE) for how to get started.  [Past
-contributors](INSERT URL HERE) include:
-* @jmgate
+guidelines](https://github.com/sandialabs/reverse_argparse/blob/master/CONTRIBUTING.md)
+for how to get started.  [Past
+contributors](https://github.com/sandialabs/reverse_argparse/graphs/contributors)
+include:
+* [@jmgate](https://github.com/jmgate)
 
 ## License
 
@@ -66,5 +69,5 @@ See [LICENSE.md](https://github.com/sandialabs/reverse_argparse/blob/master/LICE
 
 ## Credits
 
-Special thanks to [the GMS project](INSERT URL HERE) for investing in the
-initial development of this package.
+Special thanks to [the GMS project](https://github.com/SNL-GMS/GMS-PI21-OPEN/)
+for investing in the initial development of this package.
