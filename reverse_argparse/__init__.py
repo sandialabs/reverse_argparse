@@ -1,3 +1,6 @@
-from .reverse_argparse import ReverseArgumentParser
+from .reverse_argparse import (
+    ReverseArgumentParser,
+    quote_arg_if_necessary
+)
 
-__all__ = ["ReverseArgumentParser"]
+__all__ = ["ReverseArgumentParser", "quote_arg_if_necessary"]

@@ -216,25 +216,6 @@ class ReverseArgumentParser:
             elif short_options:
                 return short_options[0]
 
-    @staticmethod
-    def _quote_arg_if_necessary(arg: str) -> str:
-        """
-        If a command line argument has any spaces in it, surround it in
-        single quotes.  If no quotes are necessary, don't change the
-        argument.
-
-        Args:
-            arg:  The command line argument.
-
-        Returns:
-            The (possibly) quoted argument.
-        """
-        needs_quotes_regex = re.compile(r"(.*\s.*)")
-        if needs_quotes_regex.search(arg):
-            return needs_quotes_regex.sub(r"'\1'", arg)
-        else:
-            return arg
-
     def _append(self, args: list[str] | list[list[str]]) -> None:
         """
         Given a list of command line arguments corresponding to a
@@ -428,3 +409,22 @@ class ReverseArgumentParser:
         self._append(
             [] if value is None else [action.option_strings[flag_index]]
         )
+
+
+def quote_arg_if_necessary(arg: str) -> str:
+    """
+    If a command line argument has any spaces in it, surround it in
+    single quotes.  If no quotes are necessary, don't change the
+    argument.
+
+    Args:
+        arg:  The command line argument.
+
+    Returns:
+        The (possibly) quoted argument.
+    """
+    needs_quotes_regex = re.compile(r"(.*\s.*)")
+    if needs_quotes_regex.search(arg):
+        return needs_quotes_regex.sub(r"'\1'", arg)
+    else:
+        return arg
