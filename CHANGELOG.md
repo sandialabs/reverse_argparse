@@ -2,17 +2,19 @@
 
 All notable changes to this project will be documented in this file.
 
-The format is based on [Keep a
-Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to
-[Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+The format is based on [Keep a Changelog][keepachangelog], and this project
+adheres to [Semantic Versioning][semver].
 
-## [1.0.0] - 2022-12-19
+[keepachangelog]: https://keepachangelog.com/en/1.0.0/
+[semver]: https://semver.org/spec/v2.0.0.html
+
+## [1.0.0] - DATE TBD
 
 ### Added
 
 - Initial release of package.
 
-[1.0.0]: https://github.com/organization-name/repository-name/releases/tag/v1.0.0
+[1.0.0]: https://github.com/sandialabs/reverse_argparse/releases/tag/v1.0.0
 
 > **Note:**  This will be updated when the package is moved to GitHub and
 > officially released, and then a CI job will be used to automatically update

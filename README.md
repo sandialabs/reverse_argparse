@@ -2,14 +2,16 @@
 
 # reverse_argparse
 
-Whereas [`argparse`](https://docs.python.org/3/library/argparse.html) is
-concerned with taking a bunch of command line arguments and parsing them, this
-package is intended to do the opposite; that is, it'll take the parsed
-arguments and create the effective command line invocation of the script that
-generated them.  The motivation is to be able to tell users exactly what was
-used for all of the options, taking into consideration any defaults and other
-transformations that might've been applied in the midst of parsing, such that
-users are able to reproduce a prior run of a script exactly.
+Whereas [`argparse`][argparse] is concerned with taking a bunch of command line
+arguments and parsing them, this package is intended to do the opposite; that
+is, it'll take the parsed arguments and create the effective command line
+invocation of the script that generated them.  The motivation is to be able to
+tell users exactly what was used for all of the options, taking into
+consideration any defaults and other transformations that might've been applied
+in the midst of parsing, such that users are able to reproduce a prior run of a
+script exactly.
+
+[argparse]: https://docs.python.org/3/library/argparse.html
 
 ## Installation
 
@@ -43,31 +45,36 @@ unparser = ReverseArgumentParser(parser, args)
 print(unparser.get_pretty_command_line_invocation())
 ```
 
-For more detailed usage and API information, please see [our
-documentation](INSERT URL HERE).
+For more detailed usage and API information, please see
+[our documentation][readthedocs].
+
+[readthedocs]: https://reverse_argparse.readthedocs.io
 
 ## Where to Get Help
 
 If you're having trouble with `reverse_argparse`, or just want to ask a
-question, head on over to [our issue
-board](https://github.com/sandialabs/reverse_argparse/issues).  If a quick
-search doesn't yield what you're looking for, feel free to file an issue.
+question, head on over to [our issue board][issues].  If a quick search doesn't
+yield what you're looking for, feel free to file an issue.
+
+[issues]: https://github.com/sandialabs/reverse_argparse/issues
 
 ## Contributing
 
 If you're interested in contributing to the development of `reverse_argparse`,
-we'd love to have your help :grinning:  Check out our [contributing
-guidelines](https://github.com/sandialabs/reverse_argparse/blob/master/CONTRIBUTING.md)
-for how to get started.  [Past
-contributors](https://github.com/sandialabs/reverse_argparse/graphs/contributors)
-include:
+we'd love to have your help :grinning:  Check out our
+[contributing guidelines](CONTRIBUTING.md) for how to get started.
+[Past contributors][contributors] include:
 * [@jmgate](https://github.com/jmgate)
+
+[contributors]: https://github.com/sandialabs/reverse_argparse/graphs/contributors
 
 ## License
 
-See [LICENSE.md](https://github.com/sandialabs/reverse_argparse/blob/master/LICENSE.md).
+See [LICENSE.md](LICENSE.md).
 
 ## Credits
 
-Special thanks to [the GMS project](https://github.com/SNL-GMS/GMS-PI21-OPEN/)
-for investing in the initial development of this package.
+Special thanks to [the GMS project][gms] for investing in the initial
+development of this package.
+
+[gms]: https://github.com/SNL-GMS/GMS-PI21-OPEN/
