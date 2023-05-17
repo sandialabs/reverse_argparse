@@ -1,7 +1,7 @@
 ---
 name: Bug
-about: Let us know what went wrong
-title: 'Bug:  '
+about: What went wrong?
+title: ''
 labels: 'Type:  Bug'
 assignees: ''
 
