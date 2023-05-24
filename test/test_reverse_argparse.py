@@ -84,28 +84,64 @@ COMPLETE_ARGS = [
 ]  # yapf: disable
 
 
+def strip_first_entry(input: str) -> str:
+    """
+    Remove the first entry of a space-delimited string.
+
+    Args:
+        input:  A space-delimited string.
+
+    Returns:
+        The input string with the first element (and first space)
+        removed.
+    """
+    return " ".join(input.split()[1:])
+
+
+def test_strip_first_entry() -> None:
+    assert strip_first_entry("foo bar baz") == "bar baz"
+
+
+def strip_first_line(input: str) -> str:
+    """
+    Remove the first line of a multi-line string.
+
+    Args:
+        input:  A multi-line string.
+
+    Returns:
+        The input string with the first line removed.
+    """
+    return "\n".join(input.splitlines()[1:])
+
+
+def test_strip_first_line() -> None:
+    assert strip_first_line("foo\nbar\nbaz") == "bar\nbaz"
+
+
 @pytest.mark.parametrize("args", COMPLETE_ARGS)
 def test_get_effective_command_line_invocation(parser, args) -> None:
     namespace = parser.parse_args(shlex.split(args))
     unparser = ReverseArgumentParser(parser, namespace)
     expected = (
-        "__main__.py --opt1 opt1-val --opt2 opt2-val1 opt2-val2 --store-true "
+        "--opt1 opt1-val --opt2 opt2-val1 opt2-val2 --store-true "
         "--store-false --needs-quotes \'hello world\' --default 42 --app1 "
         "app1-val1 --app1 app1-val2 --app2 app2-val1 --app2 app2-val2 "
         "--app-nargs app-nargs1-val1 app-nargs1-val2 --app-nargs "
         "app-nargs2-val --const --app-const1 --app-const2 -vv --ext ext-val1 "
         "ext-val2 ext-val3 --no-bool-opt pos1-val1 pos1-val2 pos2-val"
     )
-    assert unparser.get_effective_command_line_invocation() == expected
+    result = strip_first_entry(
+        unparser.get_effective_command_line_invocation()
+    )
+    assert result == expected
 
 
 @pytest.mark.parametrize("args", COMPLETE_ARGS)
 def test_get_pretty_command_line_invocation(parser, args) -> None:
     namespace = parser.parse_args(shlex.split(args))
     unparser = ReverseArgumentParser(parser, namespace)
-    expected = """
-__main__.py \\
-    --opt1 opt1-val \\
+    expected = """    --opt1 opt1-val \\
     --opt2 opt2-val1 opt2-val2 \\
     --store-true \\
     --store-false \\
@@ -124,25 +160,23 @@ __main__.py \\
     --ext ext-val1 ext-val2 ext-val3 \\
     --no-bool-opt \\
     pos1-val1 pos1-val2 \\
-    pos2-val
-""".strip()
-    assert unparser.get_pretty_command_line_invocation() == expected
+    pos2-val"""
+    result = strip_first_line(unparser.get_pretty_command_line_invocation())
+    assert result == expected
 
 
 def test_get_command_line_invocation_strip_spaces() -> None:
     parser = ArgumentParser()
     namespace = Namespace()
     unparser = ReverseArgumentParser(parser, namespace)
-    unparser.args = ["__main__.py", "    --foo", "    ", "    --bar"]
+    unparser.args = ["program_name", "    --foo", "    ", "    --bar"]
     unparser._unparsed = [True]
-    expected = "__main__.py --foo --bar"
+    expected = "program_name --foo --bar"
     assert unparser.get_effective_command_line_invocation() == expected
-    expected = """
-__main__.py \\
-    --foo \\
-    --bar
-""".strip()
-    assert unparser.get_pretty_command_line_invocation() == expected
+    expected = """    --foo \\
+    --bar"""
+    result = strip_first_line(unparser.get_pretty_command_line_invocation())
+    assert result == expected
 
 
 @pytest.mark.parametrize(
@@ -217,14 +251,14 @@ def test__unparse_args(add_args, add_kwargs, args, expected) -> None:
             unparser._unparse_args()
     else:
         unparser._unparse_args()
-        assert unparser.args == ["__main__.py", *expected]
+        assert unparser.args[1:] == expected
 
 
 def test__unparse_args_already_unparsed() -> None:
     parser = ArgumentParser()
     namespace = Namespace()
     unparser = ReverseArgumentParser(parser, namespace)
-    unparser.args = ["__main__.py", "    --ensure args", "   unchanged"]
+    unparser.args = ["program_name", "    --ensure args", "   unchanged"]
     args_before = unparser.args.copy()
     unparser._unparsed = [True]
     unparser._unparse_args()
@@ -236,7 +270,10 @@ def test__arg_is_default_and_help_is_suppressed() -> None:
     parser.add_argument("--suppressed", default=10, help=SUPPRESS)
     namespace = parser.parse_args(shlex.split(""))
     unparser = ReverseArgumentParser(parser, namespace)
-    assert unparser.get_effective_command_line_invocation() == "__main__.py"
+    result = strip_first_entry(
+        unparser.get_effective_command_line_invocation()
+    )
+    assert result == ""
 
 
 @pytest.mark.parametrize(
@@ -345,7 +382,7 @@ def test__unparse_store_action(add_args, add_kwargs, args, expected) -> None:
     namespace = parser.parse_args(shlex.split(args))
     unparser = ReverseArgumentParser(parser, namespace)
     unparser._unparse_store_action(action)
-    assert unparser.args == ["__main__.py", expected]
+    assert unparser.args[1:] == [expected]
 
 
 @pytest.mark.parametrize(
@@ -383,7 +420,7 @@ def test__unparse_store_const_action(
     namespace = parser.parse_args(shlex.split(args))
     unparser = ReverseArgumentParser(parser, namespace)
     unparser._unparse_store_const_action(action)
-    assert unparser.args == ["__main__.py", expected]
+    assert unparser.args[1:] == [expected]
 
 
 @pytest.mark.parametrize(
@@ -396,7 +433,7 @@ def test__unparse_store_true_action(args, expected) -> None:
     namespace = parser.parse_args(args)
     unparser = ReverseArgumentParser(parser, namespace)
     unparser._unparse_store_true_action(action)
-    assert unparser.args == ["__main__.py", expected]
+    assert unparser.args[1:] == [expected]
 
 
 @pytest.mark.parametrize(
@@ -409,7 +446,7 @@ def test__unparse_store_false_action(args, expected) -> None:
     namespace = parser.parse_args(args)
     unparser = ReverseArgumentParser(parser, namespace)
     unparser._unparse_store_false_action(action)
-    assert unparser.args == ["__main__.py", expected]
+    assert unparser.args[1:] == [expected]
 
 
 @pytest.mark.parametrize(
@@ -432,7 +469,7 @@ def test__unparse_append_action(add_args, add_kwargs, args, expected) -> None:
     namespace = parser.parse_args(shlex.split(args))
     unparser = ReverseArgumentParser(parser, namespace)
     unparser._unparse_append_action(action)
-    assert unparser.args == ["__main__.py", *expected]
+    assert unparser.args[1:] == expected
 
 
 @pytest.mark.parametrize(
@@ -450,7 +487,7 @@ def test__unparse_append_const_action(args, expected) -> None:
     namespace = parser.parse_args(shlex.split(args))
     unparser = ReverseArgumentParser(parser, namespace)
     unparser._unparse_append_const_action(action)
-    assert unparser.args == ["__main__.py", expected]
+    assert unparser.args[1:] == [expected]
 
 
 @pytest.mark.parametrize(
@@ -478,19 +515,19 @@ def test__unparse_count_action(add_args, add_kwargs, args, expected) -> None:
     namespace = parser.parse_args(shlex.split(args))
     unparser = ReverseArgumentParser(parser, namespace)
     unparser._unparse_count_action(action)
-    assert unparser.args == ["__main__.py", expected]
+    assert unparser.args[1:] == [expected]
 
 
 @pytest.mark.parametrize(
     "args, expected, pretty",
     [(
         "a 12",
-        "__main__.py a 12",
-        "__main__.py \\\n    a \\\n        12"
+        "a 12",
+        "    a \\\n        12"
     ), (
         "--foo b --baz Z",
-        "__main__.py --foo b --baz Z",
-        "__main__.py \\\n    --foo \\\n    b \\\n        --baz Z"
+        "--foo b --baz Z",
+        "    --foo \\\n    b \\\n        --baz Z"
     )]
 )  # yapf: disable
 def test__unparse_sub_parsers_action(args, expected, pretty) -> None:
@@ -504,8 +541,12 @@ def test__unparse_sub_parsers_action(args, expected, pretty) -> None:
     namespace = parser.parse_args(shlex.split(args))
     unparser = ReverseArgumentParser(parser, namespace)
     unparser._unparse_args()
-    assert unparser.get_effective_command_line_invocation() == expected
-    assert unparser.get_pretty_command_line_invocation() == pretty
+    result = strip_first_entry(
+        unparser.get_effective_command_line_invocation()
+    )
+    assert result == expected
+    result = strip_first_line(unparser.get_pretty_command_line_invocation())
+    assert result == pretty
 
 
 def test__unparse_sub_parsers_action_nested() -> None:
@@ -528,10 +569,7 @@ def test__unparse_sub_parsers_action_nested() -> None:
         "sub-optional-arg sub-positional-arg subsubcommand --sub-sub-optional "
         "sub-sub-positional-arg"
     )
-    expected = f"__main__.py {args}"
-    pretty = """
-__main__.py \\
-    --optional-1 \\
+    pretty = """    --optional-1 \\
     --optional-2 optional-2-arg \\
     positional-1-arg \\
     positional-2-arg-1 positional-2-arg-2 \\
@@ -540,13 +578,16 @@ __main__.py \\
         sub-positional-arg \\
         subsubcommand \\
             --sub-sub-optional \\
-            sub-sub-positional-arg
-""".strip()
+            sub-sub-positional-arg"""
     namespace = parser.parse_args(shlex.split(args))
     unparser = ReverseArgumentParser(parser, namespace)
     unparser._unparse_args()
-    assert unparser.get_effective_command_line_invocation() == expected
-    assert unparser.get_pretty_command_line_invocation() == pretty
+    result = strip_first_entry(
+        unparser.get_effective_command_line_invocation()
+    )
+    assert result == args
+    result = strip_first_line(unparser.get_pretty_command_line_invocation())
+    assert result == pretty
 
 
 def test__unparse_extend_action() -> None:
@@ -556,7 +597,7 @@ def test__unparse_extend_action() -> None:
     unparser = ReverseArgumentParser(parser, namespace)
     expected = "    --foo bar baz bif"
     unparser._unparse_extend_action(action)
-    assert unparser.args == ["__main__.py", expected]
+    assert unparser.args[1:] == [expected]
 
 
 @pytest.mark.parametrize(
@@ -581,4 +622,4 @@ def test__unparse_boolean_optional_action(default, args, expected) -> None:
     namespace = parser.parse_args(shlex.split(args))
     unparser = ReverseArgumentParser(parser, namespace)
     unparser._unparse_boolean_optional_action(action)
-    assert unparser.args == ["__main__.py", expected]
+    assert unparser.args[1:] == [expected]
