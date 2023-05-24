@@ -4,8 +4,7 @@ import shlex
 from argparse import ArgumentParser, BooleanOptionalAction, Namespace, SUPPRESS
 
 import pytest
-from python.reverse_argparse.reverse_argparse.reverse_argparse import \
-    ReverseArgumentParser
+from .. import ReverseArgumentParser
 
 
 @pytest.fixture()
