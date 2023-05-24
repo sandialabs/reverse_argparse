@@ -315,12 +315,12 @@ class ReverseArgumentParser:
             for entry in values:
                 tmp = [flag]
                 for value in entry:
-                    value = self._quote_arg_if_necessary(str(value))
+                    value = quote_arg_if_necessary(str(value))
                     tmp.append(value)
                 result.append(tmp)
         else:
             for value in values:
-                value = self._quote_arg_if_necessary(str(value))
+                value = quote_arg_if_necessary(str(value))
                 result.append([flag, value])
         self._append(result)
 
