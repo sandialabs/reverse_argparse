@@ -1,0 +1,10 @@
+# Requirements for developing `reverse_argparse`.
+
+bandit
+black
+flake8
+flake8-bugbear
+mypy
+pre-commit
+prospector
+pyroma
