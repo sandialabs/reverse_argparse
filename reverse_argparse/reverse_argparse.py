@@ -2,6 +2,7 @@
 
 import re
 from argparse import Action, ArgumentParser, Namespace, SUPPRESS
+from typing import Sequence
 
 
 class ReverseArgumentParser:
@@ -36,10 +37,7 @@ class ReverseArgumentParser:
     """
 
     def __init__(
-        self,
-        parser: ArgumentParser,
-        namespace: Namespace,
-        indent: int = 4
+        self, parser: ArgumentParser, namespace: Namespace, indent: int = 4
     ):
         self._unparsed = [False]
         self.args = [parser.prog]
@@ -59,12 +57,15 @@ class ReverseArgumentParser:
         """
         if self._unparsed[-1]:
             return
-        actions = (self.parsers[-1]._get_optional_actions()
-                   + self.parsers[-1]._get_positional_actions())
+        actions = (
+            self.parsers[-1]._get_optional_actions()
+            + self.parsers[-1]._get_positional_actions()
+        )
         for action in actions:
-            if (type(action).__name__ != "_SubParsersAction"
-                and (not hasattr(self.namespace, action.dest)
-                     or self._arg_is_default_and_help_is_suppressed(action))):
+            if type(action).__name__ != "_SubParsersAction" and (
+                not hasattr(self.namespace, action.dest)
+                or self._arg_is_default_and_help_is_suppressed(action)
+            ):
                 continue
             match type(action).__name__:
                 case "_AppendAction":
@@ -93,7 +94,7 @@ class ReverseArgumentParser:
                     self._unparse_boolean_optional_action(action)
                 case _:
                     raise NotImplementedError(
-                        f"{__class__.__name__} does not yet support the "
+                        f"{self.__class__.__name__} does not yet support the "
                         f"unparsing of {type(action).__name__} objects."
                     )
         self._unparsed[-1] = True
@@ -145,8 +146,7 @@ class ReverseArgumentParser:
         return " \\\n".join(_ for _ in self.args if _.strip())
 
     def _get_long_option_strings(
-        self,
-        option_strings: list[str]
+        self, option_strings: Sequence[str]
     ) -> list[str]:
         """
         Get the long options from a list of options strings.
@@ -159,14 +159,16 @@ class ReverseArgumentParser:
             and not the short ones (e.g., ``"-f"``).  Note that the list
             will be empty if there are no long options.
         """
-        return [option for option in option_strings
-                if len(option) > 2
-                and option[0] in self.parsers[-1].prefix_chars
-                and option[1] in self.parsers[-1].prefix_chars]
+        return [
+            option
+            for option in option_strings
+            if len(option) > 2
+            and option[0] in self.parsers[-1].prefix_chars
+            and option[1] in self.parsers[-1].prefix_chars
+        ]
 
     def _get_short_option_strings(
-        self,
-        option_strings: list[str]
+        self, option_strings: Sequence[str]
     ) -> list[str]:
         """
         Get the short options from a list of options strings.
@@ -179,14 +181,14 @@ class ReverseArgumentParser:
             and not the short ones (e.g., ``"--foo"``).  Note that the
             list will be empty if there are no short options.
         """
-        return [option for option in option_strings
-                if len(option) == 2
-                and option[0] in self.parsers[-1].prefix_chars]
+        return [
+            option
+            for option in option_strings
+            if len(option) == 2 and option[0] in self.parsers[-1].prefix_chars
+        ]
 
     def _get_option_string(
-        self,
-        action: Action,
-        prefer_short: bool = False
+        self, action: Action, prefer_short: bool = False
     ) -> str:
         """
         Get the first of the long options corresponding to a given
@@ -201,7 +203,8 @@ class ReverseArgumentParser:
                 long ones.
 
         Returns:
-            The option string.
+            The option string, or the empty string, if no options string
+            exists (e.g., for positional arguments).
         """
         short_options = self._get_short_option_strings(action.option_strings)
         long_options = self._get_long_option_strings(action.option_strings)
@@ -210,13 +213,30 @@ class ReverseArgumentParser:
                 return short_options[0]
             elif long_options:
                 return long_options[0]
+            else:
+                return ""
         else:
             if long_options:
                 return long_options[0]
             elif short_options:
                 return short_options[0]
+            else:
+                return ""
 
-    def _append(self, args: list[str] | list[list[str]]) -> None:
+    def _append_list_of_list_of_args(self, args: list[list[str]]) -> None:
+        """
+        Given a list of lists of command line arguments corresponding to
+        a particular action, append them to the list of arguments,
+        taking into account indentation and the sub-parser nesting
+        level.
+
+        Args:
+            args:  The command line arguments to be appended.
+        """
+        for line in args:
+            self.args.append(self.indent_str + " ".join(line))
+
+    def _append_list_of_args(self, args: list[str]) -> None:
         """
         Given a list of command line arguments corresponding to a
         particular action, append them to the list of arguments, taking
@@ -225,12 +245,28 @@ class ReverseArgumentParser:
         Args:
             args:  The command line arguments to be appended.
         """
-        indent_str = " " * self.indent * len(self.parsers)
-        if type(args) is list and len(args) > 0 and type(args[0]) is list:
-            for line in args:
-                self.args.append(indent_str + " ".join(line))
-        else:
-            self.args.append(indent_str + " ".join(args))
+        self.args.append(self.indent_str + " ".join(args))
+
+    def _append_arg(self, arg: str) -> None:
+        """
+        Given a command line argument corresponding to a particular
+        action, append it to the list of arguments, taking into account
+        indentation and the sub-parser nesting level.
+
+        Args:
+            arg:  The command line argument to be appended.
+        """
+        self.args.append(self.indent_str + arg)
+
+    @property
+    def indent_str(self) -> str:
+        """
+        The indentation level.
+
+        Returns:
+            A string of spaces corresponding to the indentation level.
+        """
+        return " " * self.indent * len(self.parsers)
 
     def _unparse_store_action(self, action: Action) -> None:
         """
@@ -255,7 +291,7 @@ class ReverseArgumentParser:
             if needs_quotes_regex.search(values[i]):
                 values[i] = needs_quotes_regex.sub(r"'\1'", values[i])
         result.extend(values)
-        self._append(result)
+        self._append_list_of_args(result)
 
     def _unparse_store_const_action(self, action: Action) -> None:
         """
@@ -266,9 +302,8 @@ class ReverseArgumentParser:
             action:  The :class:`_StoreConstAction` in question.
         """
         value = getattr(self.namespace, action.dest)
-        self._append(
-            [self._get_option_string(action)] if value == action.const else []
-        )
+        if value == action.const:
+            self._append_arg(self._get_option_string(action))
 
     def _unparse_store_true_action(self, action: Action) -> None:
         """
@@ -279,9 +314,8 @@ class ReverseArgumentParser:
             action:  The :class:`_StoreTrueAction` in question.
         """
         value = getattr(self.namespace, action.dest)
-        self._append(
-            [self._get_option_string(action)] if value is True else []
-        )
+        if value is True:
+            self._append_arg(self._get_option_string(action))
 
     def _unparse_store_false_action(self, action: Action) -> None:
         """
@@ -292,9 +326,8 @@ class ReverseArgumentParser:
             action:  The :class:`_StoreFalseAction` in question.
         """
         value = getattr(self.namespace, action.dest)
-        self._append(
-            [self._get_option_string(action)] if value is False else []
-        )
+        if value is False:
+            self._append_arg(self._get_option_string(action))
 
     def _unparse_append_action(self, action: Action) -> None:
         """
@@ -322,7 +355,7 @@ class ReverseArgumentParser:
             for value in values:
                 value = quote_arg_if_necessary(str(value))
                 result.append([flag, value])
-        self._append(result)
+        self._append_list_of_list_of_args(result)
 
     def _unparse_append_const_action(self, action: Action) -> None:
         """
@@ -333,10 +366,8 @@ class ReverseArgumentParser:
             action:  The :class:`_AppendConstAction` in question.
         """
         values = getattr(self.namespace, action.dest)
-        self._append(
-            [] if values is None or action.const not in values
-            else [self._get_option_string(action)]
-        )
+        if values is not None and action.const in values:
+            self._append_arg(self._get_option_string(action))
 
     def _unparse_count_action(self, action: Action) -> None:
         """
@@ -350,9 +381,9 @@ class ReverseArgumentParser:
         count = value if action.default is None else (value - action.default)
         flag = self._get_option_string(action, prefer_short=True)
         if len(flag) == 2 and flag[0] in self.parsers[-1].prefix_chars:
-            self._append([flag[0] + flag[1] * count])
+            self._append_arg(flag[0] + flag[1] * count)
         else:
-            self._append([flag for _ in range(count)])
+            self._append_list_of_args([flag for _ in range(count)])
 
     def _unparse_sub_parsers_action(self, action: Action) -> None:
         """
@@ -369,6 +400,11 @@ class ReverseArgumentParser:
         Args:
             action:  The :class:`_SubParsersAction` in question.
         """
+        if action.choices is None or not isinstance(action.choices, dict):
+            raise RuntimeError(
+                "This subparser action is missing its dictionary of "
+                f"choices:  {action}"
+            )
         for subcommand, subparser in action.choices.items():
             self.parsers.append(subparser)
             self._unparsed.append(False)
@@ -391,10 +427,10 @@ class ReverseArgumentParser:
             action:  The :class:`_ExtendAction` in question.
         """
         values = getattr(self.namespace, action.dest)
-        self._append(
-            [] if values is None
-            else [self._get_option_string(action)] + values
-        )
+        if values is not None:
+            self._append_list_of_args(
+                [self._get_option_string(action)] + values
+            )
 
     def _unparse_boolean_optional_action(self, action: Action) -> None:
         """
@@ -405,10 +441,9 @@ class ReverseArgumentParser:
             action:  The :class:`BooleanOptionalAction` in question.
         """
         value = getattr(self.namespace, action.dest)
-        flag_index = 0 if getattr(self.namespace, action.dest) else 1
-        self._append(
-            [] if value is None else [action.option_strings[flag_index]]
-        )
+        if value is not None:
+            flag_index = 0 if getattr(self.namespace, action.dest) else 1
+            self._append_arg(action.option_strings[flag_index])
 
 
 def quote_arg_if_necessary(arg: str) -> str:
