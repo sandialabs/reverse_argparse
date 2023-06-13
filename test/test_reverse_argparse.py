@@ -23,16 +23,10 @@ def parser() -> ArgumentParser:
     p.add_argument("--app-nargs", action="append", nargs="*")
     p.add_argument("--const", action="store_const", const=42)
     p.add_argument(
-        "--app-const1",
-        dest="app_const",
-        action="append_const",
-        const=42
+        "--app-const1", dest="app_const", action="append_const", const=42
     )
     p.add_argument(
-        "--app-const2",
-        dest="app_const",
-        action="append_const",
-        const=53
+        "--app-const2", dest="app_const", action="append_const", const=53
     )
     p.add_argument("--verbose", "-v", action="count", default=2)
     p.add_argument("--ext", action="extend", nargs="*")
@@ -60,7 +54,6 @@ COMPLETE_ARGS = [
     "--app-const2 "
     "--app-nargs app-nargs2-val "
     "--needs-quotes 'hello world'",
-
     "--ext ext-val1 "
     "--app-nargs app-nargs1-val1 app-nargs1-val2 "
     "--app-const1 "
@@ -81,7 +74,7 @@ COMPLETE_ARGS = [
     "-- "
     "pos1-val1 pos1-val2 "
     "pos2-val",
-]  # yapf: disable
+]
 
 
 def strip_first_entry(input: str) -> str:
@@ -125,7 +118,7 @@ def test_get_effective_command_line_invocation(parser, args) -> None:
     unparser = ReverseArgumentParser(parser, namespace)
     expected = (
         "--opt1 opt1-val --opt2 opt2-val1 opt2-val2 --store-true "
-        "--store-false --needs-quotes \'hello world\' --default 42 --app1 "
+        "--store-false --needs-quotes 'hello world' --default 42 --app1 "
         "app1-val1 --app1 app1-val2 --app2 app2-val1 --app2 app2-val2 "
         "--app-nargs app-nargs1-val1 app-nargs1-val2 --app-nargs "
         "app-nargs2-val --const --app-const1 --app-const2 -vv --ext ext-val1 "
@@ -181,63 +174,45 @@ def test_get_command_line_invocation_strip_spaces() -> None:
 
 @pytest.mark.parametrize(
     "add_args, add_kwargs, args, expected",
-    [(
-        ["--foo"],
-        {"action": "store"},
-        "--foo bar",
-        ["    --foo bar"]
-    ), (
-        ["--foo"],
-        {"action": "store_const", "const": 42},
-        "--foo",
-        ["    --foo"]
-    ), (
-        ["--foo"],
-        {"action": "store_true"},
-        "--foo",
-        ["    --foo"]
-    ), (
-        ["--foo"],
-        {"action": "store_false"},
-        "--foo",
-        ["    --foo"]
-    ), (
-        ["--foo"],
-        {"action": "append"},
-        "--foo bar --foo baz",
-        ["    --foo bar", "    --foo baz"]
-    ), (
-        ["--foo"],
-        {"dest": "append_const", "action": "append_const", "const": 42},
-        "--foo",
-        ["    --foo"]
-    ), (
-        ["--foo", "-f"],
-        {"action": "count", "default": 0},
-        "--foo --foo",
-        ["    -ff"]
-    ), (
-        ["--foo"],
-        {"action": "help"},
-        "--foo",
-        []
-    ), (
-        ["--foo"],
-        {"action": "version", "version": "1.2.3"},
-        "--foo",
-        []
-    ), (
-        ["--foo"],
-        {"action": "extend", "nargs": "*"},
-        "--foo bar --foo baz bif",
-        ["    --foo bar baz bif"]
-    ), (
-        ["--foo"],
-        {"action": BooleanOptionalAction},
-        "--foo",
-        ["    --foo"]
-    )]
-)  # yapf: disable
+    [
+        (["--foo"], {"action": "store"}, "--foo bar", ["    --foo bar"]),
+        (
+            ["--foo"],
+            {"action": "store_const", "const": 42},
+            "--foo",
+            ["    --foo"],
+        ),
+        (["--foo"], {"action": "store_true"}, "--foo", ["    --foo"]),
+        (["--foo"], {"action": "store_false"}, "--foo", ["    --foo"]),
+        (
+            ["--foo"],
+            {"action": "append"},
+            "--foo bar --foo baz",
+            ["    --foo bar", "    --foo baz"],
+        ),
+        (
+            ["--foo"],
+            {"dest": "append_const", "action": "append_const", "const": 42},
+            "--foo",
+            ["    --foo"],
+        ),
+        (
+            ["--foo", "-f"],
+            {"action": "count", "default": 0},
+            "--foo --foo",
+            ["    -ff"],
+        ),
+        (["--foo"], {"action": "help"}, "--foo", []),
+        (["--foo"], {"action": "version", "version": "1.2.3"}, "--foo", []),
+        (
+            ["--foo"],
+            {"action": "extend", "nargs": "*"},
+            "--foo bar --foo baz bif",
+            ["    --foo bar baz bif"],
+        ),
+        (["--foo"], {"action": BooleanOptionalAction}, "--foo", ["    --foo"]),
+    ],
+)
 def test__unparse_args(add_args, add_kwargs, args, expected) -> None:
     parser = ArgumentParser()
     parser.add_argument(*add_args, **add_kwargs)
@@ -282,8 +257,8 @@ def test__arg_is_default_and_help_is_suppressed() -> None:
         (["-v", "--verbose"], ["--verbose"]),
         (["--foo", "-f", "--foo-bar"], ["--foo", "--foo-bar"]),
         (["-x"], []),
-    ]
-)  # yapf: disable
+    ],
+)
 def test__get_long_option_strings(strings, expected) -> None:
     unparser = ReverseArgumentParser(ArgumentParser(), Namespace())
     assert unparser._get_long_option_strings(strings) == expected
@@ -295,8 +270,8 @@ def test__get_long_option_strings(strings, expected) -> None:
         (["-v", "--verbose"], ["-v"]),
         (["--foo", "-f", "--foo-bar"], ["-f"]),
         (["--foo"], []),
-    ]
-)  # yapf: disable
+    ],
+)
 def test__get_short_option_strings(strings, expected) -> None:
     unparser = ReverseArgumentParser(ArgumentParser(), Namespace())
     assert unparser._get_short_option_strings(strings) == expected
@@ -308,8 +283,8 @@ def test__get_short_option_strings(strings, expected) -> None:
         (["-v", "--verbose"], "--verbose"),
         (["--foo", "-f", "--foo-bar"], "--foo"),
         (["-x"], "-x"),
-    ]
-)  # yapf: disable
+    ],
+)
 def test__get_option_string(strings, expected) -> None:
     parser = ArgumentParser()
     action = parser.add_argument(*strings)
@@ -323,8 +298,8 @@ def test__get_option_string(strings, expected) -> None:
         (["-v", "--verbose"], "-v"),
         (["-f", "--foo", "-b"], "-f"),
         (["--foo"], "--foo"),
-    ]
-)  # yapf: disable
+    ],
+)
 def test__get_option_string_prefer_short(strings, expected) -> None:
     parser = ArgumentParser()
     action = parser.add_argument(*strings)
@@ -334,48 +309,22 @@ def test__get_option_string_prefer_short(strings, expected) -> None:
 
 @pytest.mark.parametrize(
     "add_args, add_kwargs, args, expected",
-    [(
-        ["positional"],
-        {},
-        "val",
-        "    val"
-    ), (
-        ["-f", "--foo"],
-        {},
-        "-f bar",
-        "    --foo bar"
-    ), (
-        ["-f"],
-        {},
-        "-f bar",
-        "    -f bar"
-    ), (
-        ["--foo", "--foo-bar"],
-        {},
-        "--foo-bar baz",
-        "    --foo baz"
-    ), (
-        ["positional"],
-        {"nargs": "*"},
-        "val1 val2",
-        "    val1 val2"
-    ), (
-        ["-f", "--foo"],
-        {"nargs": "*"},
-        "-f bar baz",
-        "    --foo bar baz"
-    ), (
-        ["-f"],
-        {"nargs": "*"},
-        "-f bar baz",
-        "    -f bar baz"
-    ), (
-        ["--foo", "--foo-bar"],
-        {"nargs": "*"},
-        "--foo-bar baz bif",
-        "    --foo baz bif"
-    )]
-)  # yapf: disable
+    [
+        (["positional"], {}, "val", "    val"),
+        (["-f", "--foo"], {}, "-f bar", "    --foo bar"),
+        (["-f"], {}, "-f bar", "    -f bar"),
+        (["--foo", "--foo-bar"], {}, "--foo-bar baz", "    --foo baz"),
+        (["positional"], {"nargs": "*"}, "val1 val2", "    val1 val2"),
+        (["-f", "--foo"], {"nargs": "*"}, "-f bar baz", "    --foo bar baz"),
+        (["-f"], {"nargs": "*"}, "-f bar baz", "    -f bar baz"),
+        (
+            ["--foo", "--foo-bar"],
+            {"nargs": "*"},
+            "--foo-bar baz bif",
+            "    --foo baz bif",
+        ),
+    ],
+)
 def test__unparse_store_action(add_args, add_kwargs, args, expected) -> None:
     parser = ArgumentParser()
     action = parser.add_argument(*add_args, **add_kwargs)
@@ -387,33 +336,30 @@ def test__unparse_store_action(add_args, add_kwargs, args, expected) -> None:
 
 @pytest.mark.parametrize(
     "add_args, add_kwargs, args, expected",
-    [(
-        ["--foo"],
-        {"action": "store_const", "const": 42},
-        "",
-        None
-    ), (
-        ["--foo"],
-        {"action": "store_const", "const": 42},
-        "--foo",
-        "    --foo"
-    ), (
-        ["--foo"],
-        {"action": "store_const", "const": 42, "default": 53},
-        "",
-        None
-    ), (
-        ["--foo"],
-        {"action": "store_const", "const": 42, "default": 53},
-        "--foo",
-        "    --foo"
-    )]
-)  # yapf: disable
+    [
+        (["--foo"], {"action": "store_const", "const": 42}, "", None),
+        (
+            ["--foo"],
+            {"action": "store_const", "const": 42},
+            "--foo",
+            "    --foo",
+        ),
+        (
+            ["--foo"],
+            {"action": "store_const", "const": 42, "default": 53},
+            "",
+            None,
+        ),
+        (
+            ["--foo"],
+            {"action": "store_const", "const": 42, "default": 53},
+            "--foo",
+            "    --foo",
+        ),
+    ],
+)
 def test__unparse_store_const_action(
-    add_args,
-    add_kwargs,
-    args,
-    expected
+    add_args, add_kwargs, args, expected
 ) -> None:
     parser = ArgumentParser()
     action = parser.add_argument(*add_args, **add_kwargs)
@@ -424,9 +370,8 @@ def test__unparse_store_const_action(
 
 
 @pytest.mark.parametrize(
-    "args, expected",
-    [(shlex.split("--foo"), "    --foo"), ([], None)]
-)  # yapf: disable
+    "args, expected", [(shlex.split("--foo"), "    --foo"), ([], None)]
+)
 def test__unparse_store_true_action(args, expected) -> None:
     parser = ArgumentParser()
     action = parser.add_argument("--foo", action="store_true")
@@ -437,9 +382,8 @@ def test__unparse_store_true_action(args, expected) -> None:
 
 
 @pytest.mark.parametrize(
-    "args, expected",
-    [(shlex.split("--foo"), "    --foo"), ([], None)]
-)  # yapf: disable
+    "args, expected", [(shlex.split("--foo"), "    --foo"), ([], None)]
+)
 def test__unparse_store_false_action(args, expected) -> None:
     parser = ArgumentParser()
     action = parser.add_argument("--foo", action="store_false")
@@ -451,18 +395,21 @@ def test__unparse_store_false_action(args, expected) -> None:
 
 @pytest.mark.parametrize(
     "add_args, add_kwargs, args, expected",
-    [(
-        ["--foo"],
-        {"action": "append"},
-        "--foo bar --foo baz",
-        ["    --foo bar", "    --foo baz"]
-    ), (
-        ["--foo"],
-        {"action": "append", "nargs": "*"},
-        "--foo bar baz --foo bif",
-        ["    --foo bar baz", "    --foo bif"]
-    )]
-)  # yapf: disable
+    [
+        (
+            ["--foo"],
+            {"action": "append"},
+            "--foo bar --foo baz",
+            ["    --foo bar", "    --foo baz"],
+        ),
+        (
+            ["--foo"],
+            {"action": "append", "nargs": "*"},
+            "--foo bar baz --foo bif",
+            ["    --foo bar baz", "    --foo bif"],
+        ),
+    ],
+)
 def test__unparse_append_action(add_args, add_kwargs, args, expected) -> None:
     parser = ArgumentParser()
     action = parser.add_argument(*add_args, **add_kwargs)
@@ -473,16 +420,12 @@ def test__unparse_append_action(add_args, add_kwargs, args, expected) -> None:
 
 
 @pytest.mark.parametrize(
-    "args, expected",
-    [("--foo", "    --foo"), ("", None)]
-)  # yapf: disable
+    "args, expected", [("--foo", "    --foo"), ("", None)]
+)
 def test__unparse_append_const_action(args, expected) -> None:
     parser = ArgumentParser()
     action = parser.add_argument(
-        "--foo",
-        dest="append_const",
-        action="append_const",
-        const=42
+        "--foo", dest="append_const", action="append_const", const=42
     )
     namespace = parser.parse_args(shlex.split(args))
     unparser = ReverseArgumentParser(parser, namespace)
@@ -492,23 +435,27 @@ def test__unparse_append_const_action(args, expected) -> None:
 
 @pytest.mark.parametrize(
     "add_args, add_kwargs, args, expected",
-    [(
-        ["--foo"],
-        {"action": "count"},
-        "--foo --foo --foo",
-        "    --foo --foo --foo"
-    ), (
-        ["--verbose", "-v"],
-        {"action": "count"},
-        "--verbose -v --verbose",
-        "    -vvv"
-    ), (
-        ["--verbose", "-v"],
-        {"action": "count", "default": 2},
-        "-vv",
-        "    -vv"
-    )]
-)  # yapf: disable
+    [
+        (
+            ["--foo"],
+            {"action": "count"},
+            "--foo --foo --foo",
+            "    --foo --foo --foo",
+        ),
+        (
+            ["--verbose", "-v"],
+            {"action": "count"},
+            "--verbose -v --verbose",
+            "    -vvv",
+        ),
+        (
+            ["--verbose", "-v"],
+            {"action": "count", "default": 2},
+            "-vv",
+            "    -vv",
+        ),
+    ],
+)
 def test__unparse_count_action(add_args, add_kwargs, args, expected) -> None:
     parser = ArgumentParser()
     action = parser.add_argument(*add_args, **add_kwargs)
@@ -520,16 +467,15 @@ def test__unparse_count_action(add_args, add_kwargs, args, expected) -> None:
 
 @pytest.mark.parametrize(
     "args, expected, pretty",
-    [(
-        "a 12",
-        "a 12",
-        "    a \\\n        12"
-    ), (
-        "--foo b --baz Z",
-        "--foo b --baz Z",
-        "    --foo \\\n    b \\\n        --baz Z"
-    )]
-)  # yapf: disable
+    [
+        ("a 12", "a 12", "    a \\\n        12"),
+        (
+            "--foo b --baz Z",
+            "--foo b --baz Z",
+            "    --foo \\\n    b \\\n        --baz Z",
+        ),
+    ],
+)
 def test__unparse_sub_parsers_action(args, expected, pretty) -> None:
     parser = ArgumentParser()
     parser.add_argument("--foo", action="store_true", help="foo help")
@@ -602,22 +548,22 @@ def test__unparse_extend_action() -> None:
 
 @pytest.mark.parametrize(
     "default, args, expected",
-    [(None, "", None),
-     (None, "--bool-opt", "    --bool-opt"),
-     (None, "--no-bool-opt", "    --no-bool-opt"),
-     (True, "", "    --bool-opt"),
-     (True, "--bool-opt", "    --bool-opt"),
-     (True, "--no-bool-opt", "    --no-bool-opt"),
-     (False, "", "    --no-bool-opt"),
-     (False, "--bool-opt", "    --bool-opt"),
-     (False, "--no-bool-opt", "    --no-bool-opt")]
-)  # yapf: disable
+    [
+        (None, "", None),
+        (None, "--bool-opt", "    --bool-opt"),
+        (None, "--no-bool-opt", "    --no-bool-opt"),
+        (True, "", "    --bool-opt"),
+        (True, "--bool-opt", "    --bool-opt"),
+        (True, "--no-bool-opt", "    --no-bool-opt"),
+        (False, "", "    --no-bool-opt"),
+        (False, "--bool-opt", "    --bool-opt"),
+        (False, "--no-bool-opt", "    --no-bool-opt"),
+    ],
+)
 def test__unparse_boolean_optional_action(default, args, expected) -> None:
     parser = ArgumentParser()
     action = parser.add_argument(
-        "--bool-opt",
-        action=BooleanOptionalAction,
-        default=default
+        "--bool-opt", action=BooleanOptionalAction, default=default
     )
     namespace = parser.parse_args(shlex.split(args))
     unparser = ReverseArgumentParser(parser, namespace)
