@@ -57,9 +57,10 @@ class ReverseArgumentParser:
         """
         if self._unparsed[-1]:
             return
+        psr = self.parsers[-1]
         actions = (
-            self.parsers[-1]._get_optional_actions()
-            + self.parsers[-1]._get_positional_actions()
+            psr._get_optional_actions()  # pylint: disable=protected-access
+            + psr._get_positional_actions()  # pylint: disable=protected-access
         )
         for action in actions:
             if type(action).__name__ != "_SubParsersAction" and (
@@ -211,17 +212,14 @@ class ReverseArgumentParser:
         if prefer_short:
             if short_options:
                 return short_options[0]
-            elif long_options:
+            if long_options:
                 return long_options[0]
-            else:
-                return ""
         else:
             if long_options:
                 return long_options[0]
-            elif short_options:
+            if short_options:
                 return short_options[0]
-            else:
-                return ""
+        return ""
 
     def _append_list_of_list_of_args(self, args: list[list[str]]) -> None:
         """
@@ -282,15 +280,15 @@ class ReverseArgumentParser:
         flag = self._get_option_string(action)
         result = []
         if flag:
-            result += [flag]
-        if type(values) is not list:
+            result.append(flag)
+        if not isinstance(values, list):
             values = [values]
-        for i in range(len(values)):
-            needs_quotes_regex = re.compile(r"(.*\s.*)")
-            values[i] = str(values[i])
-            if needs_quotes_regex.search(values[i]):
-                values[i] = needs_quotes_regex.sub(r"'\1'", values[i])
-        result.extend(values)
+        needs_quotes_regex = re.compile(r"(.*\s.*)")
+        for value in values:
+            value = str(value)
+            if needs_quotes_regex.search(value):
+                value = needs_quotes_regex.sub(r"'\1'", value)
+            result.append(value)
         self._append_list_of_args(result)
 
     def _unparse_store_const_action(self, action: Action) -> None:
@@ -341,10 +339,10 @@ class ReverseArgumentParser:
         if values is None:
             return
         flag = self._get_option_string(action)
-        if type(values) is not list:
+        if not isinstance(values, list):
             values = [values]
         result = []
-        if type(values[0]) is list:
+        if isinstance(values[0], list):
             for entry in values:
                 tmp = [flag]
                 for value in entry:
@@ -461,5 +459,4 @@ def quote_arg_if_necessary(arg: str) -> str:
     needs_quotes_regex = re.compile(r"(.*\s.*)")
     if needs_quotes_regex.search(arg):
         return needs_quotes_regex.sub(r"'\1'", arg)
-    else:
-        return arg
+    return arg

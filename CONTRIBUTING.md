@@ -239,6 +239,7 @@ search for and install them.  These are the ones we recommend:
 * **autoDocstring - Python Docstring Generator:**  Quickly generate docstrings for Python functions.
 * **Flake8:**  Linting support for Python files using flake8.
 * **Pylance:**  Fast, feature-rich language support for Python.
+* **Pylint:**  Linting support for Python files.
 * **Pytest IntelliSense:**  Adds IntelliSense support for [pytest][pytest]
   fixtures.
 * **Python:**  Rich support for the Python language.

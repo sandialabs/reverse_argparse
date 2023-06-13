@@ -58,10 +58,10 @@ repos:
       hooks:
           - id: isort
 
-    # - repo: https://github.com/PyCQA/prospector
-    #   rev: 1.10.2
-    #   hooks:
-    #       - id: prospector
+    - repo: https://github.com/PyCQA/prospector
+      rev: 1.10.2
+      hooks:
+          - id: prospector
 
     # - repo: https://github.com/PyCQA/pydocstyle
     #   rev: 6.3.0
