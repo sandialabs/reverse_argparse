@@ -14,25 +14,24 @@ repos:
       hooks:
           - id: mypy
 
-    # - repo: https://github.com/pre-commit/pre-commit-hooks
-    #   rev: v4.4.0
-    #   hooks:
-    #       - id: check-added-large-files
-    #       - id: check-ast
-    #       - id: check-case-conflict
-    #       - id: check-merge-conflict
-    #       - id: end-of-file-fixer
-    #       - id: mixed-line-ending
-    #       - id: name-tests-test
-    #       - id: trailing-whitespace
+    - repo: https://github.com/pre-commit/pre-commit-hooks
+      rev: v4.4.0
+      hooks:
+          - id: check-added-large-files
+          - id: check-ast
+          - id: check-case-conflict
+          - id: check-merge-conflict
+          - id: end-of-file-fixer
+          - id: mixed-line-ending
+          - id: trailing-whitespace
 
-    # - repo: https://github.com/pre-commit/pygrep-hooks
-    #   rev: v1.10.0
-    #   hooks:
-    #       - id: python-use-type-annotations
-    #       - id: rst-backticks
-    #       - id: rst-directive-colons
-    #       - id: rst-inline-touching-normal
+    - repo: https://github.com/pre-commit/pygrep-hooks
+      rev: v1.10.0
+      hooks:
+          - id: python-use-type-annotations
+          - id: rst-backticks
+          - id: rst-directive-colons
+          - id: rst-inline-touching-normal
 
     # - repo: https://github.com/psf/black
     #   rev: 23.3.0
