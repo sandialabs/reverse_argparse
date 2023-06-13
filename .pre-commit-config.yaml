@@ -43,15 +43,15 @@ repos:
     # #   hooks:
     # #       - id: bandit
 
-    # - repo: https://github.com/PyCQA/doc8
-    #   rev: v1.1.1
-    #   hooks:
-    #       - id: doc8
+    - repo: https://github.com/PyCQA/doc8
+      rev: v1.1.1
+      hooks:
+          - id: doc8
 
-    # - repo: https://github.com/PyCQA/flake8
-    #   rev: 6.0.0
-    #   hooks:
-    #       - id: flake8
+    - repo: https://github.com/PyCQA/flake8
+      rev: 6.0.0
+      hooks:
+          - id: flake8
 
     # - repo: https://github.com/PyCQA/isort
     #   rev: 5.12.0
