@@ -1,4 +1,18 @@
 #!/usr/bin/env python3
+"""
+The ``reverse_argparse`` module.
+
+Defines the :class:`ReverseArgumentParser` class for unparsing arguments
+that were already parsed via ``argparse``, and the
+:func:`quote_arg_if_necessary` helper function to surround any args with
+spaces in them with quotes.
+
+Raises:
+    NotImplementedError:  If a particular :class:`Action` does not yet
+        have an associated unparser.
+    RuntimeError:  If a subparser action is somehow missing its
+        dictionary of choices.
+"""
 
 import re
 from argparse import SUPPRESS, Action, ArgumentParser, Namespace
@@ -7,6 +21,8 @@ from typing import Sequence
 
 class ReverseArgumentParser:
     """
+    Argument parsing in reverse.
+
     Whereas :class:`argparse.ArgumentParser` is concerned with taking a
     bunch of command line arguments and parsing them into a
     :class:`argparse.Namespace`, this class is intended to do the
@@ -39,6 +55,16 @@ class ReverseArgumentParser:
     def __init__(
         self, parser: ArgumentParser, namespace: Namespace, indent: int = 4
     ):
+        """
+        Initialize the object.
+
+        Args:
+            parser:  The :class:`ArgumentParser` used to construct the
+                given :arg:`namespace`.
+            namespace:  The parsed arguments.
+            indent:  How many spaces to use for each indentation level.
+                (See :func:`get_pretty_command_line_invocation`.)
+        """
         self._unparsed = [False]
         self.args = [parser.prog]
         self.indent = indent
@@ -47,6 +73,8 @@ class ReverseArgumentParser:
 
     def _unparse_args(self) -> None:
         """
+        Unparse all the arguments.
+
         Loop over the positional and then optional actions, generating
         the command line arguments associated with each, and appending
         them to the list of arguments.
@@ -102,6 +130,8 @@ class ReverseArgumentParser:
 
     def _arg_is_default_and_help_is_suppressed(self, action: Action) -> bool:
         """
+        See if the argument should be skipped.
+
         Determine whether the argument matches the default value and the
         corresponding help text has been suppressed.  Such cases
         indicate that a parser author has hidden an argument from users,
@@ -121,8 +151,9 @@ class ReverseArgumentParser:
 
     def get_effective_command_line_invocation(self) -> str:
         """
-        Get the effective command line invocation of a script.  This
-        takes into account what was passed into the script on the
+        Get the effective command line invocation of a script.
+
+        This takes into account what was passed into the script on the
         command line, along with any default values, etc., such that
         there is no ambiguity in what exactly was run.
 
@@ -135,6 +166,8 @@ class ReverseArgumentParser:
 
     def get_pretty_command_line_invocation(self) -> str:
         """
+        Get a "pretty" version of the command that was run.
+
         Similar to :func:`get_effective_command_line_invocation`, but
         generate a string ready for "pretty-printing", with escaped
         newlines between each of the arguments.
@@ -192,6 +225,8 @@ class ReverseArgumentParser:
         self, action: Action, prefer_short: bool = False
     ) -> str:
         """
+        Get the option string for the :arg:`action`.
+
         Get the first of the long options corresponding to a given
         :class:`Action`.  If no long options are available, get the
         first of the short options.  If :arg:`prefer_short` is ``True``,
@@ -223,6 +258,8 @@ class ReverseArgumentParser:
 
     def _append_list_of_list_of_args(self, args: list[list[str]]) -> None:
         """
+        Append to the list of unparsed arguments.
+
         Given a list of lists of command line arguments corresponding to
         a particular action, append them to the list of arguments,
         taking into account indentation and the sub-parser nesting
@@ -236,6 +273,8 @@ class ReverseArgumentParser:
 
     def _append_list_of_args(self, args: list[str]) -> None:
         """
+        Append to the list of unparsed arguments.
+
         Given a list of command line arguments corresponding to a
         particular action, append them to the list of arguments, taking
         into account indentation and the sub-parser nesting level.
@@ -247,6 +286,8 @@ class ReverseArgumentParser:
 
     def _append_arg(self, arg: str) -> None:
         """
+        Append to the list of unparsed arguments.
+
         Given a command line argument corresponding to a particular
         action, append it to the list of arguments, taking into account
         indentation and the sub-parser nesting level.
@@ -268,8 +309,7 @@ class ReverseArgumentParser:
 
     def _unparse_store_action(self, action: Action) -> None:
         """
-        Generate the list of arguments that correspond to
-        ``action="store"``.
+        Generate the list of arguments for a ``store`` action.
 
         Args:
             action:  The :class:`_StoreAction` in question.
@@ -293,8 +333,7 @@ class ReverseArgumentParser:
 
     def _unparse_store_const_action(self, action: Action) -> None:
         """
-        Generate the list of arguments that correspond to
-        ``action="store_const"``.
+        Generate the argument for a ``store_const`` action.
 
         Args:
             action:  The :class:`_StoreConstAction` in question.
@@ -305,8 +344,7 @@ class ReverseArgumentParser:
 
     def _unparse_store_true_action(self, action: Action) -> None:
         """
-        Generate the list of arguments that correspond to
-        ``action="store_true"``.
+        Generate the argument for a ``store_true`` action.
 
         Args:
             action:  The :class:`_StoreTrueAction` in question.
@@ -317,8 +355,7 @@ class ReverseArgumentParser:
 
     def _unparse_store_false_action(self, action: Action) -> None:
         """
-        Generate the list of arguments that correspond to
-        ``action="store_false"``.
+        Generate the argument for a ``store_false`` action.
 
         Args:
             action:  The :class:`_StoreFalseAction` in question.
@@ -329,8 +366,7 @@ class ReverseArgumentParser:
 
     def _unparse_append_action(self, action: Action) -> None:
         """
-        Generate the list of arguments that correspond to
-        ``action="append"``.
+        Generate the list of arguments for an ``append`` action.
 
         Args:
             action:  The :class:`_AppendAction` in question.
@@ -357,8 +393,7 @@ class ReverseArgumentParser:
 
     def _unparse_append_const_action(self, action: Action) -> None:
         """
-        Generate the list of arguments that correspond to
-        ``action="append_const"``.
+        Generate the argument for an ``append_const`` action.
 
         Args:
             action:  The :class:`_AppendConstAction` in question.
@@ -369,8 +404,7 @@ class ReverseArgumentParser:
 
     def _unparse_count_action(self, action: Action) -> None:
         """
-        Generate the list of arguments that correspond to
-        ``action="count"``.
+        Generate the list of arguments for a ``count`` action.
 
         Args:
             action:  The :class:`_CountAction` in question.
@@ -385,8 +419,9 @@ class ReverseArgumentParser:
 
     def _unparse_sub_parsers_action(self, action: Action) -> None:
         """
-        Generate the list of arguments that correspond to a subparser
-        action.  This is done by:
+        Generate the list of arguments for a subparser action.
+
+        This is done by:
 
         * looping over the commands and corresponding parsers in the
           given subparser action,
@@ -418,8 +453,7 @@ class ReverseArgumentParser:
 
     def _unparse_extend_action(self, action: Action) -> None:
         """
-        Generate the list of arguments that correspond to
-        ``action="extend"``.
+        Generate the list of arguments for an ``extend`` action.
 
         Args:
             action:  The :class:`_ExtendAction` in question.
@@ -432,8 +466,7 @@ class ReverseArgumentParser:
 
     def _unparse_boolean_optional_action(self, action: Action) -> None:
         """
-        Generate the list of arguments that correspond to
-        ``action=BooleanOptionalAction``.
+        Generate the list of arguments for a ``BooleanOptionalAction``.
 
         Args:
             action:  The :class:`BooleanOptionalAction` in question.
@@ -446,6 +479,8 @@ class ReverseArgumentParser:
 
 def quote_arg_if_necessary(arg: str) -> str:
     """
+    Quote an argument, if necessary.
+
     If a command line argument has any spaces in it, surround it in
     single quotes.  If no quotes are necessary, don't change the
     argument.
