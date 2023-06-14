@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 import re
-from argparse import Action, ArgumentParser, Namespace, SUPPRESS
+from argparse import SUPPRESS, Action, ArgumentParser, Namespace
 from typing import Sequence
 
 

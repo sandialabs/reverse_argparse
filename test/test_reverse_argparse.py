@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 
 import shlex
-from argparse import ArgumentParser, BooleanOptionalAction, Namespace, SUPPRESS
+from argparse import SUPPRESS, ArgumentParser, BooleanOptionalAction, Namespace
 
 import pytest
+
 from .. import ReverseArgumentParser
 
 

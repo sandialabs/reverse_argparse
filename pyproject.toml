@@ -10,6 +10,12 @@ convention = "google"
 [tool.black]
 line-length = 79
 
+
+[tool.isort]
+profile = "black"
+line_length = 79
+
+
 [tool.poetry]
 name = "reverse_argparse"
 version = "1.0.0"
