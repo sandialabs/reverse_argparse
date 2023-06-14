@@ -7,6 +7,10 @@ build-backend = "poetry.core.masonry.api"
 convention = "google"
 
 
+[tool.bandit.assert_used]
+skips = ["**/test_*.py"]
+
+
 [tool.black]
 line-length = 79
 
