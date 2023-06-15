@@ -1,2 +1,6 @@
+.coverage
 .pytest_cache
 __pycache__
+test/coverage.json
+test/coverage.xml
+test/htmlcov

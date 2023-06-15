@@ -1,12 +1,34 @@
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+
+[pydocstyle]
+convention = "google"
+
+
+[tool.bandit.assert_used]
+skips = ["**/test_*.py"]
+
+
+[tool.black]
+line-length = 79
+
+
+[tool.isort]
+profile = "black"
+line_length = 79
+
+
 [tool.poetry]
 name = "reverse_argparse"
 version = "1.0.0"
-license = "INSERT LICENSE FILENAME HERE"
+license = "LICENSE.md"
 readme = "README.md"
 keywords = ["argparse", "argument", "parse", "parsing", "command line"]
-repository = "INSERT URL HERE"
+repository = "https://github.com/sandialabs/reverse_argparse"
 description = "Generate the effective command line invocation for a script."
-documentation = "INSERT URL HERE"
+documentation = "https://reverse_argparse.readthedocs.io"
 authors = [
     "Jason M. Gates <jmgate@sandia.gov>"
 ]
@@ -15,14 +37,16 @@ classifiers = [
     "Intended Audience :: Developers",
     "Intended Audience :: Information Technology",
     "Intended Audience :: System Administrators",
-    # "Licence :: FILL THIS OUT",  UNCOMMENT AFTER ADDING LICENSE
+    "License :: OSI Approved :: BSD License",
     "Natural Language :: English",
-    "Operating System :: MacOS",
-    "Operating System :: POSIX",
-    "Operating System :: UNIX",
+    "Operating System :: OS Independent",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
     "Topic :: Software Development",
     "Topic :: Software Development :: Debuggers",
     "Topic :: Software Development :: Documentation",
@@ -36,23 +60,14 @@ include = ["CHANGELOG.md"]
 
 
 [tool.poetry.urls]
-CI = "INSERT URL HERE"
-Issues = "INSERT URL HERE"
+CI = "https://github.com/sandialabs/reverse_argparse/actions"
+Issues = "https://github.com/sandialabs/reverse_argparse/issues"
 
 
 [tool.poetry.dependencies]
-python = "^3.10"
+python = ">=3.7"
 
 
 [tool.poetry.dev-dependencies]
-coverage = "^6.3.1"
-pytest = "^7.1.1"
-pytest-mock = "^3.7.0"
-# sphinx = "^4.0"  UNCOMMENT AFTER CREATING DOCS
-# sphinx-argparse = "^0.2"
-# sphinx-rtd-theme = "^0.5"
-
-
-[build-system]
-requires = ["poetry-core>=1.0"]
-build-backend = "poetry.core.masonry.api"
+# At some point, convert from the various requirements.txt files to this
+# list of Poetry development dependencies.

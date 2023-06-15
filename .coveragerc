@@ -1,6 +1,7 @@
 [run]
 omit =
-    */test/*
+    test/*
+    */.vscode/*
 branch = True
 dynamic_context = test_function
 
@@ -9,7 +10,7 @@ source = reverse_argparse
 
 [report]
 skip_covered = False
-fail_under = 94
+fail_under = 96
 show_missing = True
 exclude_lines =
     pragma: no cover

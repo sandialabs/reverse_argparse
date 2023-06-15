@@ -1,8 +1,5 @@
 # Requirements for testing `reverse_argparse`.
 
-coverage
-flake8
 pytest
+pytest-cov
 pytest-mock
-toml
-yapf
