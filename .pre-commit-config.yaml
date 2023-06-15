@@ -70,7 +70,8 @@ repos:
       hooks:
           - id: pydocstyle
 
-    # - repo: https://github.com/regebro/pyroma
-    #   rev: "4.2"
-    #   hooks:
-    #       - id: pyroma
+    - repo: https://github.com/regebro/pyroma
+      rev: "4.2"
+      hooks:
+          - id: pyroma
+            additional_dependencies: ["poetry"]
