@@ -105,7 +105,7 @@ class ReverseArgumentParser:
                     self._unparse_count_action(action)
                 case "_ExtendAction":
                     self._unparse_extend_action(action)
-                case "_HelpAction":
+                case "_HelpAction":  # pragma: no cover
                     continue
                 case "_StoreAction":
                     self._unparse_store_action(action)
@@ -117,11 +117,11 @@ class ReverseArgumentParser:
                     self._unparse_store_true_action(action)
                 case "_SubParsersAction":
                     self._unparse_sub_parsers_action(action)
-                case "_VersionAction":
+                case "_VersionAction":  # pragma: no cover
                     continue
                 case "BooleanOptionalAction":
                     self._unparse_boolean_optional_action(action)
-                case _:
+                case _:  # pragma: no cover
                     raise NotImplementedError(
                         f"{self.__class__.__name__} does not yet support the "
                         f"unparsing of {type(action).__name__} objects."
@@ -433,7 +433,9 @@ class ReverseArgumentParser:
         Args:
             action:  The :class:`_SubParsersAction` in question.
         """
-        if action.choices is None or not isinstance(action.choices, dict):
+        if action.choices is None or not isinstance(
+            action.choices, dict
+        ):  # pragma: no cover
             raise RuntimeError(
                 "This subparser action is missing its dictionary of "
                 f"choices:  {action}"
