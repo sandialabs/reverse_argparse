@@ -92,31 +92,16 @@ Before you begin hacking on `reverse_argparse`, you'll need to do two things:
      -r doc/requirements.txt
    ```
 
-   Make sure you can run the test suite with
-   ```bash
-   python3 -m pytest .
-   ```
-
-   and that you can build the documentation with
-   ```bash
-   cd doc
-   bash make_html_docs.sh
-   ```
-
-If you're able to do all the above successfully, then you're ready to start
-work.
-
 [homepage]: https://github.com/sandialabs/reverse_argparse
 [fork]: https://docs.github.com/en/get-started/quickstart/fork-a-repo
 
 ### Pre-Commit
 
 We use [pre-commit][precommit] to ensure adherence to Python best practices,
-enforce our style guide, etc.  To set yourself up with it, ensure you have the
-`pyramses-dev-env` environment activated, and then run
+enforce our style guide, etc.  To set yourself up with it, ensure you have your
+development environment activated, and then run
 ```bash
 cd /path/to/reverse_argparse
-pre-commit install
 pre-commit install --hook-type commit-msg --hook-type pre-push
 ```
 
@@ -139,8 +124,7 @@ The checks we perform are the following:
 * Ensure we use [type-hinting][typing].
 * Check for common mistakes in [reStructuredText][rest] in our documentation.
 * Use [black][black] to automatically format the code.
-* Use [Bandit][bandit] to find common security issues.  (This is currently
-  disabled due to [a bug][banditbug].)
+* Use [Bandit][bandit] to find common security issues.
 * Use [doc8][doc8] to enforce our style for our documentation.
 * Lint the code with [flake8][flake8].
 * Use [isort][isort] to ensure `import` statements are sorted correctly.
@@ -164,7 +148,6 @@ The checks we perform are the following:
 [typing]: https://docs.python.org/3/library/typing.html
 [black]: https://github.com/psf/black
 [bandit]: https://github.com/PyCQA/bandit
-[banditbug]: https://github.com/PyCQA/bandit/issues/1032
 [doc8]: https://github.com/PyCQA/doc8
 [flake8]: https://github.com/pyCQA/flake8
 [isort]: https://github.com/pyCQA/isort
@@ -387,8 +370,8 @@ Python development with VS Code.  Before you do, though, you'll need to select
 your Python interpreter.  Open the command palette, start typing "python
 interpreter," and select **Python: Select Interpreter**.  It will pop up a list
 of Python installations it could find on your system.  Pick the one that
-corresponds to the PyRAMSES `conda` environment (see
-[above](#python-environment)).
+corresponds to your development environment (see
+[above](#setting-up-your-environment)).
 
 #### Setting Up PyTest
 
