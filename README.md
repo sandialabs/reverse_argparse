@@ -4,6 +4,7 @@
 [![pre-commit.ci status](https://results.pre-commit.ci/badge/github/sandialabs/reverse_argparse/master.svg)](https://results.pre-commit.ci/latest/github/sandialabs/reverse_argparse/master)
 [![security: bandit](https://img.shields.io/badge/security-bandit-yellow.svg)](https://github.com/PyCQA/bandit)
 [![linting: pylint](https://img.shields.io/badge/linting-pylint-yellowgreen)](https://github.com/pylint-dev/pylint)
+[![ci](https://github.com/sandialabs/reverse_argparse/actions/workflows/ci.yml/badge.svg)](https://github.com/sandialabs/reverse_argparse/actions/workflows/ci.yml)
 
 # reverse_argparse
 
