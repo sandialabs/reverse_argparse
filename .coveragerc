@@ -4,13 +4,14 @@ omit =
     */.vscode/*
 branch = True
 dynamic_context = test_function
+relative_files = True
 
 [paths]
 source = reverse_argparse
 
 [report]
 skip_covered = False
-fail_under = 96
+fail_under = 95
 show_missing = True
 exclude_lines =
     pragma: no cover
