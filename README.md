@@ -5,7 +5,7 @@
 [![Security: Bandit](https://img.shields.io/badge/security-bandit-yellow.svg)](https://github.com/PyCQA/bandit)
 [![Linting: Pylint](https://img.shields.io/badge/linting-pylint-yellowgreen)](https://github.com/pylint-dev/pylint)
 [![Continuous Integration](https://github.com/sandialabs/reverse_argparse/actions/workflows/ci.yml/badge.svg)](https://github.com/sandialabs/reverse_argparse/actions/workflows/ci.yml)
-[![Coverage Status](https://coveralls.io/repos/github/sandialabs/reverse_argparse/badge.svg?branch=master)](https://coveralls.io/github/sandialabs/reverse_argparse?branch=master)
+[![codecov](https://codecov.io/gh/sandialabs/reverse_argparse/branch/master/graph/badge.svg?token=FmDStZ6FVR)](https://codecov.io/gh/sandialabs/reverse_argparse)
 
 # reverse_argparse
 

@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        version: ["~3.7", "~3.8", "~3.9", "~3.10", "~3.11"]
+        version: ["3.7", "3.8", "3.9", "3.10", "3.11"]
     steps:
 
       - name: Check out the commit
@@ -25,7 +25,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: ${{ matrix.version }}
+          python-version: ~${{ matrix.version }}
 
       - name: Add conda to system path
         run: |
@@ -33,10 +33,18 @@ jobs:
           # miniconda directory.
           echo $CONDA/bin >> $GITHUB_PATH
 
-      # - name: Test with pytest
-      #   run: |
-      #     conda install pytest
-      #     pytest
+      - name: Install test dependencies
+        run: |
+          conda install pytest pytest-cov
+
+      - name: Test with pytest
+        run: |
+          python -m pytest --cov=reverse_argparse test/
+
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v3
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
       - name: Test install
         run: |
@@ -45,21 +53,3 @@ jobs:
       - name: Test uninstall
         run: |
           pip uninstall -y reverse_argparse
-
-      - name: pytest coverage
-        uses: lpenz/ghaction-pytest-cov@v1
-
-      - name: Coveralls
-        uses: AndreMiras/coveralls-python-action@v20201129
-        with:
-          parallel: true
-          flag-name: python-${{ matrix.version }}
-          github-token: ${{ secrets.COVERALLS_REPO_TOKEN }}
-
-  coverage-finish:
-    needs: test
-    runs-on: ubuntu-latest
-    steps:
-      - uses: AndreMiras/coveralls-python-action@v20201129
-        with:
-          parallel-finished: true
