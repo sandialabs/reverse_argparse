@@ -6,14 +6,14 @@ ci:
 repos:
 
     - repo: https://github.com/commitizen-tools/commitizen
-      rev: 3.3.0
+      rev: 3.5.2
       hooks:
           - id: commitizen
           - id: commitizen-branch
             stages: [push]
 
     - repo: https://github.com/pre-commit/mirrors-mypy
-      rev: v1.3.0
+      rev: v1.4.1
       hooks:
           - id: mypy
 
