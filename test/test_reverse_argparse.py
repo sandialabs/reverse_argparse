@@ -1,7 +1,11 @@
 #!/usr/bin/env python3
 
 import shlex
-from argparse import SUPPRESS, ArgumentParser, BooleanOptionalAction, Namespace
+import sys
+from argparse import SUPPRESS, ArgumentParser, Namespace
+
+if sys.version_info.minor >= 9:
+    from argparse import BooleanOptionalAction
 
 import pytest
 
@@ -31,7 +35,10 @@ def parser() -> ArgumentParser:
     )
     p.add_argument("--verbose", "-v", action="count", default=2)
     p.add_argument("--ext", action="extend", nargs="*")
-    p.add_argument("--bool-opt", action=BooleanOptionalAction, default=False)
+    if sys.version_info.minor >= 9:
+        p.add_argument(
+            "--bool-opt", action=BooleanOptionalAction, default=False
+        )
     return p
 
 
@@ -118,12 +125,16 @@ def test_get_effective_command_line_invocation(parser, args) -> None:
     namespace = parser.parse_args(shlex.split(args))
     unparser = ReverseArgumentParser(parser, namespace)
     expected = (
-        "--opt1 opt1-val --opt2 opt2-val1 opt2-val2 --store-true "
-        "--store-false --needs-quotes 'hello world' --default 42 --app1 "
-        "app1-val1 --app1 app1-val2 --app2 app2-val1 --app2 app2-val2 "
-        "--app-nargs app-nargs1-val1 app-nargs1-val2 --app-nargs "
-        "app-nargs2-val --const --app-const1 --app-const2 -vv --ext ext-val1 "
-        "ext-val2 ext-val3 --no-bool-opt pos1-val1 pos1-val2 pos2-val"
+        (
+            "--opt1 opt1-val --opt2 opt2-val1 opt2-val2 --store-true "
+            "--store-false --needs-quotes 'hello world' --default 42 --app1 "
+            "app1-val1 --app1 app1-val2 --app2 app2-val1 --app2 app2-val2 "
+            "--app-nargs app-nargs1-val1 app-nargs1-val2 --app-nargs "
+            "app-nargs2-val --const --app-const1 --app-const2 -vv --ext "
+            "ext-val1 ext-val2 ext-val3 "
+        )
+        + ("--no-bool-opt " if sys.version_info.minor >= 9 else "")
+        + "pos1-val1 pos1-val2 pos2-val"
     )
     result = strip_first_entry(
         unparser.get_effective_command_line_invocation()
@@ -151,9 +162,10 @@ def test_get_pretty_command_line_invocation(parser, args) -> None:
     --app-const1 \\
     --app-const2 \\
     -vv \\
-    --ext ext-val1 ext-val2 ext-val3 \\
-    --no-bool-opt \\
-    pos1-val1 pos1-val2 \\
+    --ext ext-val1 ext-val2 ext-val3 \\"""
+    if sys.version_info.minor >= 9:
+        expected += "\n    --no-bool-opt \\"
+    expected += """\n    pos1-val1 pos1-val2 \\
     pos2-val"""
     result = strip_first_line(unparser.get_pretty_command_line_invocation())
     assert result == expected
@@ -211,7 +223,6 @@ def test_get_command_line_invocation_strip_spaces() -> None:
             "--foo bar --foo baz bif",
             ["    --foo bar baz bif"],
         ),
-        (["--foo"], {"action": BooleanOptionalAction}, "--foo", ["    --foo"]),
     ],
 )
 def test__unparse_args(add_args, add_kwargs, args, expected) -> None:
@@ -228,6 +239,19 @@ def test__unparse_args(add_args, add_kwargs, args, expected) -> None:
     else:
         unparser._unparse_args()
         assert unparser.args[1:] == expected
+
+
+def test__unparse_args_boolean_optional_action() -> None:
+    if sys.version_info.minor >= 9:
+        parser = ArgumentParser()
+        parser.add_argument("--foo", action=BooleanOptionalAction)
+        try:
+            namespace = parser.parse_args(shlex.split("--foo"))
+        except SystemExit:
+            namespace = Namespace()
+        unparser = ReverseArgumentParser(parser, namespace)
+        unparser._unparse_args()
+        assert unparser.args[1:] == ["    --foo"]
 
 
 def test__unparse_args_already_unparsed() -> None:
@@ -562,11 +586,14 @@ def test__unparse_extend_action() -> None:
     ],
 )
 def test__unparse_boolean_optional_action(default, args, expected) -> None:
-    parser = ArgumentParser()
-    action = parser.add_argument(
-        "--bool-opt", action=BooleanOptionalAction, default=default
-    )
-    namespace = parser.parse_args(shlex.split(args))
-    unparser = ReverseArgumentParser(parser, namespace)
-    unparser._unparse_boolean_optional_action(action)
-    assert unparser.args[1:] == ([expected] if expected is not None else [])
+    if sys.version_info.minor >= 9:
+        parser = ArgumentParser()
+        action = parser.add_argument(
+            "--bool-opt", action=BooleanOptionalAction, default=default
+        )
+        namespace = parser.parse_args(shlex.split(args))
+        unparser = ReverseArgumentParser(parser, namespace)
+        unparser._unparse_boolean_optional_action(action)
+        assert unparser.args[1:] == (
+            [expected] if expected is not None else []
+        )

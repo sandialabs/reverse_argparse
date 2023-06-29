@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        version: ["3.7", "3.8", "3.9", "3.10", "3.11"]
+        version: ["3.8", "3.9", "3.10", "3.11"]
     steps:
 
       - name: Check out the commit
@@ -27,19 +27,13 @@ jobs:
         with:
           python-version: ~${{ matrix.version }}
 
-      - name: Add conda to system path
-        run: |
-          # $CONDA is an environment variable pointing to the root of the
-          # miniconda directory.
-          echo $CONDA/bin >> $GITHUB_PATH
-
       - name: Install test dependencies
         run: |
-          conda install pytest pytest-cov
+          python3 -m pip install pytest pytest-cov
 
       - name: Test with pytest
         run: |
-          python -m pytest --cov=reverse_argparse test/
+          python3 -m pytest --cov=reverse_argparse test/
 
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v3
@@ -48,8 +42,8 @@ jobs:
 
       - name: Test install
         run: |
-          pip install .
+          python3 -m pip install .
 
       - name: Test uninstall
         run: |
-          pip uninstall -y reverse_argparse
+          python3 -m pip uninstall -y reverse_argparse
