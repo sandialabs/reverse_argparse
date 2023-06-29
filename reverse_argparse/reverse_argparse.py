@@ -15,8 +15,9 @@ Raises:
 """
 
 import re
+import sys
 from argparse import SUPPRESS, Action, ArgumentParser, Namespace
-from typing import Sequence
+from typing import List, Sequence
 
 
 class ReverseArgumentParser:
@@ -34,16 +35,16 @@ class ReverseArgumentParser:
     such that they're able to reproduce a prior run of a script exactly.
 
     Attributes:
-        _unparsed (list[bool]):  A list in which the elements indicate
+        _unparsed (List[bool]):  A list in which the elements indicate
             whether the corresponding parser in :attr:`parsers` has been
             unparsed.
-        args (list[str]):  The list of arguments corresponding to each
+        args (List[str]):  The list of arguments corresponding to each
             :class:`Action` in the given parser, which is built up as
             the arguments are unparsed.
         indent (int):  The number of spaces with which to indent
             subsequent lines when pretty-printing the effective command
             line invocation.
-        parsers (list[ArgumentParser]):  The parser that was used to
+        parsers (List[ArgumentParser]):  The parser that was used to
             generate the parsed arguments.  This is a ``list``
             (conceptually a stack) to allow for sub-parsers, so the
             outer-most parser is the first item in the list, and
@@ -78,10 +79,6 @@ class ReverseArgumentParser:
         Loop over the positional and then optional actions, generating
         the command line arguments associated with each, and appending
         them to the list of arguments.
-
-        Raises:
-            NotImplementedError:  If there is not currently an
-                implementation for unparsing the given action.
         """
         if self._unparsed[-1]:
             return
@@ -91,42 +88,61 @@ class ReverseArgumentParser:
             + psr._get_positional_actions()  # pylint: disable=protected-access
         )
         for action in actions:
-            if type(action).__name__ != "_SubParsersAction" and (
-                not hasattr(self.namespace, action.dest)
-                or self._arg_is_default_and_help_is_suppressed(action)
-            ):
-                continue
-            match type(action).__name__:
-                case "_AppendAction":
-                    self._unparse_append_action(action)
-                case "_AppendConstAction":
-                    self._unparse_append_const_action(action)
-                case "_CountAction":
-                    self._unparse_count_action(action)
-                case "_ExtendAction":
-                    self._unparse_extend_action(action)
-                case "_HelpAction":  # pragma: no cover
-                    continue
-                case "_StoreAction":
-                    self._unparse_store_action(action)
-                case "_StoreConstAction":
-                    self._unparse_store_const_action(action)
-                case "_StoreFalseAction":
-                    self._unparse_store_false_action(action)
-                case "_StoreTrueAction":
-                    self._unparse_store_true_action(action)
-                case "_SubParsersAction":
-                    self._unparse_sub_parsers_action(action)
-                case "_VersionAction":  # pragma: no cover
-                    continue
-                case "BooleanOptionalAction":
-                    self._unparse_boolean_optional_action(action)
-                case _:  # pragma: no cover
-                    raise NotImplementedError(
-                        f"{self.__class__.__name__} does not yet support the "
-                        f"unparsing of {type(action).__name__} objects."
-                    )
+            self._unparse_action(action)
         self._unparsed[-1] = True
+
+    def _unparse_action(self, action: Action) -> None:
+        """
+        Unparse a single action.
+
+        Generate the command line arguments associated with the given
+        ``action``, and append them to the list of arguments.
+
+        Args:
+            action:  The :class:`argparse.Action` to unparse.
+
+        Raises:
+            NotImplementedError:  If there is not currently an
+                implementation for unparsing the given action.
+        """
+        action_type = type(action).__name__
+        if action_type != "_SubParsersAction" and (
+            not hasattr(self.namespace, action.dest)
+            or self._arg_is_default_and_help_is_suppressed(action)
+        ):
+            return
+        if action_type == "_AppendAction":
+            self._unparse_append_action(action)
+        elif action_type == "_AppendConstAction":
+            self._unparse_append_const_action(action)
+        elif action_type == "_CountAction":
+            self._unparse_count_action(action)
+        elif action_type == "_ExtendAction":
+            self._unparse_extend_action(action)
+        elif action_type == "_HelpAction":  # pragma: no cover
+            return
+        elif action_type == "_StoreAction":
+            self._unparse_store_action(action)
+        elif action_type == "_StoreConstAction":
+            self._unparse_store_const_action(action)
+        elif action_type == "_StoreFalseAction":
+            self._unparse_store_false_action(action)
+        elif action_type == "_StoreTrueAction":
+            self._unparse_store_true_action(action)
+        elif action_type == "_SubParsersAction":
+            self._unparse_sub_parsers_action(action)
+        elif action_type == "_VersionAction":  # pragma: no cover
+            return
+        elif (
+            action_type == "BooleanOptionalAction"
+            and sys.version_info.minor >= 9
+        ):
+            self._unparse_boolean_optional_action(action)
+        else:  # pragma: no cover
+            raise NotImplementedError(
+                f"{self.__class__.__name__} does not yet support the "
+                f"unparsing of {action_type} objects."
+            )
 
     def _arg_is_default_and_help_is_suppressed(self, action: Action) -> bool:
         """
@@ -181,7 +197,7 @@ class ReverseArgumentParser:
 
     def _get_long_option_strings(
         self, option_strings: Sequence[str]
-    ) -> list[str]:
+    ) -> List[str]:
         """
         Get the long options from a list of options strings.
 
@@ -203,7 +219,7 @@ class ReverseArgumentParser:
 
     def _get_short_option_strings(
         self, option_strings: Sequence[str]
-    ) -> list[str]:
+    ) -> List[str]:
         """
         Get the short options from a list of options strings.
 
@@ -256,7 +272,7 @@ class ReverseArgumentParser:
                 return short_options[0]
         return ""
 
-    def _append_list_of_list_of_args(self, args: list[list[str]]) -> None:
+    def _append_list_of_list_of_args(self, args: List[List[str]]) -> None:
         """
         Append to the list of unparsed arguments.
 
@@ -271,7 +287,7 @@ class ReverseArgumentParser:
         for line in args:
             self.args.append(self.indent_str + " ".join(line))
 
-    def _append_list_of_args(self, args: list[str]) -> None:
+    def _append_list_of_args(self, args: List[str]) -> None:
         """
         Append to the list of unparsed arguments.
 

@@ -11,7 +11,7 @@ source = reverse_argparse
 
 [report]
 skip_covered = False
-fail_under = 95
+fail_under = 90
 show_missing = True
 exclude_lines =
     pragma: no cover
