@@ -71,7 +71,7 @@ development :grinning:  Here's everything you need to know.
 
 ## Setting Up Your Environment
 
-Before you begin hacking on `reverse_argparse`, you'll need to do two things:
+Before you begin hacking on `reverse_argparse`, you'll need to do four things:
 
 1. **Fork the Repository:**  On [`reverse_argparse`'s main page][homepage], in
    the top-right corner, you'll see a button to [fork the repository][fork].
@@ -87,9 +87,19 @@ Before you begin hacking on `reverse_argparse`, you'll need to do two things:
    cd /path/to/reverse_argparse
    python3 -m pip install \
      -r requirements.txt \
-     -r requirements-dev.txt \
-     -r test/requirements.txt \
-     -r doc/requirements.txt
+     -r doc/requirements.txt \
+     -r example/requirements.txt \
+     -r test/requirements.txt
+   ```
+3. **Run the Examples:**  Ensure you can run all the examples with
+   ```bash
+   cd /path/to/reverse_argparse/example
+   ./run-all.bash
+   ```
+4. **Build the Documentation:**  Ensure you can build the documentation with
+   ```bash
+   cd /path/to/reverse_argparse/doc
+   ./make-html.bash
    ```
 
 [homepage]: https://github.com/sandialabs/reverse_argparse

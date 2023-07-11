@@ -3,15 +3,9 @@
 The ``reverse_argparse`` module.
 
 Defines the :class:`ReverseArgumentParser` class for unparsing arguments
-that were already parsed via ``argparse``, and the
+that were already parsed via :mod:`argparse`, and the
 :func:`quote_arg_if_necessary` helper function to surround any args with
 spaces in them with quotes.
-
-Raises:
-    NotImplementedError:  If a particular :class:`Action` does not yet
-        have an associated unparser.
-    RuntimeError:  If a subparser action is somehow missing its
-        dictionary of choices.
 """
 
 import re
@@ -35,22 +29,22 @@ class ReverseArgumentParser:
     such that they're able to reproduce a prior run of a script exactly.
 
     Attributes:
-        _unparsed (List[bool]):  A list in which the elements indicate
-            whether the corresponding parser in :attr:`parsers` has been
-            unparsed.
-        args (List[str]):  The list of arguments corresponding to each
-            :class:`Action` in the given parser, which is built up as
-            the arguments are unparsed.
-        indent (int):  The number of spaces with which to indent
+        _args (List[str]):  The list of arguments corresponding to each
+            :class:`argparse.Action` in the given parser, which is built
+            up as the arguments are unparsed.
+        _indent (int):  The number of spaces with which to indent
             subsequent lines when pretty-printing the effective command
             line invocation.
-        parsers (List[ArgumentParser]):  The parser that was used to
-            generate the parsed arguments.  This is a ``list``
+        _namespace (Namespace):  The parsed arguments.
+        _parsers (List[argparse.ArgumentParser]):  The parser that was
+            used to generate the parsed arguments.  This is a ``list``
             (conceptually a stack) to allow for sub-parsers, so the
             outer-most parser is the first item in the list, and
             sub-parsers are pushed onto and popped off of the stack as
             they are processed.
-        namespace (Namespace):  The parsed arguments.
+        _unparsed (List[bool]):  A list in which the elements indicate
+            whether the corresponding parser in :attr:`parsers` has been
+            unparsed.
     """
 
     def __init__(
@@ -60,17 +54,17 @@ class ReverseArgumentParser:
         Initialize the object.
 
         Args:
-            parser:  The :class:`ArgumentParser` used to construct the
-                given :arg:`namespace`.
+            parser:  The :class:`argparse.ArgumentParser` used to
+                construct the given ``namespace``.
             namespace:  The parsed arguments.
             indent:  How many spaces to use for each indentation level.
                 (See :func:`get_pretty_command_line_invocation`.)
         """
         self._unparsed = [False]
-        self.args = [parser.prog]
-        self.indent = indent
-        self.parsers = [parser]
-        self.namespace = namespace
+        self._args = [parser.prog]
+        self._indent = indent
+        self._parsers = [parser]
+        self._namespace = namespace
 
     def _unparse_args(self) -> None:
         """
@@ -82,7 +76,7 @@ class ReverseArgumentParser:
         """
         if self._unparsed[-1]:
             return
-        psr = self.parsers[-1]
+        psr = self._parsers[-1]
         actions = (
             psr._get_optional_actions()  # pylint: disable=protected-access
             + psr._get_positional_actions()  # pylint: disable=protected-access
@@ -107,7 +101,7 @@ class ReverseArgumentParser:
         """
         action_type = type(action).__name__
         if action_type != "_SubParsersAction" and (
-            not hasattr(self.namespace, action.dest)
+            not hasattr(self._namespace, action.dest)
             or self._arg_is_default_and_help_is_suppressed(action)
         ):
             return
@@ -162,7 +156,7 @@ class ReverseArgumentParser:
             ``True`` if the argument should be omitted; ``False``
             otherwise.
         """
-        value = getattr(self.namespace, action.dest)
+        value = getattr(self._namespace, action.dest)
         return value == action.default and action.help == SUPPRESS
 
     def get_effective_command_line_invocation(self) -> str:
@@ -178,7 +172,7 @@ class ReverseArgumentParser:
             what was run before.
         """
         self._unparse_args()
-        return " ".join(_.strip() for _ in self.args if _.strip())
+        return " ".join(_.strip() for _ in self._args if _.strip())
 
     def get_pretty_command_line_invocation(self) -> str:
         """
@@ -186,14 +180,15 @@ class ReverseArgumentParser:
 
         Similar to :func:`get_effective_command_line_invocation`, but
         generate a string ready for "pretty-printing", with escaped
-        newlines between each of the arguments.
+        newlines between each of the arguments, and appropriate
+        indentation.
 
         Returns:
             What you would need to run on the command line to reproduce
             what was run before.
         """
         self._unparse_args()
-        return " \\\n".join(_ for _ in self.args if _.strip())
+        return " \\\n".join(_ for _ in self._args if _.strip())
 
     def _get_long_option_strings(
         self, option_strings: Sequence[str]
@@ -213,8 +208,8 @@ class ReverseArgumentParser:
             option
             for option in option_strings
             if len(option) > 2
-            and option[0] in self.parsers[-1].prefix_chars
-            and option[1] in self.parsers[-1].prefix_chars
+            and option[0] in self._parsers[-1].prefix_chars
+            and option[1] in self._parsers[-1].prefix_chars
         ]
 
     def _get_short_option_strings(
@@ -234,23 +229,23 @@ class ReverseArgumentParser:
         return [
             option
             for option in option_strings
-            if len(option) == 2 and option[0] in self.parsers[-1].prefix_chars
+            if len(option) == 2 and option[0] in self._parsers[-1].prefix_chars
         ]
 
     def _get_option_string(
         self, action: Action, prefer_short: bool = False
     ) -> str:
         """
-        Get the option string for the :arg:`action`.
+        Get the option string for the `action`.
 
         Get the first of the long options corresponding to a given
-        :class:`Action`.  If no long options are available, get the
-        first of the short options.  If :arg:`prefer_short` is ``True``,
-        search the short options first, and fall back to the long ones
-        if necessary.
+        :class:`argparse.Action`.  If no long options are available, get
+        the first of the short options.  If ``prefer_short`` is
+        ``True``, search the short options first, and fall back to the
+        long ones if necessary.
 
         Args:
-            action:  The :class:`Action` in question.
+            action:  The :class:`argparse.Action` in question.
             prefer_short:  Whether to prefer the short options over the
                 long ones.
 
@@ -285,7 +280,7 @@ class ReverseArgumentParser:
             args:  The command line arguments to be appended.
         """
         for line in args:
-            self.args.append(self.indent_str + " ".join(line))
+            self._args.append(self._indent_str + " ".join(line))
 
     def _append_list_of_args(self, args: List[str]) -> None:
         """
@@ -298,7 +293,7 @@ class ReverseArgumentParser:
         Args:
             args:  The command line arguments to be appended.
         """
-        self.args.append(self.indent_str + " ".join(args))
+        self._args.append(self._indent_str + " ".join(args))
 
     def _append_arg(self, arg: str) -> None:
         """
@@ -311,17 +306,17 @@ class ReverseArgumentParser:
         Args:
             arg:  The command line argument to be appended.
         """
-        self.args.append(self.indent_str + arg)
+        self._args.append(self._indent_str + arg)
 
     @property
-    def indent_str(self) -> str:
+    def _indent_str(self) -> str:
         """
         The indentation level.
 
         Returns:
             A string of spaces corresponding to the indentation level.
         """
-        return " " * self.indent * len(self.parsers)
+        return " " * self._indent * len(self._parsers)
 
     def _unparse_store_action(self, action: Action) -> None:
         """
@@ -330,7 +325,7 @@ class ReverseArgumentParser:
         Args:
             action:  The :class:`_StoreAction` in question.
         """
-        values = getattr(self.namespace, action.dest)
+        values = getattr(self._namespace, action.dest)
         if values is None:
             return
         flag = self._get_option_string(action)
@@ -354,7 +349,7 @@ class ReverseArgumentParser:
         Args:
             action:  The :class:`_StoreConstAction` in question.
         """
-        value = getattr(self.namespace, action.dest)
+        value = getattr(self._namespace, action.dest)
         if value == action.const:
             self._append_arg(self._get_option_string(action))
 
@@ -365,7 +360,7 @@ class ReverseArgumentParser:
         Args:
             action:  The :class:`_StoreTrueAction` in question.
         """
-        value = getattr(self.namespace, action.dest)
+        value = getattr(self._namespace, action.dest)
         if value is True:
             self._append_arg(self._get_option_string(action))
 
@@ -376,7 +371,7 @@ class ReverseArgumentParser:
         Args:
             action:  The :class:`_StoreFalseAction` in question.
         """
-        value = getattr(self.namespace, action.dest)
+        value = getattr(self._namespace, action.dest)
         if value is False:
             self._append_arg(self._get_option_string(action))
 
@@ -387,7 +382,7 @@ class ReverseArgumentParser:
         Args:
             action:  The :class:`_AppendAction` in question.
         """
-        values = getattr(self.namespace, action.dest)
+        values = getattr(self._namespace, action.dest)
         if values is None:
             return
         flag = self._get_option_string(action)
@@ -414,7 +409,7 @@ class ReverseArgumentParser:
         Args:
             action:  The :class:`_AppendConstAction` in question.
         """
-        values = getattr(self.namespace, action.dest)
+        values = getattr(self._namespace, action.dest)
         if values is not None and action.const in values:
             self._append_arg(self._get_option_string(action))
 
@@ -425,10 +420,10 @@ class ReverseArgumentParser:
         Args:
             action:  The :class:`_CountAction` in question.
         """
-        value = getattr(self.namespace, action.dest)
+        value = getattr(self._namespace, action.dest)
         count = value if action.default is None else (value - action.default)
         flag = self._get_option_string(action, prefer_short=True)
-        if len(flag) == 2 and flag[0] in self.parsers[-1].prefix_chars:
+        if len(flag) == 2 and flag[0] in self._parsers[-1].prefix_chars:
             self._append_arg(flag[0] + flag[1] * count)
         else:
             self._append_list_of_args([flag for _ in range(count)])
@@ -448,6 +443,10 @@ class ReverseArgumentParser:
 
         Args:
             action:  The :class:`_SubParsersAction` in question.
+
+        Raises:
+            RuntimeError:  If a subparser action is somehow missing its
+                dictionary of choices.
         """
         if action.choices is None or not isinstance(
             action.choices, dict
@@ -457,17 +456,17 @@ class ReverseArgumentParser:
                 f"choices:  {action}"
             )
         for subcommand, subparser in action.choices.items():
-            self.parsers.append(subparser)
+            self._parsers.append(subparser)
             self._unparsed.append(False)
-            self.args.append(
-                " " * self.indent * (len(self.parsers) - 1) + subcommand
+            self._args.append(
+                " " * self._indent * (len(self._parsers) - 1) + subcommand
             )
-            args_before = self.args.copy()
+            args_before = self._args.copy()
             self._unparse_args()
-            if self.args == args_before:
-                self.parsers.pop()
+            if self._args == args_before:
+                self._parsers.pop()
                 self._unparsed.pop()
-                self.args.pop()
+                self._args.pop()
 
     def _unparse_extend_action(self, action: Action) -> None:
         """
@@ -476,7 +475,7 @@ class ReverseArgumentParser:
         Args:
             action:  The :class:`_ExtendAction` in question.
         """
-        values = getattr(self.namespace, action.dest)
+        values = getattr(self._namespace, action.dest)
         if values is not None:
             self._append_list_of_args(
                 [self._get_option_string(action)] + values
@@ -489,9 +488,9 @@ class ReverseArgumentParser:
         Args:
             action:  The :class:`BooleanOptionalAction` in question.
         """
-        value = getattr(self.namespace, action.dest)
+        value = getattr(self._namespace, action.dest)
         if value is not None:
-            flag_index = 0 if getattr(self.namespace, action.dest) else 1
+            flag_index = 0 if getattr(self._namespace, action.dest) else 1
             self._append_arg(action.option_strings[flag_index])
 
 

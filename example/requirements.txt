@@ -1,0 +1,4 @@
+# Requirements for running the `reverse_argparse` examples.
+
+dateparser
+types-dateparser
