@@ -51,3 +51,13 @@ jobs:
       - name: Test uninstall
         run: |
           python3 -m pip uninstall -y reverse_argparse
+
+      - name: Build documentation
+        run: |
+          ./doc/make-html.bash
+
+      - name: Save documentation artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: html
+          path: doc/build/html
