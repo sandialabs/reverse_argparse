@@ -27,9 +27,13 @@ jobs:
         with:
           python-version: ~${{ matrix.version }}
 
-      - name: Install test dependencies
+      - name: Install development dependencies
         run: |
-          python3 -m pip install pytest pytest-cov
+          python3 -m pip install --upgrade pip
+          python3 -m pip install \
+            -r doc/requirements.txt \
+            -r example/requirements.txt \
+            -r test/requirements.txt
 
       - name: Test with pytest
         run: |
@@ -47,3 +51,13 @@ jobs:
       - name: Test uninstall
         run: |
           python3 -m pip uninstall -y reverse_argparse
+
+      - name: Build documentation
+        run: |
+          ./doc/make-html.bash
+
+      - name: Save documentation artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: html
+          path: doc/build/html
