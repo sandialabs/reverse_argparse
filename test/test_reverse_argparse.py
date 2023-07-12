@@ -9,7 +9,7 @@ if sys.version_info.minor >= 9:
 
 import pytest
 
-from .. import ReverseArgumentParser
+from reverse_argparse import ReverseArgumentParser
 
 
 @pytest.fixture()
@@ -175,7 +175,7 @@ def test_get_command_line_invocation_strip_spaces() -> None:
     parser = ArgumentParser()
     namespace = Namespace()
     unparser = ReverseArgumentParser(parser, namespace)
-    unparser.args = ["program_name", "    --foo", "    ", "    --bar"]
+    unparser._args = ["program_name", "    --foo", "    ", "    --bar"]
     unparser._unparsed = [True]
     expected = "program_name --foo --bar"
     assert unparser.get_effective_command_line_invocation() == expected
@@ -238,7 +238,7 @@ def test__unparse_args(add_args, add_kwargs, args, expected) -> None:
             unparser._unparse_args()
     else:
         unparser._unparse_args()
-        assert unparser.args[1:] == expected
+        assert unparser._args[1:] == expected
 
 
 def test__unparse_args_boolean_optional_action() -> None:
@@ -251,18 +251,18 @@ def test__unparse_args_boolean_optional_action() -> None:
             namespace = Namespace()
         unparser = ReverseArgumentParser(parser, namespace)
         unparser._unparse_args()
-        assert unparser.args[1:] == ["    --foo"]
+        assert unparser._args[1:] == ["    --foo"]
 
 
 def test__unparse_args_already_unparsed() -> None:
     parser = ArgumentParser()
     namespace = Namespace()
     unparser = ReverseArgumentParser(parser, namespace)
-    unparser.args = ["program_name", "    --ensure args", "   unchanged"]
-    args_before = unparser.args.copy()
+    unparser._args = ["program_name", "    --ensure args", "   unchanged"]
+    args_before = unparser._args.copy()
     unparser._unparsed = [True]
     unparser._unparse_args()
-    assert unparser.args == args_before
+    assert unparser._args == args_before
 
 
 def test__arg_is_default_and_help_is_suppressed() -> None:
@@ -356,7 +356,7 @@ def test__unparse_store_action(add_args, add_kwargs, args, expected) -> None:
     namespace = parser.parse_args(shlex.split(args))
     unparser = ReverseArgumentParser(parser, namespace)
     unparser._unparse_store_action(action)
-    assert unparser.args[1:] == [expected]
+    assert unparser._args[1:] == [expected]
 
 
 @pytest.mark.parametrize(
@@ -391,7 +391,7 @@ def test__unparse_store_const_action(
     namespace = parser.parse_args(shlex.split(args))
     unparser = ReverseArgumentParser(parser, namespace)
     unparser._unparse_store_const_action(action)
-    assert unparser.args[1:] == ([expected] if expected is not None else [])
+    assert unparser._args[1:] == ([expected] if expected is not None else [])
 
 
 @pytest.mark.parametrize(
@@ -403,7 +403,7 @@ def test__unparse_store_true_action(args, expected) -> None:
     namespace = parser.parse_args(args)
     unparser = ReverseArgumentParser(parser, namespace)
     unparser._unparse_store_true_action(action)
-    assert unparser.args[1:] == ([expected] if expected is not None else [])
+    assert unparser._args[1:] == ([expected] if expected is not None else [])
 
 
 @pytest.mark.parametrize(
@@ -415,7 +415,7 @@ def test__unparse_store_false_action(args, expected) -> None:
     namespace = parser.parse_args(args)
     unparser = ReverseArgumentParser(parser, namespace)
     unparser._unparse_store_false_action(action)
-    assert unparser.args[1:] == ([expected] if expected is not None else [])
+    assert unparser._args[1:] == ([expected] if expected is not None else [])
 
 
 @pytest.mark.parametrize(
@@ -441,7 +441,7 @@ def test__unparse_append_action(add_args, add_kwargs, args, expected) -> None:
     namespace = parser.parse_args(shlex.split(args))
     unparser = ReverseArgumentParser(parser, namespace)
     unparser._unparse_append_action(action)
-    assert unparser.args[1:] == expected
+    assert unparser._args[1:] == expected
 
 
 @pytest.mark.parametrize(
@@ -455,7 +455,7 @@ def test__unparse_append_const_action(args, expected) -> None:
     namespace = parser.parse_args(shlex.split(args))
     unparser = ReverseArgumentParser(parser, namespace)
     unparser._unparse_append_const_action(action)
-    assert unparser.args[1:] == ([expected] if expected is not None else [])
+    assert unparser._args[1:] == ([expected] if expected is not None else [])
 
 
 @pytest.mark.parametrize(
@@ -487,7 +487,7 @@ def test__unparse_count_action(add_args, add_kwargs, args, expected) -> None:
     namespace = parser.parse_args(shlex.split(args))
     unparser = ReverseArgumentParser(parser, namespace)
     unparser._unparse_count_action(action)
-    assert unparser.args[1:] == [expected]
+    assert unparser._args[1:] == [expected]
 
 
 @pytest.mark.parametrize(
@@ -568,7 +568,7 @@ def test__unparse_extend_action() -> None:
     unparser = ReverseArgumentParser(parser, namespace)
     expected = "    --foo bar baz bif"
     unparser._unparse_extend_action(action)
-    assert unparser.args[1:] == [expected]
+    assert unparser._args[1:] == [expected]
 
 
 @pytest.mark.parametrize(
@@ -594,6 +594,6 @@ def test__unparse_boolean_optional_action(default, args, expected) -> None:
         namespace = parser.parse_args(shlex.split(args))
         unparser = ReverseArgumentParser(parser, namespace)
         unparser._unparse_boolean_optional_action(action)
-        assert unparser.args[1:] == (
+        assert unparser._args[1:] == (
             [expected] if expected is not None else []
         )

@@ -16,6 +16,7 @@ repos:
       rev: v1.4.1
       hooks:
           - id: mypy
+            additional_dependencies: ["dateparser", "types-dateparser"]
 
     - repo: https://github.com/pre-commit/pre-commit-hooks
       rev: v4.4.0
@@ -67,6 +68,7 @@ repos:
       rev: 1.10.2
       hooks:
           - id: prospector
+            additional_dependencies: ["dateparser"]
 
     - repo: https://github.com/PyCQA/pydocstyle
       rev: 6.3.0

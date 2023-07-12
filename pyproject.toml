@@ -52,10 +52,6 @@ classifiers = [
     "Topic :: Software Development :: User Interfaces",
     "Typing :: Typed"
 ]
-packages = [
-    { include = "reverse_argparse" },
-]
-include = ["CHANGELOG.md"]
 
 
 [tool.poetry.urls]
