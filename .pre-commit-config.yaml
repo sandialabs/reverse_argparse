@@ -9,8 +9,9 @@ repos:
       rev: 3.5.2
       hooks:
           - id: commitizen
+            stages: [commit-msg]
           - id: commitizen-branch
-            stages: [push]
+            stages: [pre-push]
 
     - repo: https://github.com/pre-commit/mirrors-mypy
       rev: v1.4.1
