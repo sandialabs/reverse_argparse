@@ -1,0 +1,23 @@
+#!/usr/bin/env python3
+"""How ``reverse_argparse`` handles relative references."""
+import os
+from argparse import ArgumentParser
+
+from reverse_argparse import ReverseArgumentParser
+
+# Construct the `ArgumentParser`.
+parser = ArgumentParser()
+parser.add_argument("--foo")
+parser.add_argument("--bar", default="spam")
+parser.add_argument("--baz", type=int, default=42)
+parser.add_argument("--src", type=os.path.abspath)  # type: ignore
+
+# Parse the command line arguments.
+args = parser.parse_args()
+
+# Insert the body of your script here.
+
+# Unparse the arguments to tell the user what they ran.
+print("The effective command line invocation was:")
+unparser = ReverseArgumentParser(parser, args)
+print(unparser.get_effective_command_line_invocation())
