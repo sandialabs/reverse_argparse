@@ -48,3 +48,7 @@ jobs:
       - name: Test uninstall
         run: |
           python3 -m pip uninstall -y reverse_argparse
+
+      - name: Check pre-commit hooks
+        run: |
+          pre-commit run --all-files
