@@ -29,7 +29,8 @@ jobs:
 
       - name: Install test dependencies
         run: |
-          python3 -m pip install pytest pytest-cov
+          python3 -m pip install --upgrade pip
+          python3 -m pip install -r test/requirements.txt
 
       - name: Test with pytest
         run: |
