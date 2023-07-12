@@ -9,7 +9,7 @@ if sys.version_info.minor >= 9:
 
 import pytest
 
-from .. import ReverseArgumentParser
+from reverse_argparse import ReverseArgumentParser
 
 
 @pytest.fixture()
