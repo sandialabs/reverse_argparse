@@ -7,6 +7,7 @@
 [![Continuous Integration](https://github.com/sandialabs/reverse_argparse/actions/workflows/ci.yml/badge.svg)](https://github.com/sandialabs/reverse_argparse/actions/workflows/ci.yml)
 [![codecov](https://codecov.io/gh/sandialabs/reverse_argparse/branch/master/graph/badge.svg?token=FmDStZ6FVR)](https://codecov.io/gh/sandialabs/reverse_argparse)
 ![Python Version](https://img.shields.io/badge/Python-3.8+-blue.svg)
+[![ReadTheDocs](https://readthedocs.org/projects/reverse-argparse/badge/?version=latest)](https://reverse-argparse.readthedocs.io/en/latest/)
 
 # reverse_argparse
 
