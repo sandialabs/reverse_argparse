@@ -418,7 +418,7 @@ utilize [type-hinting][typing] wherever possible for clarity's sake.
 [docstrings]: https://www.python.org/dev/peps/pep-0257
 [google]: https://github.com/google/styleguide/blob/gh-pages/pyguide.md#38-comments-and-docstrings
 [rest]: https://www.sphinx-doc.org/en/master/usage/restructuredtext/basics.html
-[docs]: https://reverse_argparse.readthedocs.io
+[docs]: https://reverse-argparse.readthedocs.io
 [sphinx]: https://www.sphinx-doc.org/en/master/
 
 ### Testing

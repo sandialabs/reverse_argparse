@@ -28,7 +28,7 @@ readme = "README.md"
 keywords = ["argparse", "argument", "parse", "parsing", "command line"]
 repository = "https://github.com/sandialabs/reverse_argparse"
 description = "Generate the effective command line invocation for a script."
-documentation = "https://reverse_argparse.readthedocs.io"
+documentation = "https://reverse-argparse.readthedocs.io"
 authors = [
     "Jason M. Gates <jmgate@sandia.gov>"
 ]

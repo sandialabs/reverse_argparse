@@ -56,7 +56,7 @@ print(unparser.get_pretty_command_line_invocation())
 For more detailed usage and API information, please see
 [our documentation][readthedocs].
 
-[readthedocs]: https://reverse_argparse.readthedocs.io
+[readthedocs]: https://reverse-argparse.readthedocs.io
 
 ## Where to Get Help
 

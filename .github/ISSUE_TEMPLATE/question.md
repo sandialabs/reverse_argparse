@@ -14,4 +14,4 @@ assignees: ''
 
 ## Checklist
 * [ ] Have you read through the [README](README.md)?
-* [ ] Have you searched through [our documentation](https://reverse_argparse.readthedocs.io)?
+* [ ] Have you searched through [our documentation](https://reverse-argparse.readthedocs.io)?
