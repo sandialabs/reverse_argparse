@@ -133,7 +133,7 @@ the exact same line translates to
    python3 my_script.py --start-time '2023-07-05T05:43:21Z'
 
 Who knows how long it'll take you two to figure out you're actually looking at
-different data sets under the hood.
+different data sets under the hood?
 
 What's the Solution?
 --------------------
