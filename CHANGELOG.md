@@ -5,7 +5,7 @@
 
 ## v1.0.1 (2023-07-20)
 
-### Continuous Integration 
+### Continuous Integration
 * ci: Rename workflow file ([`1cfed2d`](https://github.com/sandialabs/reverse_argparse/commit/1cfed2d0bd8833e633f684e717745ac65997d7ad))
 * ci: Add conventional commits job ([`c683d7a`](https://github.com/sandialabs/reverse_argparse/commit/c683d7a9adf415f71816b190954cec4f4be3162d))
 * ci: Set up semantice-release ([`9f233be`](https://github.com/sandialabs/reverse_argparse/commit/9f233bea255a44c5bb8470330c746ca6a951377e))
@@ -45,7 +45,7 @@
 * chore: Add VS Code settings ([`cc4edb2`](https://github.com/sandialabs/reverse_argparse/commit/cc4edb2611ed25a8a90751c03c8f69c8221db642))
 * chore: Add __pycache__ to .gitignore ([`48a8acd`](https://github.com/sandialabs/reverse_argparse/commit/48a8acd77bad6b83a735b0540b5b184920715da9))
 
-### Continuous Integration 
+### Continuous Integration
 * ci: Remove documentation jobs ([`81ab9c2`](https://github.com/sandialabs/reverse_argparse/commit/81ab9c230c3a19c8268b878c6e9364e3e1882266))
 
   Let ReadTheDocs test the PR instead.
