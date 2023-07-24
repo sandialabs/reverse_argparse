@@ -1,3 +1,4 @@
+{% set version, release = context.history.released.items() | first %}
 # {{ version.as_tag() }} ({{ release.tagged_date.strftime("%Y-%m-%d") }})
 {% for type_, commits in release["elements"] | dictsort %}
 ## {{ type_ | capitalize if type_ != "ci" else "Continuous Integration" }}
