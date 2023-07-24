@@ -4,7 +4,7 @@
 {% if context.history.unreleased | length > 0 %}
 ## Unreleased
 {% for type_, commits in context.history.unreleased | dictsort %}
-### {{ type_ | capitalize if type_ != "ci" else "Continuous Integration "}}
+### {{ type_ | capitalize if type_ != "ci" else "Continuous Integration" }}
 {% for commit in commits -%}
 {%- set summary = commit.message.rstrip().splitlines()[0] -%}
 {%- set details = commit.message.rstrip().splitlines()[2:] -%}
@@ -18,7 +18,7 @@
 {% for version, release in context.history.released.items() -%}
 ## {{ version.as_tag() }} ({{ release.tagged_date.strftime("%Y-%m-%d") }})
 {% for type_, commits in release["elements"] | dictsort %}
-### {{ type_ | capitalize if type_ != "ci" else "Continuous Integration "}}
+### {{ type_ | capitalize if type_ != "ci" else "Continuous Integration" }}
 {% for commit in commits -%}
 {%- set summary = commit.message.rstrip().splitlines()[0] -%}
 {%- set details = commit.message.rstrip().splitlines()[2:] -%}
