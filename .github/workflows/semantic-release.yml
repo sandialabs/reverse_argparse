@@ -23,7 +23,6 @@ jobs:
       uses: python-semantic-release/python-semantic-release@master
       with:
         github_token: ${{ secrets.GH_TOKEN }}
-        root_options: "-vv"
 
     - name: Publish to PyPI
       uses: pypa/gh-action-pypi-publish@release/v1
@@ -34,4 +33,3 @@ jobs:
       if: steps.release.outputs.released == 'true'
       with:
         github_token: ${{ secrets.GH_TOKEN }}
-        root_options: "-vv"
