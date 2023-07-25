@@ -424,10 +424,9 @@ utilize [type-hinting][typing] wherever possible for clarity's sake.
 
 ### Testing
 
-PyRAMSES uses [pytest][pytest] for our unit test suite.  To get up-to-speed
-with what it does and how it works, check out
-[this RealPython tutorial][tutorial].  Also highly recommended is
-[Python Testing with pytest, by Brian Okken][okken].
+We use [pytest][pytest] for our unit test suite.  To get up-to-speed with what
+it does and how it works, check out [this RealPython tutorial][tutorial].  Also
+highly recommended is [Python Testing with pytest, by Brian Okken][okken].
 
 [pytest]: https://docs.pytest.org/
 [tutorial]: https://realpython.com/pytest-python-testing/
