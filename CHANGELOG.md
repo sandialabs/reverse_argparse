@@ -2,6 +2,11 @@
 
 
 
+## v1.0.4 (2023-07-25)
+
+### Fix
+* fix: PyPI badge ([`1581e2a`](https://github.com/sandialabs/reverse_argparse/commit/1581e2a322caf39bd7a670c5c3f059713b4a43eb))
+
 ## v1.0.3 (2023-07-25)
 
 ### Fix
