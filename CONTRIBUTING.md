@@ -112,6 +112,7 @@ enforce our style guide, etc.  To set yourself up with it, ensure you have your
 development environment activated, and then run
 ```bash
 cd /path/to/reverse_argparse
+pre-commit install
 pre-commit install --hook-type commit-msg --hook-type pre-push
 ```
 
