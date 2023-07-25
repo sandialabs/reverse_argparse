@@ -1,6 +1,6 @@
 [![Code Style: black](https://img.shields.io/badge/Code%20Style-black-000000.svg)](https://github.com/psf/black)
 [![codecov](https://codecov.io/gh/sandialabs/reverse_argparse/branch/master/graph/badge.svg?token=FmDStZ6FVR)](https://codecov.io/gh/sandialabs/reverse_argparse)
-[![Continuous Integration](https://github.com/sandialabs/reverse_argparse/actions/workflows/ci.yml/badge.svg)](https://github.com/sandialabs/reverse_argparse/actions/workflows/ci.yml)
+[![Continuous Integration](https://github.com/sandialabs/reverse_argparse/actions/workflows/continuous-integration.yml/badge.svg)](https://github.com/sandialabs/reverse_argparse/actions/workflows/continuous-integration.yml)
 [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](CODE_OF_CONDUCT.md)
 [![Documentation Status](https://readthedocs.org/projects/reverse-argparse/badge/?version=latest)](https://reverse-argparse.readthedocs.io/en/latest/?badge=latest)
 [![Linting: Pylint](https://img.shields.io/badge/Linting-Pylint-yellowgreen)](https://github.com/pylint-dev/pylint)
