@@ -7,4 +7,4 @@ Provide the :class:`ReverseArgumentParser` class and
 from .reverse_argparse import ReverseArgumentParser, quote_arg_if_necessary
 
 __all__ = ["ReverseArgumentParser", "quote_arg_if_necessary"]
-__version__ = "1.0.2"
+__version__ = "1.0.3"
