@@ -6,7 +6,7 @@
 [![Linting: Pylint](https://img.shields.io/badge/Linting-Pylint-yellowgreen)](https://github.com/pylint-dev/pylint)
 [![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit)](https://github.com/pre-commit/pre-commit)
 [![pre-commit.ci Status](https://results.pre-commit.ci/badge/github/sandialabs/reverse_argparse/master.svg)](https://results.pre-commit.ci/latest/github/sandialabs/reverse_argparse/master)
-[![PyPI Version](https://badge.fury.io/py/reverse_argparse.svg)](https://badge.fury.io/py/reverse-argparse)
+[![PyPI Version](https://badge.fury.io/py/reverse-argparse.svg)](https://badge.fury.io/py/reverse-argparse)
 ![Python Version](https://img.shields.io/badge/Python-3.8+-blue.svg)
 [![Security: Bandit](https://img.shields.io/badge/Security-Bandit-yellow.svg)](https://github.com/PyCQA/bandit)
 
