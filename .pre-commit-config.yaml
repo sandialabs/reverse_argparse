@@ -6,14 +6,14 @@ ci:
 repos:
 
     - repo: https://github.com/commitizen-tools/commitizen
-      rev: 3.5.3
+      rev: 3.6.0
       hooks:
           - id: commitizen
           - id: commitizen-branch
             stages: [push]
 
     - repo: https://github.com/pre-commit/mirrors-mypy
-      rev: v1.4.1
+      rev: v1.5.0
       hooks:
           - id: mypy
             additional_dependencies: ["dateparser", "types-dateparser"]
@@ -55,7 +55,7 @@ repos:
           - id: doc8
 
     - repo: https://github.com/PyCQA/flake8
-      rev: 6.0.0
+      rev: 6.1.0
       hooks:
           - id: flake8
 
