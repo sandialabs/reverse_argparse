@@ -4,8 +4,8 @@ The ``reverse_argparse`` module.
 
 Defines the :class:`ReverseArgumentParser` class for unparsing arguments
 that were already parsed via :mod:`argparse`, and the
-:func:`quote_arg_if_necessary` helper function to surround any args with
-spaces in them with quotes.
+:func:`quote_arg_if_necessary` helper function to surround any arguments
+with spaces in them with quotes.
 """
 
 import re
