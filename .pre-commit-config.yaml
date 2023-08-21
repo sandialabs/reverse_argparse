@@ -2,6 +2,7 @@
 # See https://pre-commit.com/hooks.html for more hooks
 ci:
     autofix_prs: false
+    autoupdate_commit_msg: "ci: pre-commit auto-update"
 
 repos:
 
