@@ -3,4 +3,5 @@
 sphinx>=6.0,<7.0
 sphinx-autodoc-typehints
 sphinxcontrib-programoutput
+sphinxcontrib-spelling
 sphinx-rtd-theme

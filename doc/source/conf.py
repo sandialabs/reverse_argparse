@@ -31,6 +31,7 @@ extensions = [
     "sphinx_autodoc_typehints",
     "sphinx_rtd_theme",
     "sphinxcontrib.programoutput",
+    "sphinxcontrib.spelling",
 ]
 intersphinx_mapping = {"python": ("https://docs.python.org/3", None)}
 
