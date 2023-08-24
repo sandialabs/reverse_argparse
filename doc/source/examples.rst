@@ -1,7 +1,7 @@
 Examples
 ========
 
-The following example illustrate both the usage and the utility of
+The following examples illustrate both the usage and the utility of
 ``reverse_argparse``.  They build on each other in complexity, so it will make
 the most sense to start here at the top and work your way down through each in
 turn.
