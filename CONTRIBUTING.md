@@ -60,7 +60,7 @@ development :grinning:  Here's everything you need to know.
     <ul>
       <li><a href="#reviewers">Reviewers</a></li>
       <li><a href="#drafts">Drafts</a></li>
-      <li><a href="#gitlab-ci">GitHub CI</a></li>
+      <li><a href="#continuous-integration">Continuous Integration</a></li>
       <li><a href="#merging">Merging</a></li>
     </ul>
   </li>
@@ -223,14 +223,16 @@ search for and install them.  These are the ones we recommend:
   to native VS Code testing.
 * **Test Explorer UI:**  Extensible user interface for running your tests in VS
   Code.
-* **Vim:**  For when you can't truly leave vi behind (and who would want to?)
+* **Vim:**  For when you can't truly leave vi behind (and who would want to?).
 * **vscode-icons:**  Icons for the file explorer.
 
 [kraken]: https://www.gitkraken.com/
 
 **Python-Specific**
-* **AREPL for python:**  Automatically evaluate Python code as you type in the editor.
-* **autoDocstring - Python Docstring Generator:**  Quickly generate docstrings for Python functions.
+* **AREPL for python:**  Automatically evaluate Python code as you type in the
+  editor.
+* **autoDocstring - Python Docstring Generator:**  Quickly generate docstrings
+  for Python functions.
 * **Flake8:**  Linting support for Python files using flake8.
 * **Pylance:**  Fast, feature-rich language support for Python.
 * **Pylint:**  Linting support for Python files.
@@ -256,9 +258,9 @@ After installing the various extensions, you'll also want to customize your
 
 * Text Editor
   * Font
-    * **Font Family:**  Add "'Hack FC Ligatured', " to the beginning of the list.
-      You'll also want to install the [Ligatured Hack fonts][hack] on your
-      system.
+    * **Font Family:**  Add "'Hack FC Ligatured', " to the beginning of the
+      list.  You'll also want to install the [Ligatured Hack fonts][hack] on
+      your system.
   * Files
     * **Auto Save:**  Set to "onFocusChange".
     * **Trim Trailing Whitespace:**  Check.
@@ -292,8 +294,8 @@ After installing the various extensions, you'll also want to customize your
     * **Docstring Format:**  Select "google-notypes".
     * **Start On New Line:**  Check.
   * Sourcery Configuration:
-    * **Token:**  [Create a free Sourcery account][sourcery], generate a token, and
-      paste it here.
+    * **Token:**  [Create a free Sourcery account][sourcery], generate a token,
+      and paste it here.
   * Vim
     * **Vimrc:**  Enable:  Check.
 
@@ -456,7 +458,8 @@ following guidelines:
 * Prefer alphabetizing keyword arguments to functions, unless a different
   ordering would be more logical in a specific situation.
 * Blank lines in functions should be avoided unless preceding a comment
-  indicating a section of code.  However, if your function is broken up into sections via comments, consider subdividing it into smaller functions.
+  indicating a section of code.  However, if your function is broken up into
+  sections via comments, consider subdividing it into smaller functions.
 * Prefer imports of the form
   ```python
   from package import Class
@@ -537,7 +540,7 @@ Once `master` is updated, you then create a feature branch off of it with
 git checkout -b <branch-name>
 ```
 
-The recommended branch naming convention is to use the issue number, following
+The recommended branch naming convention is to use the issue number, followed
 by a hyphen, followed by the issue title, all lowercase, omitting special
 characters, and replacing spaces with hyphens.  For instance, if issue number
 123 has "Implement Awesome New Feature" as the title, the corresponding branch
@@ -561,7 +564,7 @@ rebase -i` to reorganize your commits before sharing.
 
 > **Note:**  If you rebase a branch that's already been pushed to a remote,
 > you'll wind up changing the history, which will require a force push with
-> `git push origin +<branchName>`.  That is permissible (even encouraged), but
+> `git push origin +<branch-name>`.  That is permissible (even encouraged), but
 > if you've had one or more reviewers or collaborators working with you on the
 > branch, *get their buy-in first* before doing a force push.
 
@@ -613,13 +616,33 @@ review, you can [mark it as ready][ready].
 [drafts]: https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-pull-requests#draft-pull-requests
 [ready]: https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/changing-the-stage-of-a-pull-request#marking-a-pull-request-as-ready-for-review
 
-### GitHub CI
+### Continuous Integration
 
-> **NOTE:**  REWORK THIS SECTION WHEN CI IS SET UP.
+GitHub Actions is GitHub's continuous integration and delivery (CI/CD)
+mechanism.  The configurations for our workflows can be found in the `*.yml`
+files in [the `.github/workflows` directory](.github/workflows) in the
+repository root:
+* **Continuous Integration:**  This workflow runs a `test` job, parametrized
+  across the currently maintained versions of Python, to ensure unit testing
+  passes, and a `commits` job to ensure we're adhering to the [Conventional
+  Commits specification][conventional].
+* **Semantic Release:**  This workflow runs on merges to `master` to
+  automatically generate and publish new releases, based on the commits just
+  merged.
 
-GitHub CI will automatically run on your pull request.  The configuration for
-the pipeline can be found in [the `.gitlab-ci.yml` file](INSERT URL HERE) in
-the repository root.
+In addition to the GitHub Actions workflows, we also integrate with the
+following services:
+* [Codecov][codecov]:  We calculate and publish code coverage details for all
+  PRs and merged into `master`, and the service comments on PRs indicating any
+  changes in coverage compared to the base branch.
+* [ReadTheDocs][readthedocs]:  We ensure our documentation builds for all PRs,
+  and the documentation is published for `master` and all release tags.
+* [pre-commit.ci][precommitci]: We ensure all the `pre-commit` checks we
+  encourage developers to run locally also run in CI.
+
+[codecov]: https://about.codecov.io/
+[readthedocs]: https://about.readthedocs.com/?ref=readthedocs.org
+[precommitci]: https://pre-commit.ci/
 
 ### Merging
 
