@@ -33,7 +33,7 @@ To get up and running with ``reverse_argparse``, simply
 
 .. code-block:: bash
 
-   python3 -m pip install reverse_argparse
+   python3 -m pip install reverse-argparse
 
 Usage
 -----
