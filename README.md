@@ -82,7 +82,9 @@ See [LICENSE.md](LICENSE.md).
 
 ## Credits
 
-Special thanks to [the GMS project][gms] for investing in the initial
-development of this package.
+Special thanks to [@mjsumpter][mjsumpter] for contributing to a prior iteration
+of this concept, and to [the GMS project][gms] for investing in the development
+of this package.
 
+[mjsumpter]: https://github.com/mjsumpter
 [gms]: https://github.com/SNL-GMS/GMS-PI21-OPEN/
