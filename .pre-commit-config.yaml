@@ -7,7 +7,7 @@ ci:
 repos:
 
     - repo: https://github.com/commitizen-tools/commitizen
-      rev: 3.7.0
+      rev: 3.7.1
       hooks:
           - id: commitizen
           - id: commitizen-branch
