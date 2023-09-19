@@ -1,7 +1,8 @@
 # Requirements for building the `reverse_argparse` documentation.
 
-sphinx>=6.0,<7.0
+sphinx
 sphinx-autodoc-typehints
+sphinx-copybutton
+sphinx-rtd-theme
 sphinxcontrib-programoutput
 sphinxcontrib-spelling
-sphinx-rtd-theme
