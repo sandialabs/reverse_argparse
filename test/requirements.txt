@@ -2,6 +2,7 @@
 
 bandit
 black
+dateparser
 flake8
 flake8-bugbear
 mypy
