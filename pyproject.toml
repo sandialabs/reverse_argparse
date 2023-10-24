@@ -15,6 +15,14 @@ skips = ["**/test_*.py"]
 line-length = 79
 
 
+[tool.commitizen]
+name = "cz_customize"
+
+
+[tool.commitizen.customize]
+schema_pattern = "(?s)(build|chore|ci|docs|feat|fix|minor|patch|perf|refactor|style|test|revert)(\\(\\S+\\))?!?:( [^\\n\\r]+)((\\n\\n.*)|(\\s*))?$"
+
+
 [tool.isort]
 profile = "black"
 line_length = 79
@@ -97,3 +105,22 @@ exclude_commit_patterns = [
 [tool.semantic_release.commit_author]
 env = "GIT_COMMIT_AUTHOR"
 default = "semantic-release <semantic-release>"
+
+
+[tool.semantic_release.commit_parser_options]
+allowed_tags = [
+    "build",
+    "chore",
+    "ci",
+    "docs",
+    "feat",
+    "fix",
+    "minor",
+    "patch",
+    "perf",
+    "refactor",
+    "style",
+    "test",
+]
+minor_tags = ["feat", "minor"]
+patch_tags = ["fix", "patch", "perf"]
