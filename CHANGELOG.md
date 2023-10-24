@@ -2,6 +2,116 @@
 
 
 
+## v1.0.5 (2023-10-24)
+
+### Chore
+* chore: Update python-semantic-release config ([`9972341`](https://github.com/sandialabs/reverse_argparse/commit/997234115d3ad715ad2adb6b3a092193163a91f8))
+
+  * Add commit types to automatically bump the minor or patch version
+    numbers via a commit message.
+  * Update commitizen configuration to allow the new commit types.
+* chore: Add Python 3.12 to pyproject.toml ([`ef59c2d`](https://github.com/sandialabs/reverse_argparse/commit/ef59c2d76c9f51dcae6736dbe91436c647780245))
+
+  This was accidentally omitted in
+  6642a176e3591f3ef8ed0c04dbcbc4a257c5b127.
+* chore: Remove YAPF configuration ([`ad02127`](https://github.com/sandialabs/reverse_argparse/commit/ad02127423354c1f42aff78728b9429c24647031))
+
+  We switched to `black` back in #5.
+
+### Continuous Integration
+* ci: pre-commit auto-update ([`cb014b7`](https://github.com/sandialabs/reverse_argparse/commit/cb014b7de64273369a4edb1df26ece2458f19850))
+
+  updates:
+  - [github.com/commitizen-tools/commitizen: 3.10.1 → 3.12.0](https://github.com/commitizen-tools/commitizen/compare/3.10.1...3.12.0)
+  - [github.com/pre-commit/mirrors-mypy: v1.6.0 → v1.6.1](https://github.com/pre-commit/mirrors-mypy/compare/v1.6.0...v1.6.1)
+  - [github.com/psf/black: 23.9.1 → 23.10.0](https://github.com/psf/black/compare/23.9.1...23.10.0)
+  - [github.com/PyCQA/prospector: 1.10.2 → v1.10.3](https://github.com/PyCQA/prospector/compare/1.10.2...v1.10.3)
+* ci: pre-commit auto-update ([`568c816`](https://github.com/sandialabs/reverse_argparse/commit/568c816514b50c014edf9cae79e1079055ccc437))
+
+  updates:
+  - [github.com/commitizen-tools/commitizen: 3.10.0 → 3.10.1](https://github.com/commitizen-tools/commitizen/compare/3.10.0...3.10.1)
+  - [github.com/pre-commit/mirrors-mypy: v1.5.1 → v1.6.0](https://github.com/pre-commit/mirrors-mypy/compare/v1.5.1...v1.6.0)
+* ci: pre-commit auto-update ([`b57dc9f`](https://github.com/sandialabs/reverse_argparse/commit/b57dc9f2f062679c453a97af3366dad7693bd2f2))
+
+  updates:
+  - [github.com/pre-commit/pre-commit-hooks: v4.4.0 → v4.5.0](https://github.com/pre-commit/pre-commit-hooks/compare/v4.4.0...v4.5.0)
+* ci: Add Python 3.12 to CI ([`f03f4dc`](https://github.com/sandialabs/reverse_argparse/commit/f03f4dccde7188b8ea545d8bf3b626fefe652745))
+
+  Also update the version badge to specify particular versions.
+* ci: pre-commit auto-update ([`d9fc077`](https://github.com/sandialabs/reverse_argparse/commit/d9fc0777c37d1041610b8f775da7ee510e7b9111))
+
+  updates:
+  - [github.com/commitizen-tools/commitizen: 3.9.0 → 3.10.0](https://github.com/commitizen-tools/commitizen/compare/3.9.0...3.10.0)
+* ci: pre-commit auto-update ([`e97c276`](https://github.com/sandialabs/reverse_argparse/commit/e97c2768ffe210167bdd565e907cb4d418eaa2de))
+
+  updates:
+  - [github.com/commitizen-tools/commitizen: 3.8.2 → 3.9.0](https://github.com/commitizen-tools/commitizen/compare/3.8.2...3.9.0)
+* ci: pre-commit auto-update ([`87d1f7e`](https://github.com/sandialabs/reverse_argparse/commit/87d1f7e09ce5acc57ca58a455954b3273fc351ad))
+
+  updates:
+  - [github.com/commitizen-tools/commitizen: 3.7.1 → 3.8.2](https://github.com/commitizen-tools/commitizen/compare/3.7.1...3.8.2)
+  - [github.com/psf/black: 23.7.0 → 23.9.1](https://github.com/psf/black/compare/23.7.0...23.9.1)
+* ci: pre-commit auto-update ([`b750046`](https://github.com/sandialabs/reverse_argparse/commit/b7500466de2d37dbb75df895a459749831a378c5))
+
+  updates:
+  - [github.com/commitizen-tools/commitizen: 3.7.0 → 3.7.1](https://github.com/commitizen-tools/commitizen/compare/3.7.0...3.7.1)
+* ci: pre-commit auto-update ([`b50b368`](https://github.com/sandialabs/reverse_argparse/commit/b50b368ea89d59fc8ba6f9ab1fac5971720af637))
+
+  updates:
+  - [github.com/commitizen-tools/commitizen: 3.6.0 → 3.7.0](https://github.com/commitizen-tools/commitizen/compare/3.6.0...3.7.0)
+* ci: pre-commit auto-update ([`989ba52`](https://github.com/sandialabs/reverse_argparse/commit/989ba523c4fe5bb93f0acc587f95805198352e7f))
+
+  updates:
+  - [github.com/pre-commit/mirrors-mypy: v1.5.0 → v1.5.1](https://github.com/pre-commit/mirrors-mypy/compare/v1.5.0...v1.5.1)
+* ci: Fix pre-commit auto-update message ([`6475b1f`](https://github.com/sandialabs/reverse_argparse/commit/6475b1f3ac2e5fff643a289859d452bbfa42099d))
+
+  Ensure the commit message used by the pre-commit auto-update bot adheres
+  to the Conventional Commits specification.
+* ci: pre-commit autoupdate ([`08fe531`](https://github.com/sandialabs/reverse_argparse/commit/08fe531db0d29044440649a5fee7787ba691858c))
+
+  updates:
+  - [github.com/commitizen-tools/commitizen: 3.5.3 → 3.6.0](https://github.com/commitizen-tools/commitizen/compare/3.5.3...3.6.0)
+  - [github.com/pre-commit/mirrors-mypy: v1.4.1 → v1.5.0](https://github.com/pre-commit/mirrors-mypy/compare/v1.4.1...v1.5.0)
+  - [github.com/PyCQA/flake8: 6.0.0 → 6.1.0](https://github.com/PyCQA/flake8/compare/6.0.0...6.1.0)
+
+### Documentation
+* docs: Remove dependency pinning ([`b14034f`](https://github.com/sandialabs/reverse_argparse/commit/b14034fb44f39fec6e9db847053233bd10a24ccd))
+
+  I should be the case that the bugs that kept us on an older version of
+  Sphinx have been resolved at this point, so remove the version pinning.
+* docs: Add sphinx-copybutton ([`2122825`](https://github.com/sandialabs/reverse_argparse/commit/2122825d7c31ebb91b7dd76af74c5cf61a4bd897))
+
+  Automatically add a button to all code boxes to copy the contents to the
+  clipboard.
+* docs: Fix typos ([`eb05c2c`](https://github.com/sandialabs/reverse_argparse/commit/eb05c2ca0b9bca8ada937d382d10185bc03e66e0))
+* docs: Special thanks to @mjsumpter ([`6cc3054`](https://github.com/sandialabs/reverse_argparse/commit/6cc3054bd573da56c57505bcb11d057e38440dcb))
+
+  Include @mjsumpter in the **Credits** section at the bottom of the
+  README, as he put together a prior iteration of this concept under my
+  guidance.  His earlier implementation informed the eventual creation of
+  this package.
+* docs: Add CI details to contributing guidelines ([`b8269bf`](https://github.com/sandialabs/reverse_argparse/commit/b8269bf0c74a95bf65cddf1fb29eccf6db7b9cf8))
+* docs: Check spelling ([`b72ee11`](https://github.com/sandialabs/reverse_argparse/commit/b72ee11874ae3b03280f623dbe08614aa023d689))
+
+  Add sphinxcontrib-spelling extension to check the spelling in our
+  documentation, and add a step to the CI job to ensure all is well.
+* docs: Add OpenSSF Best Practices badge ([`604fb61`](https://github.com/sandialabs/reverse_argparse/commit/604fb6127229606c8e36dae4199b538e0ec12248))
+* docs: Fix copy/paste issue ([`2f6517a`](https://github.com/sandialabs/reverse_argparse/commit/2f6517a9ad62412ea246d500170b0de7fe7e0e2f))
+* docs: pre-commit install instructions ([`063d8f9`](https://github.com/sandialabs/reverse_argparse/commit/063d8f977d513f966d10889f7fc14386731a1c80))
+
+### Patch
+* patch: Add release notes template ([`a447eac`](https://github.com/sandialabs/reverse_argparse/commit/a447eac820ac9cadf081f1fdfeda1c4d5027552c))
+
+  * Create a template to govern the generation of release notes by
+    python-semantic-release.
+  * Bump the patch version number to test that this works as expected.
+
+### Test
+* test: Run examples in CI ([`6642a17`](https://github.com/sandialabs/reverse_argparse/commit/6642a176e3591f3ef8ed0c04dbcbc4a257c5b127))
+
+  Create `example/test_examples.py` so `pytest` runs all the examples and
+  checks their output.
+
 ## v1.0.4 (2023-07-25)
 
 ### Fix

@@ -17,7 +17,7 @@ copyright = (
     "2023, National Technology & Engineering Solutions of Sandia, LLC (NTESS)"
 )
 author = "Jason M. Gates"
-version = "1.0.4"
+version = "1.0.5"
 release = version
 
 # -- General configuration ----------------------------------------------------
