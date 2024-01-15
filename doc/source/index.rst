@@ -12,6 +12,7 @@ reverse_argparse
 
 |Code Style: black|
 |codecov|
+|CodeQL|
 |conda-forge Version|
 |conda-forge Downloads|
 |Continuous Integration|
@@ -34,6 +35,8 @@ reverse_argparse
    :target: https://github.com/psf/black
 .. |codecov| image:: https://codecov.io/gh/sandialabs/reverse_argparse/branch/master/graph/badge.svg?token=FmDStZ6FVR
    :target: https://codecov.io/gh/sandialabs/reverse_argparse
+.. |CodeQL| image:: https://github.com/sandialabs/reverse_argparse/actions/workflows/github-code-scanning/codeql/badge.svg
+   :target: https://github.com/sandialabs/reverse_argparse/actions/workflows/github-code-scanning/codeql
 .. |conda-forge Version| image:: https://img.shields.io/conda/v/conda-forge/reverse-argparse?label=conda-forge
    :target: https://anaconda.org/conda-forge/reverse-argparse
 .. |conda-forge Downloads| image:: https://img.shields.io/conda/d/conda-forge/reverse-argparse?label=conda-forge%20downloads
