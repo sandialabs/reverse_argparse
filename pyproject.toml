@@ -30,7 +30,7 @@ line_length = 79
 
 [tool.poetry]
 name = "reverse_argparse"
-version = "1.0.5"
+version = "1.0.6"
 license = "LICENSE.md"
 readme = "README.md"
 keywords = ["argparse", "argument", "parse", "parsing", "command line"]

@@ -2,6 +2,64 @@
 
 
 
+## v1.0.6 (2024-01-15)
+
+### Continuous Integration
+* ci: pre-commit auto-update ([`47bb274`](https://github.com/sandialabs/reverse_argparse/commit/47bb274ce756e0846aef876acc083f363accf223))
+
+  updates:
+  - [github.com/PyCQA/flake8: 6.1.0 → 7.0.0](https://github.com/PyCQA/flake8/compare/6.1.0...7.0.0)
+* ci: pre-commit auto-update ([`9d3e11a`](https://github.com/sandialabs/reverse_argparse/commit/9d3e11a30ba2981456e86c936e49c1f81310ce71))
+
+  updates:
+  - [github.com/pre-commit/mirrors-mypy: v1.7.1 → v1.8.0](https://github.com/pre-commit/mirrors-mypy/compare/v1.7.1...v1.8.0)
+  - [github.com/psf/black: 23.11.0 → 23.12.1](https://github.com/psf/black/compare/23.11.0...23.12.1)
+  - [github.com/PyCQA/isort: 5.13.0 → 5.13.2](https://github.com/PyCQA/isort/compare/5.13.0...5.13.2)
+* ci: pre-commit auto-update ([`48da6a4`](https://github.com/sandialabs/reverse_argparse/commit/48da6a49cfd0c3d28fbcbf91f9344d99d703fbe6))
+
+  updates:
+  - [github.com/PyCQA/bandit: 1.7.5 → 1.7.6](https://github.com/PyCQA/bandit/compare/1.7.5...1.7.6)
+  - [github.com/PyCQA/isort: 5.12.0 → 5.13.0](https://github.com/PyCQA/isort/compare/5.12.0...5.13.0)
+* ci: pre-commit auto-update ([`a5591e4`](https://github.com/sandialabs/reverse_argparse/commit/a5591e4a92dd0ce9fb7b74ea414a7cac0ba88945))
+
+  updates:
+  - [github.com/commitizen-tools/commitizen: 3.12.0 → v3.13.0](https://github.com/commitizen-tools/commitizen/compare/3.12.0...v3.13.0)
+* ci: pre-commit auto-update ([`5d80e7d`](https://github.com/sandialabs/reverse_argparse/commit/5d80e7d9d79737623b20172c415c8afbf1322eb9))
+
+  updates:
+  - [github.com/pre-commit/mirrors-mypy: v1.7.0 → v1.7.1](https://github.com/pre-commit/mirrors-mypy/compare/v1.7.0...v1.7.1)
+* ci: pre-commit auto-update ([`bbc7a4e`](https://github.com/sandialabs/reverse_argparse/commit/bbc7a4e78cd5e8caba57fa73775a2d5730dfa7dd))
+
+  updates:
+  - [github.com/pre-commit/mirrors-mypy: v1.6.1 → v1.7.0](https://github.com/pre-commit/mirrors-mypy/compare/v1.6.1...v1.7.0)
+  - [github.com/psf/black: 23.10.1 → 23.11.0](https://github.com/psf/black/compare/23.10.1...23.11.0)
+* ci: pre-commit auto-update ([`4c5b060`](https://github.com/sandialabs/reverse_argparse/commit/4c5b06092015bd0ebddcb248ed45a17cc262041a))
+
+  updates:
+  - [github.com/psf/black: 23.10.0 → 23.10.1](https://github.com/psf/black/compare/23.10.0...23.10.1)
+
+### Documentation
+* docs: Add more badges ([`629857d`](https://github.com/sandialabs/reverse_argparse/commit/629857dc1c926be7cb0aa41b155be42d502822ef))
+
+  Add additional badges to capture things like contributions, the
+  conda-forge release channel, etc.
+* docs: Include badges in ReadTheDocs ([`e30fc68`](https://github.com/sandialabs/reverse_argparse/commit/e30fc68c9d9ae8dc7a35b016b4024604e23ec5e5))
+
+  Include the badges from the README in the index page of our
+  documentation so this information is visible on ReadTheDocs in addition
+  to GitHub and PyPI.
+
+  Closes #81.
+* docs: Private vulnerability reporting ([`9d6a758`](https://github.com/sandialabs/reverse_argparse/commit/9d6a758a95f47922f57eac814ba28e9046ee08e2))
+
+  Remove the security issue template and instead direct people to file a
+  private security advisory.
+
+### Patch
+* patch: Add a badge for the CodeQL action ([`2d77837`](https://github.com/sandialabs/reverse_argparse/commit/2d77837998ca69a46dd7579cbb89e9aa298b0ae4))
+
+  Create a patch release to push all these new badges out to PyPI.
+
 ## v1.0.5 (2023-10-24)
 
 ### Chore
