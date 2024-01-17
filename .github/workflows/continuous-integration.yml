@@ -50,6 +50,16 @@ jobs:
         run: make spelling
         working-directory: ./doc
 
+      - name: Check documentation coverage
+        run: make coverage
+        working-directory: ./doc
+
+      - name: Archive documentation coverage results
+        uses: actions/upload-artifact@v3
+        with:
+          name: docs-coverage-report
+          path: doc/build/coverage/python.txt
+
       - name: Test uninstall
         run: python3 -m pip uninstall -y reverse_argparse
 
