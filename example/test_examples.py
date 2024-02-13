@@ -1,5 +1,10 @@
 #!/usr/bin/env python3
-"""Run all the examples and ensure their output is correct."""
+"""
+Run all the examples and ensure their output is correct.
+
+Copyright The reverse-argparse Authors.
+SPDX-License-Identifier: BSD-3-Clause
+"""
 import re
 import shlex
 import subprocess  # nosec B404
