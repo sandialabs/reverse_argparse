@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+"""
+The unit test suite for the ``reverse_argparse`` package.
+
+Copyright The reverse-argparse Authors.
+SPDX-License-Identifier: BSD-3-Clause
+"""
 
 import shlex
 import sys

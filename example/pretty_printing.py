@@ -1,5 +1,10 @@
 #!/usr/bin/env python3
-"""``reverse_argparse`` pretty-printing functionality."""
+"""
+``reverse_argparse`` pretty-printing functionality.
+
+Copyright The reverse-argparse Authors.
+SPDX-License-Identifier: BSD-3-Clause
+"""
 import os
 from argparse import ArgumentParser
 

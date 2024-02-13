@@ -1,5 +1,10 @@
 #!/usr/bin/env python3
-"""How ``reverse_argparse`` handles default values."""
+"""
+How ``reverse_argparse`` handles default values.
+
+Copyright The reverse-argparse Authors.
+SPDX-License-Identifier: BSD-3-Clause
+"""
 from argparse import ArgumentParser
 
 from reverse_argparse import ReverseArgumentParser

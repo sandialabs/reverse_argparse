@@ -1,5 +1,10 @@
 #!/usr/bin/env python3
-"""How ``reverse_argparse`` handles relative references."""
+"""
+How ``reverse_argparse`` handles relative references.
+
+Copyright The reverse-argparse Authors.
+SPDX-License-Identifier: BSD-3-Clause
+"""
 import os
 from argparse import ArgumentParser
 

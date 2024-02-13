@@ -6,6 +6,9 @@ Defines the :class:`ReverseArgumentParser` class for unparsing arguments
 that were already parsed via :mod:`argparse`, and the
 :func:`quote_arg_if_necessary` helper function to surround any arguments
 with spaces in them with quotes.
+
+Copyright The reverse-argparse Authors.
+SPDX-License-Identifier: BSD-3-Clause
 """
 
 import re
