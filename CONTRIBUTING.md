@@ -3,69 +3,19 @@
 Thanks so much for your willingness to help out with `reverse_argparse`'s
 development :grinning:  Here's everything you need to know.
 
-<details>
-<summary><b>Contents</b></summary>
-<ul>
-  <li>
-    <a href="#setting-up-your-environment">Setting Up Your Environment</a>
-    <ul>
-      <li><a href="#pre-commit">Pre-Commit</a></li>
-      <li>
-        <a href="#vs-code">VS Code</a>
-        <ul>
-          <li><a href="#getting-started">Getting Started</a></li>
-          <li><a href="#extensions">Extensions</a></li>
-          <li><a href="#settings">Settings</a></li>
-          <li><a href="#choosing-a-python-interpreter">Choosing a Python Interpreter</a></li>
-          <li><a href="#setting-up-pytest">Setting Up PyTest</a></li>
-        </ul>
-      </li>
-    </ul>
-  </li>
-  <li>
-    <a href="#coding-standards">Coding Standards</a>
-    <ul>
-      <li><a href="#documentation">Documentation</a></li>
-      <li><a href="#testing">Testing</a></li>
-      <li><a href="#best-practices">Best Practices</a></li>
-    </ul>
-  </li>
-  <li>
-    <a href="#creating-issues">Creating Issues</a>
-    <ul>
-      <li><a href="#markdown">Markdown</a></li>
-      <li><a href="#issue-templates">Issue Templates</a></li>
-      <li><a href="#labels">Labels</a></li>
-    </ul>
-  </li>
-  <li>
-    <a href="#working-issues">Working Issues</a>
-    <ul>
-      <li><a href="#planning-work">Planning Work</a></li>
-      <li><a href="#when-work-begins">When Work Begins</a></li>
-      <li>
-        <a href="#as-work-continues">As Work Continues</a>
-        <ul>
-          <li><a href="#commit-messages">Commit Messages</a></li>
-          <li><a href="#pytest">pytest</a></li>
-          <li><a href="#sphinx">Sphinx</a></li>
-        </ul>
-      </li>
-      <li><a href="#when-work-is-complete">When Work is Complete</a></li>
-      <li><a href="#closing-old-issues">Closing Old Issues</a></li>
-    </ul>
-  </li>
-  <li>
-    <a href="#pull-requests">Pull Requests</a>
-    <ul>
-      <li><a href="#reviewers">Reviewers</a></li>
-      <li><a href="#drafts">Drafts</a></li>
-      <li><a href="#continuous-integration">Continuous Integration</a></li>
-      <li><a href="#merging">Merging</a></li>
-    </ul>
-  </li>
-</ul>
-</details>
+
+
+## Contributor License Agreement
+
+By contributing to this software project, you are agreeing to the following
+terms and conditions for your contributions:
+
+* You agree your contributions are submitted under the
+  [license used by this project](LICENSE.md).
+* You represent you are authorized to make the contributions and grant the
+  license.  If your employer has rights to intellectual property that includes
+  your contributions, you represent that you have received permission to make
+  contributions and grant the required license on behalf of that employer.
 
 
 
