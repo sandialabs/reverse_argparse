@@ -7,7 +7,10 @@ that were already parsed via :mod:`argparse`, and the
 :func:`quote_arg_if_necessary` helper function to surround any arguments
 with spaces in them with quotes.
 
-Copyright The reverse-argparse Authors.
+© 2024 National Technology & Engineering Solutions of Sandia, LLC
+(NTESS).  Under the terms of Contract DE-NA0003525 with NTESS, the U.S.
+Government retains certain rights in this software.
+
 SPDX-License-Identifier: BSD-3-Clause
 """
 
