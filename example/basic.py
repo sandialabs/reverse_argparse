@@ -1,13 +1,12 @@
 #!/usr/bin/env python3
-"""
-Basic ``reverse_argparse`` functionality.
+"""Basic ``reverse_argparse`` functionality."""
 
-© 2024 National Technology & Engineering Solutions of Sandia, LLC
-(NTESS).  Under the terms of Contract DE-NA0003525 with NTESS, the U.S.
-Government retains certain rights in this software.
+# © 2024 National Technology & Engineering Solutions of Sandia, LLC
+# (NTESS).  Under the terms of Contract DE-NA0003525 with NTESS, the
+# U.S. Government retains certain rights in this software.
 
-SPDX-License-Identifier: BSD-3-Clause
-"""
+# SPDX-License-Identifier: BSD-3-Clause
+
 from argparse import ArgumentParser
 
 from reverse_argparse import ReverseArgumentParser
