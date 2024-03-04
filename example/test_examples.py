@@ -1,13 +1,12 @@
 #!/usr/bin/env python3
-"""
-Run all the examples and ensure their output is correct.
+"""Run all the examples and ensure their output is correct."""
 
-© 2024 National Technology & Engineering Solutions of Sandia, LLC
-(NTESS).  Under the terms of Contract DE-NA0003525 with NTESS, the U.S.
-Government retains certain rights in this software.
+# © 2024 National Technology & Engineering Solutions of Sandia, LLC
+# (NTESS).  Under the terms of Contract DE-NA0003525 with NTESS, the
+# U.S. Government retains certain rights in this software.
 
-SPDX-License-Identifier: BSD-3-Clause
-"""
+# SPDX-License-Identifier: BSD-3-Clause
+
 import re
 import shlex
 import subprocess  # nosec B404
