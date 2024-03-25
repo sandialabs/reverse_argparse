@@ -95,4 +95,4 @@ of this concept, and to [the GMS project][gms] for investing in the development
 of this package.
 
 [mjsumpter]: https://github.com/mjsumpter
-[gms]: https://github.com/SNL-GMS/GMS-PI21-OPEN/
+[gms]: https://github.com/SNL-GMS/GMS-PI25
