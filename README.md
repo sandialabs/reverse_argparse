@@ -11,6 +11,7 @@
 [![Linting: Pylint](https://img.shields.io/badge/Linting-Pylint-yellowgreen)](https://github.com/pylint-dev/pylint)
 [![Merged PRs](https://img.shields.io/github/issues-pr-closed-raw/sandialabs/reverse_argparse.svg?label=merged+PRs)](https://github.com/sandialabs/reverse_argparse/pulls?q=is:pr+is:merged)
 [![OpenSSF Best Practices](https://bestpractices.coreinfrastructure.org/projects/7632/badge)](https://bestpractices.coreinfrastructure.org/projects/7632)
+[![OpenSSF Scorecard](htt‌ps://api.securityscorecards.dev/projects/github.com/sandialabs/reverse_argparse/badge)](htt‌ps://securityscorecards.dev/viewer/?uri=github.com/sandialabs/reverse_argparse)
 ![Anaconda-Server Badge](https://anaconda.org/conda-forge/reverse-argparse/badges/platforms.svg)
 [![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit)](https://github.com/pre-commit/pre-commit)
 [![pre-commit.ci Status](https://results.pre-commit.ci/badge/github/sandialabs/reverse_argparse/master.svg)](https://results.pre-commit.ci/latest/github/sandialabs/reverse_argparse/master)
