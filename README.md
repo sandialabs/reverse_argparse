@@ -1,5 +1,6 @@
 [![Code Style: black](https://img.shields.io/badge/Code%20Style-black-000000.svg)](https://github.com/psf/black)
 [![codecov](https://codecov.io/gh/sandialabs/reverse_argparse/branch/master/graph/badge.svg?token=FmDStZ6FVR)](https://codecov.io/gh/sandialabs/reverse_argparse)
+[![CodeFactor](https://www.codefactor.io/repository/github/sandialabs/reverse_argparse/badge/master)](https://www.codefactor.io/repository/github/sandialabs/reverse_argparse/overview/master)
 [![CodeQL](https://github.com/sandialabs/reverse_argparse/actions/workflows/github-code-scanning/codeql/badge.svg)](https://github.com/sandialabs/reverse_argparse/actions/workflows/github-code-scanning/codeql)
 [![Conda Version](https://img.shields.io/conda/v/conda-forge/reverse-argparse?label=conda-forge)](https://anaconda.org/conda-forge/reverse-argparse)
 ![Conda Downloads](https://img.shields.io/conda/d/conda-forge/reverse-argparse?label=conda-forge%20downloads)

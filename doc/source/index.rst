@@ -12,6 +12,7 @@ reverse_argparse
 
 |Code Style: black|
 |codecov|
+|CodeFactor|
 |CodeQL|
 |conda-forge Version|
 |conda-forge Downloads|
@@ -23,6 +24,7 @@ reverse_argparse
 |Linting: Pylint|
 |Merged PRs|
 |OpenSSF Best Practices|
+|OpenSSF Scorecard|
 |Platforms|
 |pre-commit|
 |pre-commit.ci Status|
@@ -35,6 +37,8 @@ reverse_argparse
    :target: https://github.com/psf/black
 .. |codecov| image:: https://codecov.io/gh/sandialabs/reverse_argparse/branch/master/graph/badge.svg?token=FmDStZ6FVR
    :target: https://codecov.io/gh/sandialabs/reverse_argparse
+.. |CodeFactor| image:: https://www.codefactor.io/repository/github/sandialabs/reverse_argparse/badge/master
+   :target: https://www.codefactor.io/repository/github/sandialabs/reverse_argparse/overview/master
 .. |CodeQL| image:: https://github.com/sandialabs/reverse_argparse/actions/workflows/github-code-scanning/codeql/badge.svg
    :target: https://github.com/sandialabs/reverse_argparse/actions/workflows/github-code-scanning/codeql
 .. |conda-forge Version| image:: https://img.shields.io/conda/v/conda-forge/reverse-argparse?label=conda-forge
@@ -56,6 +60,8 @@ reverse_argparse
    :target: https://github.com/sandialabs/reverse_argparse/pulls?q=is:pr+is:merged
 .. |OpenSSF Best Practices| image:: https://bestpractices.coreinfrastructure.org/projects/7632/badge
    :target: https://bestpractices.coreinfrastructure.org/projects/7632
+.. |OpenSSF Scorecard| image:: https://api.securityscorecards.dev/projects/github.com/sandialabs/reverse_argparse/badge
+   :target: https://securityscorecards.dev/viewer/?uri=github.com/sandialabs/reverse_argparse
 .. |Platforms| image:: https://anaconda.org/conda-forge/reverse-argparse/badges/platforms.svg
 .. |pre-commit| image:: https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit
    :target: https://github.com/pre-commit/pre-commit
