@@ -354,6 +354,8 @@ files, open the command palette, type "coverage," and select
 uncovered lines in green and red, respectively.  You can also view the full
 coverage report by opening `test/htmlcov/index.html`.
 
+
+
 ## Coding Standards
 
 Many of our coding standards are applied and enforced using
@@ -551,7 +553,7 @@ origin <branch-name>`, and then create a pull request.  Apply the same "Type"
 label as the issue, and then return to the issue and swap "Stage:  Development"
 for "Stage:  Review".
 
-### Reviewers
+### Reviews
 
 A project maintainer will review your pull request.  Work with them to get your
 changes into an acceptable state.
@@ -605,3 +607,72 @@ When the review is finished and changes are ready to be merged into `master`:
 3. Notify your reviewers that the request is ready to merge.
 4. Wait for them to merge the request.
 5. Ensure the post-merge CI pipeline also succeeds.
+
+
+
+## Conventional Comments
+
+When commenting on issues and pull requests, we endeavor to adhere to the
+[Conventional Comments specification][conventionalcomments] wherever
+applicable.  Comments should have the form
+```
+<label> [decorations]: <subject>
+
+[discussion]
+```
+where:
+* **label:**  This is a single label that signifies what kind of comment is
+  being left.
+* **subject:**  This is the main message of the comment.
+* **decorations (optional):**  These are extra decorating labels for the
+  comment.  They are surrounded by parentheses and comma-separated.
+* **discussion (optional):**  This contains supporting statements, context,
+  reasoning, and anything else to help communicate the “why” and “next steps”
+  for resolving the comment.
+
+The labels we use are the following:
+
+* **chore:**  Chores are simple tasks that must be done before the subject can
+  be “officially” accepted.  Usually, these comments reference some common
+  process.  Try to leave a link to the process description so that the reader
+  knows how to resolve the chore.
+* **issue:**  Issues highlight specific problems with the subject under review.
+  These problems can be user-facing or behind the scenes.  It is strongly
+  recommended to pair this comment with a suggestion.  If you are not sure if a
+  problem exists or not, consider leaving a **question**.
+* **note:**  Notes are always non-blocking and simply highlight something the
+  reader should take note of.
+* **polish:**  Polish comments are like a suggestion, where there is nothing
+  necessarily wrong with the relevant content, there's just some ways to
+  immediately improve the quality.
+* **praise:**  Praises highlight something positive.  Try to leave at least one
+  of these comments per review.  Do not leave false praise (which can actually
+  be damaging).  Do look for something to sincerely praise.
+* **quibble:**  Quibbles are trivial, preference-based requests.  These should
+  be non-blocking by nature.
+* **suggestion:**  Suggestions propose improvements to the current subject.
+  It's important to be explicit and clear on what is being suggested and why it
+  is an improvement.  Consider using patches and the blocking or non-blocking
+  decorations to further communicate your intent.
+* **thought:**  Thoughts represent an idea that popped up from reviewing.
+  These comments are non-blocking by nature, but they are extremely valuable
+  and can lead to more focused initiatives and mentoring opportunities.
+* **todo:**  TODO's are small, trivial, but necessary changes.  Distinguishing
+  **todo** comments from **issues** or **suggestions** helps direct the
+  reader's attention to comments requiring more involvement.
+* **typo:**  Typo comments are like **todo**, where the main issue is a
+  misspelling.
+* **question:**  Questions are appropriate if you have a potential concern but
+  are not quite sure if it's relevant or not.  Asking the author for
+  clarification or investigation can lead to a quick resolution.
+
+The decorations we use are the following:
+
+* **if-minor:**  This decoration gives some freedom to the author that they
+  should resolve the comment only if the changes ends up being minor or
+  trivial.
+* **non-blocking:**  A comment with this decoration should not prevent the
+  subject under review from being accepted.  Without this decoration, comments
+  are assumed to be blocking.
+
+[conventionalcomments]: https://conventionalcomments.org/
