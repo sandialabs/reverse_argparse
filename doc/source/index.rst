@@ -24,6 +24,7 @@ reverse_argparse
 |Linting: Pylint|
 |Merged PRs|
 |OpenSSF Best Practices|
+|OpenSSF Scorecard|
 |Platforms|
 |pre-commit|
 |pre-commit.ci Status|
@@ -59,6 +60,8 @@ reverse_argparse
    :target: https://github.com/sandialabs/reverse_argparse/pulls?q=is:pr+is:merged
 .. |OpenSSF Best Practices| image:: https://bestpractices.coreinfrastructure.org/projects/7632/badge
    :target: https://bestpractices.coreinfrastructure.org/projects/7632
+.. |OpenSSF Scorecard| image:: https://api.securityscorecards.dev/projects/github.com/sandialabs/reverse_argparse/badge
+   :target: https://securityscorecards.dev/viewer/?uri=github.com/sandialabs/reverse_argparse
 .. |Platforms| image:: https://anaconda.org/conda-forge/reverse-argparse/badges/platforms.svg
 .. |pre-commit| image:: https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit
    :target: https://github.com/pre-commit/pre-commit
