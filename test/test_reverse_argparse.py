@@ -10,12 +10,16 @@ import shlex
 import sys
 from argparse import SUPPRESS, ArgumentParser, Namespace
 
-if sys.version_info.minor >= 9:
-    from argparse import BooleanOptionalAction
-
 import pytest
 
 from reverse_argparse import ReverseArgumentParser
+
+
+BOOLEAN_OPTIONAL_ACTION_MINOR_VERSION = 9
+
+
+if sys.version_info.minor >= BOOLEAN_OPTIONAL_ACTION_MINOR_VERSION:
+    from argparse import BooleanOptionalAction
 
 
 @pytest.fixture()
@@ -47,7 +51,7 @@ def parser() -> ArgumentParser:
     )
     p.add_argument("--verbose", "-v", action="count", default=2)
     p.add_argument("--ext", action="extend", nargs="*")
-    if sys.version_info.minor >= 9:
+    if sys.version_info.minor >= BOOLEAN_OPTIONAL_ACTION_MINOR_VERSION:
         p.add_argument(
             "--bool-opt", action=BooleanOptionalAction, default=False
         )
@@ -148,7 +152,11 @@ def test_get_effective_command_line_invocation(parser, args) -> None:
             "app-nargs2-val --const --app-const1 --app-const2 -vv --ext "
             "ext-val1 ext-val2 ext-val3 "
         )
-        + ("--no-bool-opt " if sys.version_info.minor >= 9 else "")
+        + (
+            "--no-bool-opt "
+            if sys.version_info.minor >= BOOLEAN_OPTIONAL_ACTION_MINOR_VERSION
+            else ""
+        )
         + "pos1-val1 pos1-val2 pos2-val"
     )
     result = strip_first_entry(
@@ -179,7 +187,7 @@ def test_get_pretty_command_line_invocation(parser, args) -> None:
     --app-const2 \\
     -vv \\
     --ext ext-val1 ext-val2 ext-val3 \\"""
-    if sys.version_info.minor >= 9:
+    if sys.version_info.minor >= BOOLEAN_OPTIONAL_ACTION_MINOR_VERSION:
         expected += "\n    --no-bool-opt \\"
     expected += """\n    pos1-val1 pos1-val2 \\
     pos2-val"""
@@ -268,7 +276,7 @@ def test__unparse_args_boolean_optional_action() -> None:
     With a ``BooleanOptionalAction``, which became available in Python
     3.9.
     """
-    if sys.version_info.minor >= 9:
+    if sys.version_info.minor >= BOOLEAN_OPTIONAL_ACTION_MINOR_VERSION:
         parser = ArgumentParser()
         parser.add_argument("--foo", action=BooleanOptionalAction)
         try:
@@ -641,7 +649,7 @@ def test__unparse_extend_action() -> None:
 )
 def test__unparse_boolean_optional_action(default, args, expected) -> None:
     """Ensure ``BooleanOptionalAction`` actions are handled appropriately."""
-    if sys.version_info.minor >= 9:
+    if sys.version_info.minor >= BOOLEAN_OPTIONAL_ACTION_MINOR_VERSION:
         parser = ArgumentParser()
         action = parser.add_argument(
             "--bool-opt", action=BooleanOptionalAction, default=default
