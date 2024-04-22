@@ -493,7 +493,7 @@ class ReverseArgumentParser:
         values = getattr(self._namespace, action.dest)
         if values is not None:
             self._append_list_of_args(
-                [self._get_option_string(action)] + values
+                [self._get_option_string(action), *values]
             )
 
     def _unparse_boolean_optional_action(self, action: Action) -> None:
