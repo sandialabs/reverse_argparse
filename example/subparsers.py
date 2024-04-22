@@ -21,7 +21,10 @@ foo_parser.add_argument("--one")
 foo_parser.add_argument("--two", default="spam")
 foo_parser.add_argument("--three", type=int, default=42)
 bar_parser = subparsers.add_parser("bar")
-bar_parser.add_argument("--four", type=os.path.abspath)  # type: ignore
+bar_parser.add_argument(
+    "--four",
+    type=os.path.abspath,  # type: ignore[arg-type]
+)
 bar_parser.add_argument("--five")
 
 # Parse the command line arguments.
