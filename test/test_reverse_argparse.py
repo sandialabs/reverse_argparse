@@ -205,7 +205,7 @@ def test_get_command_line_invocation_strip_spaces() -> None:
 
 
 @pytest.mark.parametrize(
-    "add_args, add_kwargs, args, expected",
+    ("add_args", "add_kwargs", "args", "expected"),
     [
         (["--foo"], {"action": "store"}, "--foo bar", ["    --foo bar"]),
         (
@@ -305,7 +305,7 @@ def test__arg_is_default_and_help_is_suppressed() -> None:
 
 
 @pytest.mark.parametrize(
-    "strings, expected",
+    ("strings", "expected"),
     [
         (["-v", "--verbose"], ["--verbose"]),
         (["--foo", "-f", "--foo-bar"], ["--foo", "--foo-bar"]),
@@ -319,7 +319,7 @@ def test__get_long_option_strings(strings, expected) -> None:
 
 
 @pytest.mark.parametrize(
-    "strings, expected",
+    ("strings", "expected"),
     [
         (["-v", "--verbose"], ["-v"]),
         (["--foo", "-f", "--foo-bar"], ["-f"]),
@@ -335,7 +335,7 @@ def test__get_short_option_strings(strings, expected) -> None:
 
 
 @pytest.mark.parametrize(
-    "strings, expected",
+    ("strings", "expected"),
     [
         (["-v", "--verbose"], "--verbose"),
         (["--foo", "-f", "--foo-bar"], "--foo"),
@@ -351,7 +351,7 @@ def test__get_option_string(strings, expected) -> None:
 
 
 @pytest.mark.parametrize(
-    "strings, expected",
+    ("strings", "expected"),
     [
         (["-v", "--verbose"], "-v"),
         (["-f", "--foo", "-b"], "-f"),
@@ -369,7 +369,7 @@ def test__get_option_string_prefer_short(strings, expected) -> None:
 
 
 @pytest.mark.parametrize(
-    "add_args, add_kwargs, args, expected",
+    ("add_args", "add_kwargs", "args", "expected"),
     [
         (["positional"], {}, "val", "    val"),
         (["-f", "--foo"], {}, "-f bar", "    --foo bar"),
@@ -397,7 +397,7 @@ def test__unparse_store_action(add_args, add_kwargs, args, expected) -> None:
 
 
 @pytest.mark.parametrize(
-    "add_args, add_kwargs, args, expected",
+    ("add_args", "add_kwargs", "args", "expected"),
     [
         (["--foo"], {"action": "store_const", "const": 42}, "", None),
         (
@@ -435,7 +435,7 @@ def test__unparse_store_const_action(
 
 
 @pytest.mark.parametrize(
-    "args, expected", [(shlex.split("--foo"), "    --foo"), ([], None)]
+    ("args", "expected"), [(shlex.split("--foo"), "    --foo"), ([], None)]
 )
 def test__unparse_store_true_action(args, expected) -> None:
     """Ensure ``store_true`` actions are handled appropriately."""
@@ -450,7 +450,7 @@ def test__unparse_store_true_action(args, expected) -> None:
 
 
 @pytest.mark.parametrize(
-    "args, expected", [(shlex.split("--foo"), "    --foo"), ([], None)]
+    ("args", "expected"), [(shlex.split("--foo"), "    --foo"), ([], None)]
 )
 def test__unparse_store_false_action(args, expected) -> None:
     """Ensure ``store_false`` actions are handled appropriately."""
@@ -465,7 +465,7 @@ def test__unparse_store_false_action(args, expected) -> None:
 
 
 @pytest.mark.parametrize(
-    "add_args, add_kwargs, args, expected",
+    ("add_args", "add_kwargs", "args", "expected"),
     [
         (
             ["--foo"],
@@ -492,7 +492,7 @@ def test__unparse_append_action(add_args, add_kwargs, args, expected) -> None:
 
 
 @pytest.mark.parametrize(
-    "args, expected", [("--foo", "    --foo"), ("", None)]
+    ("args", "expected"), [("--foo", "    --foo"), ("", None)]
 )
 def test__unparse_append_const_action(args, expected) -> None:
     """Ensure ``append_const`` actions are handled appropriately."""
@@ -509,7 +509,7 @@ def test__unparse_append_const_action(args, expected) -> None:
 
 
 @pytest.mark.parametrize(
-    "add_args, add_kwargs, args, expected",
+    ("add_args", "add_kwargs", "args", "expected"),
     [
         (
             ["--foo"],
@@ -542,7 +542,7 @@ def test__unparse_count_action(add_args, add_kwargs, args, expected) -> None:
 
 
 @pytest.mark.parametrize(
-    "args, expected, pretty",
+    ("args", "expected", "pretty"),
     [
         ("a 12", "a 12", "    a \\\n        12"),
         (
@@ -626,7 +626,7 @@ def test__unparse_extend_action() -> None:
 
 
 @pytest.mark.parametrize(
-    "default, args, expected",
+    ("default", "args", "expected"),
     [
         (None, "", None),
         (None, "--bool-opt", "    --bool-opt"),
