@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """
 The ``reverse_argparse`` module.
 
@@ -18,6 +17,10 @@ import re
 import sys
 from argparse import SUPPRESS, Action, ArgumentParser, Namespace
 from typing import List, Sequence
+
+
+BOOLEAN_OPTIONAL_ACTION_MINOR_VERSION = 9
+SHORT_OPTION_LENGTH = 2
 
 
 class ReverseArgumentParser:
@@ -91,7 +94,7 @@ class ReverseArgumentParser:
             self._unparse_action(action)
         self._unparsed[-1] = True
 
-    def _unparse_action(self, action: Action) -> None:
+    def _unparse_action(self, action: Action) -> None:  # noqa: C901, PLR0912
         """
         Unparse a single action.
 
@@ -135,14 +138,15 @@ class ReverseArgumentParser:
             return
         elif (
             action_type == "BooleanOptionalAction"
-            and sys.version_info.minor >= 9
+            and sys.version_info.minor >= BOOLEAN_OPTIONAL_ACTION_MINOR_VERSION
         ):
             self._unparse_boolean_optional_action(action)
         else:  # pragma: no cover
-            raise NotImplementedError(
+            message = (
                 f"{self.__class__.__name__} does not yet support the "
                 f"unparsing of {action_type} objects."
             )
+            raise NotImplementedError(message)
 
     def _arg_is_default_and_help_is_suppressed(self, action: Action) -> bool:
         """
@@ -213,7 +217,7 @@ class ReverseArgumentParser:
         return [
             option
             for option in option_strings
-            if len(option) > 2
+            if len(option) > SHORT_OPTION_LENGTH
             and option[0] in self._parsers[-1].prefix_chars
             and option[1] in self._parsers[-1].prefix_chars
         ]
@@ -235,11 +239,12 @@ class ReverseArgumentParser:
         return [
             option
             for option in option_strings
-            if len(option) == 2 and option[0] in self._parsers[-1].prefix_chars
+            if len(option) == SHORT_OPTION_LENGTH
+            and option[0] in self._parsers[-1].prefix_chars
         ]
 
     def _get_option_string(
-        self, action: Action, prefer_short: bool = False
+        self, action: Action, *, prefer_short: bool = False
     ) -> str:
         """
         Get the option string for the `action`.
@@ -342,10 +347,10 @@ class ReverseArgumentParser:
             values = [values]
         needs_quotes_regex = re.compile(r"(.*\s.*)")
         for value in values:
-            value = str(value)
-            if needs_quotes_regex.search(value):
-                value = needs_quotes_regex.sub(r"'\1'", value)
-            result.append(value)
+            string_value = str(value)
+            if needs_quotes_regex.search(string_value):
+                string_value = needs_quotes_regex.sub(r"'\1'", string_value)
+            result.append(string_value)
         self._append_list_of_args(result)
 
     def _unparse_store_const_action(self, action: Action) -> None:
@@ -399,13 +404,13 @@ class ReverseArgumentParser:
             for entry in values:
                 tmp = [flag]
                 for value in entry:
-                    value = quote_arg_if_necessary(str(value))
-                    tmp.append(value)
+                    quoted_value = quote_arg_if_necessary(str(value))
+                    tmp.append(quoted_value)
                 result.append(tmp)
         else:
             for value in values:
-                value = quote_arg_if_necessary(str(value))
-                result.append([flag, value])
+                quoted_value = quote_arg_if_necessary(str(value))
+                result.append([flag, quoted_value])
         self._append_list_of_list_of_args(result)
 
     def _unparse_append_const_action(self, action: Action) -> None:
@@ -429,7 +434,10 @@ class ReverseArgumentParser:
         value = getattr(self._namespace, action.dest)
         count = value if action.default is None else (value - action.default)
         flag = self._get_option_string(action, prefer_short=True)
-        if len(flag) == 2 and flag[0] in self._parsers[-1].prefix_chars:
+        if (
+            len(flag) == SHORT_OPTION_LENGTH
+            and flag[0] in self._parsers[-1].prefix_chars
+        ):
             self._append_arg(flag[0] + flag[1] * count)
         else:
             self._append_list_of_args([flag for _ in range(count)])
@@ -457,10 +465,11 @@ class ReverseArgumentParser:
         if action.choices is None or not isinstance(
             action.choices, dict
         ):  # pragma: no cover
-            raise RuntimeError(
+            message = (
                 "This subparser action is missing its dictionary of "
                 f"choices:  {action}"
             )
+            raise RuntimeError(message)
         for subcommand, subparser in action.choices.items():
             self._parsers.append(subparser)
             self._unparsed.append(False)
@@ -484,7 +493,7 @@ class ReverseArgumentParser:
         values = getattr(self._namespace, action.dest)
         if values is not None:
             self._append_list_of_args(
-                [self._get_option_string(action)] + values
+                [self._get_option_string(action), *values]
             )
 
     def _unparse_boolean_optional_action(self, action: Action) -> None:

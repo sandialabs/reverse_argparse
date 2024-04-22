@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """The unit test suite for the ``reverse_argparse`` package."""
 
 # © 2024 National Technology & Engineering Solutions of Sandia, LLC
@@ -11,16 +10,26 @@ import shlex
 import sys
 from argparse import SUPPRESS, ArgumentParser, Namespace
 
-if sys.version_info.minor >= 9:
-    from argparse import BooleanOptionalAction
-
 import pytest
 
 from reverse_argparse import ReverseArgumentParser
 
 
+BOOLEAN_OPTIONAL_ACTION_MINOR_VERSION = 9
+
+
+if sys.version_info.minor >= BOOLEAN_OPTIONAL_ACTION_MINOR_VERSION:
+    from argparse import BooleanOptionalAction
+
+
 @pytest.fixture()
 def parser() -> ArgumentParser:
+    """
+    Pre-populate an ``ArgumentParser`` with a variety of options.
+
+    Returns:
+        The ``ArgumentParser`` to be used in a number of tests.
+    """
     p = ArgumentParser()
     p.add_argument("pos1", nargs="*")
     p.add_argument("pos2")
@@ -42,7 +51,7 @@ def parser() -> ArgumentParser:
     )
     p.add_argument("--verbose", "-v", action="count", default=2)
     p.add_argument("--ext", action="extend", nargs="*")
-    if sys.version_info.minor >= 9:
+    if sys.version_info.minor >= BOOLEAN_OPTIONAL_ACTION_MINOR_VERSION:
         p.add_argument(
             "--bool-opt", action=BooleanOptionalAction, default=False
         )
@@ -92,43 +101,46 @@ COMPLETE_ARGS = [
 ]
 
 
-def strip_first_entry(input: str) -> str:
+def strip_first_entry(input_string: str) -> str:
     """
     Remove the first entry of a space-delimited string.
 
     Args:
-        input:  A space-delimited string.
+        input_string:  A space-delimited string.
 
     Returns:
         The input string with the first element (and first space)
         removed.
     """
-    return " ".join(input.split()[1:])
+    return " ".join(input_string.split()[1:])
 
 
 def test_strip_first_entry() -> None:
-    assert strip_first_entry("foo bar baz") == "bar baz"
+    """Ensure :func:`strip_first_entry` works as expected."""
+    assert strip_first_entry("foo bar baz") == "bar baz"  # noqa: S101
 
 
-def strip_first_line(input: str) -> str:
+def strip_first_line(input_string: str) -> str:
     """
     Remove the first line of a multi-line string.
 
     Args:
-        input:  A multi-line string.
+        input_string:  A multi-line string.
 
     Returns:
         The input string with the first line removed.
     """
-    return "\n".join(input.splitlines()[1:])
+    return "\n".join(input_string.splitlines()[1:])
 
 
 def test_strip_first_line() -> None:
-    assert strip_first_line("foo\nbar\nbaz") == "bar\nbaz"
+    """Ensure :func:`strip_first_line` works as expected."""
+    assert strip_first_line("foo\nbar\nbaz") == "bar\nbaz"  # noqa: S101
 
 
 @pytest.mark.parametrize("args", COMPLETE_ARGS)
 def test_get_effective_command_line_invocation(parser, args) -> None:
+    """Ensure :func:`get_effective_command_line_invoation` works."""
     namespace = parser.parse_args(shlex.split(args))
     unparser = ReverseArgumentParser(parser, namespace)
     expected = (
@@ -140,17 +152,22 @@ def test_get_effective_command_line_invocation(parser, args) -> None:
             "app-nargs2-val --const --app-const1 --app-const2 -vv --ext "
             "ext-val1 ext-val2 ext-val3 "
         )
-        + ("--no-bool-opt " if sys.version_info.minor >= 9 else "")
+        + (
+            "--no-bool-opt "
+            if sys.version_info.minor >= BOOLEAN_OPTIONAL_ACTION_MINOR_VERSION
+            else ""
+        )
         + "pos1-val1 pos1-val2 pos2-val"
     )
     result = strip_first_entry(
         unparser.get_effective_command_line_invocation()
     )
-    assert result == expected
+    assert result == expected  # noqa: S101
 
 
 @pytest.mark.parametrize("args", COMPLETE_ARGS)
 def test_get_pretty_command_line_invocation(parser, args) -> None:
+    """Ensure :func:`get_pretty_command_line_invoation` works as expected."""
     namespace = parser.parse_args(shlex.split(args))
     unparser = ReverseArgumentParser(parser, namespace)
     expected = """    --opt1 opt1-val \\
@@ -170,30 +187,33 @@ def test_get_pretty_command_line_invocation(parser, args) -> None:
     --app-const2 \\
     -vv \\
     --ext ext-val1 ext-val2 ext-val3 \\"""
-    if sys.version_info.minor >= 9:
+    if sys.version_info.minor >= BOOLEAN_OPTIONAL_ACTION_MINOR_VERSION:
         expected += "\n    --no-bool-opt \\"
     expected += """\n    pos1-val1 pos1-val2 \\
     pos2-val"""
     result = strip_first_line(unparser.get_pretty_command_line_invocation())
-    assert result == expected
+    assert result == expected  # noqa: S101
 
 
 def test_get_command_line_invocation_strip_spaces() -> None:
+    """Ensure extraneous spaces are stripped."""
     parser = ArgumentParser()
     namespace = Namespace()
     unparser = ReverseArgumentParser(parser, namespace)
     unparser._args = ["program_name", "    --foo", "    ", "    --bar"]
     unparser._unparsed = [True]
     expected = "program_name --foo --bar"
-    assert unparser.get_effective_command_line_invocation() == expected
+    assert (  # noqa: S101
+        unparser.get_effective_command_line_invocation() == expected
+    )
     expected = """    --foo \\
     --bar"""
     result = strip_first_line(unparser.get_pretty_command_line_invocation())
-    assert result == expected
+    assert result == expected  # noqa: S101
 
 
 @pytest.mark.parametrize(
-    "add_args, add_kwargs, args, expected",
+    ("add_args", "add_kwargs", "args", "expected"),
     [
         (["--foo"], {"action": "store"}, "--foo bar", ["    --foo bar"]),
         (
@@ -233,6 +253,7 @@ def test_get_command_line_invocation_strip_spaces() -> None:
     ],
 )
 def test__unparse_args(add_args, add_kwargs, args, expected) -> None:
+    """Ensure :func:`_unparse_args` works as expected."""
     parser = ArgumentParser()
     parser.add_argument(*add_args, **add_kwargs)
     try:
@@ -245,11 +266,17 @@ def test__unparse_args(add_args, add_kwargs, args, expected) -> None:
             unparser._unparse_args()
     else:
         unparser._unparse_args()
-        assert unparser._args[1:] == expected
+        assert unparser._args[1:] == expected  # noqa: S101
 
 
 def test__unparse_args_boolean_optional_action() -> None:
-    if sys.version_info.minor >= 9:
+    """
+    Ensure :func:`_unparse_args` works as expected.
+
+    With a ``BooleanOptionalAction``, which became available in Python
+    3.9.
+    """
+    if sys.version_info.minor >= BOOLEAN_OPTIONAL_ACTION_MINOR_VERSION:
         parser = ArgumentParser()
         parser.add_argument("--foo", action=BooleanOptionalAction)
         try:
@@ -258,10 +285,11 @@ def test__unparse_args_boolean_optional_action() -> None:
             namespace = Namespace()
         unparser = ReverseArgumentParser(parser, namespace)
         unparser._unparse_args()
-        assert unparser._args[1:] == ["    --foo"]
+        assert unparser._args[1:] == ["    --foo"]  # noqa: S101
 
 
 def test__unparse_args_already_unparsed() -> None:
+    """Ensure unparsing is a no-op if the args have already been unparsed."""
     parser = ArgumentParser()
     namespace = Namespace()
     unparser = ReverseArgumentParser(parser, namespace)
@@ -269,10 +297,11 @@ def test__unparse_args_already_unparsed() -> None:
     args_before = unparser._args.copy()
     unparser._unparsed = [True]
     unparser._unparse_args()
-    assert unparser._args == args_before
+    assert unparser._args == args_before  # noqa: S101
 
 
 def test__arg_is_default_and_help_is_suppressed() -> None:
+    """Ensure defaults for suppressed args are suppressed."""
     parser = ArgumentParser()
     parser.add_argument("--suppressed", default=10, help=SUPPRESS)
     namespace = parser.parse_args(shlex.split(""))
@@ -280,11 +309,11 @@ def test__arg_is_default_and_help_is_suppressed() -> None:
     result = strip_first_entry(
         unparser.get_effective_command_line_invocation()
     )
-    assert result == ""
+    assert result == ""  # noqa: S101
 
 
 @pytest.mark.parametrize(
-    "strings, expected",
+    ("strings", "expected"),
     [
         (["-v", "--verbose"], ["--verbose"]),
         (["--foo", "-f", "--foo-bar"], ["--foo", "--foo-bar"]),
@@ -292,12 +321,13 @@ def test__arg_is_default_and_help_is_suppressed() -> None:
     ],
 )
 def test__get_long_option_strings(strings, expected) -> None:
+    """Ensure the long-form option is selected from a list."""
     unparser = ReverseArgumentParser(ArgumentParser(), Namespace())
-    assert unparser._get_long_option_strings(strings) == expected
+    assert unparser._get_long_option_strings(strings) == expected  # noqa: S101
 
 
 @pytest.mark.parametrize(
-    "strings, expected",
+    ("strings", "expected"),
     [
         (["-v", "--verbose"], ["-v"]),
         (["--foo", "-f", "--foo-bar"], ["-f"]),
@@ -305,12 +335,15 @@ def test__get_long_option_strings(strings, expected) -> None:
     ],
 )
 def test__get_short_option_strings(strings, expected) -> None:
+    """Ensure the short-form option is selected from a list."""
     unparser = ReverseArgumentParser(ArgumentParser(), Namespace())
-    assert unparser._get_short_option_strings(strings) == expected
+    assert (  # noqa: S101
+        unparser._get_short_option_strings(strings) == expected
+    )
 
 
 @pytest.mark.parametrize(
-    "strings, expected",
+    ("strings", "expected"),
     [
         (["-v", "--verbose"], "--verbose"),
         (["--foo", "-f", "--foo-bar"], "--foo"),
@@ -318,14 +351,15 @@ def test__get_short_option_strings(strings, expected) -> None:
     ],
 )
 def test__get_option_string(strings, expected) -> None:
+    """Ensure long-form options are preferred over short-form ones."""
     parser = ArgumentParser()
     action = parser.add_argument(*strings)
     unparser = ReverseArgumentParser(parser, Namespace())
-    assert unparser._get_option_string(action) == expected
+    assert unparser._get_option_string(action) == expected  # noqa: S101
 
 
 @pytest.mark.parametrize(
-    "strings, expected",
+    ("strings", "expected"),
     [
         (["-v", "--verbose"], "-v"),
         (["-f", "--foo", "-b"], "-f"),
@@ -333,14 +367,17 @@ def test__get_option_string(strings, expected) -> None:
     ],
 )
 def test__get_option_string_prefer_short(strings, expected) -> None:
+    """Ensure short-form options are preferred over long-form ones."""
     parser = ArgumentParser()
     action = parser.add_argument(*strings)
     unparser = ReverseArgumentParser(parser, Namespace())
-    assert unparser._get_option_string(action, prefer_short=True) == expected
+    assert (  # noqa: S101
+        unparser._get_option_string(action, prefer_short=True) == expected
+    )
 
 
 @pytest.mark.parametrize(
-    "add_args, add_kwargs, args, expected",
+    ("add_args", "add_kwargs", "args", "expected"),
     [
         (["positional"], {}, "val", "    val"),
         (["-f", "--foo"], {}, "-f bar", "    --foo bar"),
@@ -358,16 +395,17 @@ def test__get_option_string_prefer_short(strings, expected) -> None:
     ],
 )
 def test__unparse_store_action(add_args, add_kwargs, args, expected) -> None:
+    """Ensure ``store`` actions are handled appropriately."""
     parser = ArgumentParser()
     action = parser.add_argument(*add_args, **add_kwargs)
     namespace = parser.parse_args(shlex.split(args))
     unparser = ReverseArgumentParser(parser, namespace)
     unparser._unparse_store_action(action)
-    assert unparser._args[1:] == [expected]
+    assert unparser._args[1:] == [expected]  # noqa: S101
 
 
 @pytest.mark.parametrize(
-    "add_args, add_kwargs, args, expected",
+    ("add_args", "add_kwargs", "args", "expected"),
     [
         (["--foo"], {"action": "store_const", "const": 42}, "", None),
         (
@@ -393,40 +431,49 @@ def test__unparse_store_action(add_args, add_kwargs, args, expected) -> None:
 def test__unparse_store_const_action(
     add_args, add_kwargs, args, expected
 ) -> None:
+    """Ensure ``store_const`` actions are handled appropriately."""
     parser = ArgumentParser()
     action = parser.add_argument(*add_args, **add_kwargs)
     namespace = parser.parse_args(shlex.split(args))
     unparser = ReverseArgumentParser(parser, namespace)
     unparser._unparse_store_const_action(action)
-    assert unparser._args[1:] == ([expected] if expected is not None else [])
+    assert (  # noqa: S101
+        unparser._args[1:] == ([expected] if expected is not None else [])
+    )
 
 
 @pytest.mark.parametrize(
-    "args, expected", [(shlex.split("--foo"), "    --foo"), ([], None)]
+    ("args", "expected"), [(shlex.split("--foo"), "    --foo"), ([], None)]
 )
 def test__unparse_store_true_action(args, expected) -> None:
+    """Ensure ``store_true`` actions are handled appropriately."""
     parser = ArgumentParser()
     action = parser.add_argument("--foo", action="store_true")
     namespace = parser.parse_args(args)
     unparser = ReverseArgumentParser(parser, namespace)
     unparser._unparse_store_true_action(action)
-    assert unparser._args[1:] == ([expected] if expected is not None else [])
+    assert (  # noqa: S101
+        unparser._args[1:] == ([expected] if expected is not None else [])
+    )
 
 
 @pytest.mark.parametrize(
-    "args, expected", [(shlex.split("--foo"), "    --foo"), ([], None)]
+    ("args", "expected"), [(shlex.split("--foo"), "    --foo"), ([], None)]
 )
 def test__unparse_store_false_action(args, expected) -> None:
+    """Ensure ``store_false`` actions are handled appropriately."""
     parser = ArgumentParser()
     action = parser.add_argument("--foo", action="store_false")
     namespace = parser.parse_args(args)
     unparser = ReverseArgumentParser(parser, namespace)
     unparser._unparse_store_false_action(action)
-    assert unparser._args[1:] == ([expected] if expected is not None else [])
+    assert (  # noqa: S101
+        unparser._args[1:] == ([expected] if expected is not None else [])
+    )
 
 
 @pytest.mark.parametrize(
-    "add_args, add_kwargs, args, expected",
+    ("add_args", "add_kwargs", "args", "expected"),
     [
         (
             ["--foo"],
@@ -443,18 +490,20 @@ def test__unparse_store_false_action(args, expected) -> None:
     ],
 )
 def test__unparse_append_action(add_args, add_kwargs, args, expected) -> None:
+    """Ensure ``append`` actions are handled appropriately."""
     parser = ArgumentParser()
     action = parser.add_argument(*add_args, **add_kwargs)
     namespace = parser.parse_args(shlex.split(args))
     unparser = ReverseArgumentParser(parser, namespace)
     unparser._unparse_append_action(action)
-    assert unparser._args[1:] == expected
+    assert unparser._args[1:] == expected  # noqa: S101
 
 
 @pytest.mark.parametrize(
-    "args, expected", [("--foo", "    --foo"), ("", None)]
+    ("args", "expected"), [("--foo", "    --foo"), ("", None)]
 )
 def test__unparse_append_const_action(args, expected) -> None:
+    """Ensure ``append_const`` actions are handled appropriately."""
     parser = ArgumentParser()
     action = parser.add_argument(
         "--foo", dest="append_const", action="append_const", const=42
@@ -462,11 +511,13 @@ def test__unparse_append_const_action(args, expected) -> None:
     namespace = parser.parse_args(shlex.split(args))
     unparser = ReverseArgumentParser(parser, namespace)
     unparser._unparse_append_const_action(action)
-    assert unparser._args[1:] == ([expected] if expected is not None else [])
+    assert (  # noqa: S101
+        unparser._args[1:] == ([expected] if expected is not None else [])
+    )
 
 
 @pytest.mark.parametrize(
-    "add_args, add_kwargs, args, expected",
+    ("add_args", "add_kwargs", "args", "expected"),
     [
         (
             ["--foo"],
@@ -489,16 +540,17 @@ def test__unparse_append_const_action(args, expected) -> None:
     ],
 )
 def test__unparse_count_action(add_args, add_kwargs, args, expected) -> None:
+    """Ensure ``count`` actions are handled appropriately."""
     parser = ArgumentParser()
     action = parser.add_argument(*add_args, **add_kwargs)
     namespace = parser.parse_args(shlex.split(args))
     unparser = ReverseArgumentParser(parser, namespace)
     unparser._unparse_count_action(action)
-    assert unparser._args[1:] == [expected]
+    assert unparser._args[1:] == [expected]  # noqa: S101
 
 
 @pytest.mark.parametrize(
-    "args, expected, pretty",
+    ("args", "expected", "pretty"),
     [
         ("a 12", "a 12", "    a \\\n        12"),
         (
@@ -509,6 +561,7 @@ def test__unparse_count_action(add_args, add_kwargs, args, expected) -> None:
     ],
 )
 def test__unparse_sub_parsers_action(args, expected, pretty) -> None:
+    """Ensure subparsers are handled appropriately."""
     parser = ArgumentParser()
     parser.add_argument("--foo", action="store_true", help="foo help")
     subparsers = parser.add_subparsers(help="sub-command help")
@@ -522,12 +575,13 @@ def test__unparse_sub_parsers_action(args, expected, pretty) -> None:
     result = strip_first_entry(
         unparser.get_effective_command_line_invocation()
     )
-    assert result == expected
+    assert result == expected  # noqa: S101
     result = strip_first_line(unparser.get_pretty_command_line_invocation())
-    assert result == pretty
+    assert result == pretty  # noqa: S101
 
 
 def test__unparse_sub_parsers_action_nested() -> None:
+    """Ensure nested subparsers are handled appropriately."""
     parser = ArgumentParser()
     parser.add_argument("--optional-1", action="store_true")
     parser.add_argument("--optional-2")
@@ -563,23 +617,24 @@ def test__unparse_sub_parsers_action_nested() -> None:
     result = strip_first_entry(
         unparser.get_effective_command_line_invocation()
     )
-    assert result == args
+    assert result == args  # noqa: S101
     result = strip_first_line(unparser.get_pretty_command_line_invocation())
-    assert result == pretty
+    assert result == pretty  # noqa: S101
 
 
 def test__unparse_extend_action() -> None:
+    """Ensure ``extend`` actions are handled appropriately."""
     parser = ArgumentParser()
     action = parser.add_argument("--foo", action="extend", nargs="*")
     namespace = parser.parse_args(shlex.split("--foo bar --foo baz bif"))
     unparser = ReverseArgumentParser(parser, namespace)
     expected = "    --foo bar baz bif"
     unparser._unparse_extend_action(action)
-    assert unparser._args[1:] == [expected]
+    assert unparser._args[1:] == [expected]  # noqa: S101
 
 
 @pytest.mark.parametrize(
-    "default, args, expected",
+    ("default", "args", "expected"),
     [
         (None, "", None),
         (None, "--bool-opt", "    --bool-opt"),
@@ -593,7 +648,8 @@ def test__unparse_extend_action() -> None:
     ],
 )
 def test__unparse_boolean_optional_action(default, args, expected) -> None:
-    if sys.version_info.minor >= 9:
+    """Ensure ``BooleanOptionalAction`` actions are handled appropriately."""
+    if sys.version_info.minor >= BOOLEAN_OPTIONAL_ACTION_MINOR_VERSION:
         parser = ArgumentParser()
         action = parser.add_argument(
             "--bool-opt", action=BooleanOptionalAction, default=default
@@ -601,6 +657,6 @@ def test__unparse_boolean_optional_action(default, args, expected) -> None:
         namespace = parser.parse_args(shlex.split(args))
         unparser = ReverseArgumentParser(parser, namespace)
         unparser._unparse_boolean_optional_action(action)
-        assert unparser._args[1:] == (
+        assert unparser._args[1:] == (  # noqa: S101
             [expected] if expected is not None else []
         )

@@ -10,7 +10,6 @@ reverse_argparse
    examples
    reference
 
-|Code Style: black|
 |codecov|
 |CodeFactor|
 |CodeQL|
@@ -21,7 +20,6 @@ reverse_argparse
 |GitHub Contributors|
 |Documentation Status|
 |License|
-|Linting: Pylint|
 |Merged PRs|
 |OpenSSF Best Practices|
 |OpenSSF Scorecard|
@@ -31,10 +29,8 @@ reverse_argparse
 |PyPI Version|
 |PyPI Downloads|
 |Python Version|
-|Security: Bandit|
+|Ruff|
 
-.. |Code Style: black| image:: https://img.shields.io/badge/Code%20Style-black-000000.svg
-   :target: https://github.com/psf/black
 .. |codecov| image:: https://codecov.io/gh/sandialabs/reverse_argparse/branch/master/graph/badge.svg?token=FmDStZ6FVR
    :target: https://codecov.io/gh/sandialabs/reverse_argparse
 .. |CodeFactor| image:: https://www.codefactor.io/repository/github/sandialabs/reverse_argparse/badge/master
@@ -54,8 +50,6 @@ reverse_argparse
    :target: https://reverse-argparse.readthedocs.io/en/latest/?badge=latest
 .. |License| image:: https://anaconda.org/conda-forge/reverse-argparse/badges/license.svg
    :target: https://github.com/sandialabs/reverse_argparse/blob/master/LICENSE.md
-.. |Linting: Pylint| image:: https://img.shields.io/badge/Linting-Pylint-yellowgreen
-   :target: https://github.com/pylint-dev/pylint
 .. |Merged PRs| image:: https://img.shields.io/github/issues-pr-closed-raw/sandialabs/reverse_argparse.svg?label=merged+PRs
    :target: https://github.com/sandialabs/reverse_argparse/pulls?q=is:pr+is:merged
 .. |OpenSSF Best Practices| image:: https://bestpractices.coreinfrastructure.org/projects/7632/badge
@@ -71,8 +65,8 @@ reverse_argparse
    :target: https://pypi.org/project/reverse-argparse/
 .. |PyPI Downloads| image:: https://img.shields.io/pypi/dm/reverse-argparse?label=PyPI%20downloads
 .. |Python Version| image:: https://img.shields.io/badge/Python-3.8|3.9|3.10|3.11|3.12-blue.svg
-.. |Security: Bandit| image:: https://img.shields.io/badge/Security-Bandit-yellow.svg
-   :target: https://github.com/PyCQA/bandit
+.. |Ruff| image:: https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json
+   :target: https://github.com/astral-sh/ruff
 
 The ``reverse_argparse`` module provides a means of undoing the argument
 parsing provided by :mod:`argparse`.  That is, it can take a

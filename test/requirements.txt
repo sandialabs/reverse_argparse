@@ -1,14 +1,10 @@
 # Requirements for testing `reverse_argparse`.
 
-bandit
-black
 dateparser
-flake8
-flake8-bugbear
 mypy
 pre-commit
-prospector
 pyroma
 pytest
 pytest-cov
 pytest-mock
+ruff

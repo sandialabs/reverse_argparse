@@ -17,7 +17,7 @@ parser = ArgumentParser()
 parser.add_argument("--foo")
 parser.add_argument("--bar", default="spam")
 parser.add_argument("--baz", type=int, default=42)
-parser.add_argument("--src", type=os.path.abspath)  # type: ignore
+parser.add_argument("--src", type=os.path.abspath)  # type: ignore[arg-type]
 
 # Parse the command line arguments.
 args = parser.parse_args()
