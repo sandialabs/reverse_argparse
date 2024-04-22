@@ -98,18 +98,18 @@ COMPLETE_ARGS = [
 ]
 
 
-def strip_first_entry(input: str) -> str:
+def strip_first_entry(input_string: str) -> str:
     """
     Remove the first entry of a space-delimited string.
 
     Args:
-        input:  A space-delimited string.
+        input_string:  A space-delimited string.
 
     Returns:
         The input string with the first element (and first space)
         removed.
     """
-    return " ".join(input.split()[1:])
+    return " ".join(input_string.split()[1:])
 
 
 def test_strip_first_entry() -> None:
@@ -117,17 +117,17 @@ def test_strip_first_entry() -> None:
     assert strip_first_entry("foo bar baz") == "bar baz"  # noqa: S101
 
 
-def strip_first_line(input: str) -> str:
+def strip_first_line(input_string: str) -> str:
     """
     Remove the first line of a multi-line string.
 
     Args:
-        input:  A multi-line string.
+        input_string:  A multi-line string.
 
     Returns:
         The input string with the first line removed.
     """
-    return "\n".join(input.splitlines()[1:])
+    return "\n".join(input_string.splitlines()[1:])
 
 
 def test_strip_first_line() -> None:

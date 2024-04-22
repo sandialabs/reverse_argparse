@@ -13,7 +13,7 @@ sys.path.append(str(Path.cwd().parents[2].resolve() / "reverse_argparse"))
 # -- Project information ------------------------------------------------------
 
 project = "reverse_argparse"
-copyright = (
+copyright = (  # noqa: A001
     "2023–2024, National Technology & Engineering Solutions of Sandia, LLC "
     "(NTESS)"
 )
