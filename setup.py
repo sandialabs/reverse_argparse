@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """
 Setup file for the ``reverse_argparse`` package.
 

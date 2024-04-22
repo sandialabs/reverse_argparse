@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """The unit test suite for the ``reverse_argparse`` package."""
 
 # © 2024 National Technology & Engineering Solutions of Sandia, LLC
