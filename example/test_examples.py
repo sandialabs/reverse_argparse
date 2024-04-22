@@ -10,7 +10,7 @@
 import re
 import shlex
 import subprocess  # nosec B404
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 
@@ -85,10 +85,10 @@ post_processing.py --bar spam --baz 42 --before
 """.strip()
         in result.stdout
     )
-    thirty_miutes_ago = datetime.now() - timedelta(minutes=30)
+    thirty_miutes_ago = datetime.now(tz=timezone.utc) - timedelta(minutes=30)
     time_from_example = datetime.strptime(
         shlex.split(result.stdout)[-1], "%Y-%m-%d %H:%M:%S.%f"
-    )
+    ).astimezone(timezone.utc)
     assert (  # noqa: S101
         thirty_miutes_ago - time_from_example < timedelta(seconds=1)
     )
@@ -122,11 +122,11 @@ pretty_printing.py \\
         in result.stdout
     )
     assert re.search(r"--src /\S+/file\.txt", result.stdout)  # noqa: S101
-    today = datetime.now()
+    today = datetime.now(tz=timezone.utc)
     time_from_example = datetime.strptime(
         shlex.split(result.stdout.splitlines()[-1])[-1],
         "%Y-%m-%d %H:%M:%S.%f",
-    )
+    ).astimezone(timezone.utc)
     assert today - time_from_example < timedelta(seconds=1)  # noqa: S101
 
 
