@@ -244,7 +244,7 @@ class ReverseArgumentParser:
         ]
 
     def _get_option_string(
-        self, action: Action, prefer_short: bool = False
+        self, action: Action, *, prefer_short: bool = False
     ) -> str:
         """
         Get the option string for the `action`.
