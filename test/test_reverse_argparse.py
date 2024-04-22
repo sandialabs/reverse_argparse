@@ -21,6 +21,12 @@ from reverse_argparse import ReverseArgumentParser
 
 @pytest.fixture()
 def parser() -> ArgumentParser:
+    """
+    Pre-populate an ``ArgumentParser`` with a variety of options.
+
+    Returns:
+        The ``ArgumentParser`` to be used in a number of tests.
+    """
     p = ArgumentParser()
     p.add_argument("pos1", nargs="*")
     p.add_argument("pos2")
@@ -107,6 +113,7 @@ def strip_first_entry(input: str) -> str:
 
 
 def test_strip_first_entry() -> None:
+    """Ensure :func:`strip_first_entry` works as expected."""
     assert strip_first_entry("foo bar baz") == "bar baz"
 
 
@@ -124,11 +131,13 @@ def strip_first_line(input: str) -> str:
 
 
 def test_strip_first_line() -> None:
+    """Ensure :func:`strip_first_line` works as expected."""
     assert strip_first_line("foo\nbar\nbaz") == "bar\nbaz"
 
 
 @pytest.mark.parametrize("args", COMPLETE_ARGS)
 def test_get_effective_command_line_invocation(parser, args) -> None:
+    """Ensure :func:`get_effective_command_line_invoation` works."""
     namespace = parser.parse_args(shlex.split(args))
     unparser = ReverseArgumentParser(parser, namespace)
     expected = (
@@ -151,6 +160,7 @@ def test_get_effective_command_line_invocation(parser, args) -> None:
 
 @pytest.mark.parametrize("args", COMPLETE_ARGS)
 def test_get_pretty_command_line_invocation(parser, args) -> None:
+    """Ensure :func:`get_pretty_command_line_invoation` works as expected."""
     namespace = parser.parse_args(shlex.split(args))
     unparser = ReverseArgumentParser(parser, namespace)
     expected = """    --opt1 opt1-val \\
@@ -179,6 +189,7 @@ def test_get_pretty_command_line_invocation(parser, args) -> None:
 
 
 def test_get_command_line_invocation_strip_spaces() -> None:
+    """Ensure extraneous spaces are stripped."""
     parser = ArgumentParser()
     namespace = Namespace()
     unparser = ReverseArgumentParser(parser, namespace)
@@ -233,6 +244,7 @@ def test_get_command_line_invocation_strip_spaces() -> None:
     ],
 )
 def test__unparse_args(add_args, add_kwargs, args, expected) -> None:
+    """Ensure :func:`_unparse_args` works as expected."""
     parser = ArgumentParser()
     parser.add_argument(*add_args, **add_kwargs)
     try:
@@ -249,6 +261,12 @@ def test__unparse_args(add_args, add_kwargs, args, expected) -> None:
 
 
 def test__unparse_args_boolean_optional_action() -> None:
+    """
+    Ensure :func:`_unparse_args` works as expected.
+
+    With a ``BooleanOptionalAction``, which became available in Python
+    3.9.
+    """
     if sys.version_info.minor >= 9:
         parser = ArgumentParser()
         parser.add_argument("--foo", action=BooleanOptionalAction)
@@ -262,6 +280,7 @@ def test__unparse_args_boolean_optional_action() -> None:
 
 
 def test__unparse_args_already_unparsed() -> None:
+    """Ensure unparsing is a no-op if the args have already been unparsed."""
     parser = ArgumentParser()
     namespace = Namespace()
     unparser = ReverseArgumentParser(parser, namespace)
@@ -273,6 +292,7 @@ def test__unparse_args_already_unparsed() -> None:
 
 
 def test__arg_is_default_and_help_is_suppressed() -> None:
+    """Ensure defaults for suppressed args are suppressed."""
     parser = ArgumentParser()
     parser.add_argument("--suppressed", default=10, help=SUPPRESS)
     namespace = parser.parse_args(shlex.split(""))
@@ -292,6 +312,7 @@ def test__arg_is_default_and_help_is_suppressed() -> None:
     ],
 )
 def test__get_long_option_strings(strings, expected) -> None:
+    """Ensure the long-form option is selected from a list."""
     unparser = ReverseArgumentParser(ArgumentParser(), Namespace())
     assert unparser._get_long_option_strings(strings) == expected
 
@@ -305,6 +326,7 @@ def test__get_long_option_strings(strings, expected) -> None:
     ],
 )
 def test__get_short_option_strings(strings, expected) -> None:
+    """Ensure the short-form option is selected from a list."""
     unparser = ReverseArgumentParser(ArgumentParser(), Namespace())
     assert unparser._get_short_option_strings(strings) == expected
 
@@ -318,6 +340,7 @@ def test__get_short_option_strings(strings, expected) -> None:
     ],
 )
 def test__get_option_string(strings, expected) -> None:
+    """Ensure long-form options are preferred over short-form ones."""
     parser = ArgumentParser()
     action = parser.add_argument(*strings)
     unparser = ReverseArgumentParser(parser, Namespace())
@@ -333,6 +356,7 @@ def test__get_option_string(strings, expected) -> None:
     ],
 )
 def test__get_option_string_prefer_short(strings, expected) -> None:
+    """Ensure short-form options are preferred over long-form ones."""
     parser = ArgumentParser()
     action = parser.add_argument(*strings)
     unparser = ReverseArgumentParser(parser, Namespace())
@@ -358,6 +382,7 @@ def test__get_option_string_prefer_short(strings, expected) -> None:
     ],
 )
 def test__unparse_store_action(add_args, add_kwargs, args, expected) -> None:
+    """Ensure ``store`` actions are handled appropriately."""
     parser = ArgumentParser()
     action = parser.add_argument(*add_args, **add_kwargs)
     namespace = parser.parse_args(shlex.split(args))
@@ -393,6 +418,7 @@ def test__unparse_store_action(add_args, add_kwargs, args, expected) -> None:
 def test__unparse_store_const_action(
     add_args, add_kwargs, args, expected
 ) -> None:
+    """Ensure ``store_const`` actions are handled appropriately."""
     parser = ArgumentParser()
     action = parser.add_argument(*add_args, **add_kwargs)
     namespace = parser.parse_args(shlex.split(args))
@@ -405,6 +431,7 @@ def test__unparse_store_const_action(
     "args, expected", [(shlex.split("--foo"), "    --foo"), ([], None)]
 )
 def test__unparse_store_true_action(args, expected) -> None:
+    """Ensure ``store_true`` actions are handled appropriately."""
     parser = ArgumentParser()
     action = parser.add_argument("--foo", action="store_true")
     namespace = parser.parse_args(args)
@@ -417,6 +444,7 @@ def test__unparse_store_true_action(args, expected) -> None:
     "args, expected", [(shlex.split("--foo"), "    --foo"), ([], None)]
 )
 def test__unparse_store_false_action(args, expected) -> None:
+    """Ensure ``store_false`` actions are handled appropriately."""
     parser = ArgumentParser()
     action = parser.add_argument("--foo", action="store_false")
     namespace = parser.parse_args(args)
@@ -443,6 +471,7 @@ def test__unparse_store_false_action(args, expected) -> None:
     ],
 )
 def test__unparse_append_action(add_args, add_kwargs, args, expected) -> None:
+    """Ensure ``append`` actions are handled appropriately."""
     parser = ArgumentParser()
     action = parser.add_argument(*add_args, **add_kwargs)
     namespace = parser.parse_args(shlex.split(args))
@@ -455,6 +484,7 @@ def test__unparse_append_action(add_args, add_kwargs, args, expected) -> None:
     "args, expected", [("--foo", "    --foo"), ("", None)]
 )
 def test__unparse_append_const_action(args, expected) -> None:
+    """Ensure ``append_const`` actions are handled appropriately."""
     parser = ArgumentParser()
     action = parser.add_argument(
         "--foo", dest="append_const", action="append_const", const=42
@@ -489,6 +519,7 @@ def test__unparse_append_const_action(args, expected) -> None:
     ],
 )
 def test__unparse_count_action(add_args, add_kwargs, args, expected) -> None:
+    """Ensure ``count`` actions are handled appropriately."""
     parser = ArgumentParser()
     action = parser.add_argument(*add_args, **add_kwargs)
     namespace = parser.parse_args(shlex.split(args))
@@ -509,6 +540,7 @@ def test__unparse_count_action(add_args, add_kwargs, args, expected) -> None:
     ],
 )
 def test__unparse_sub_parsers_action(args, expected, pretty) -> None:
+    """Ensure subparsers are handled appropriately."""
     parser = ArgumentParser()
     parser.add_argument("--foo", action="store_true", help="foo help")
     subparsers = parser.add_subparsers(help="sub-command help")
@@ -528,6 +560,7 @@ def test__unparse_sub_parsers_action(args, expected, pretty) -> None:
 
 
 def test__unparse_sub_parsers_action_nested() -> None:
+    """Ensure nested subparsers are handled appropriately."""
     parser = ArgumentParser()
     parser.add_argument("--optional-1", action="store_true")
     parser.add_argument("--optional-2")
@@ -569,6 +602,7 @@ def test__unparse_sub_parsers_action_nested() -> None:
 
 
 def test__unparse_extend_action() -> None:
+    """Ensure ``extend`` actions are handled appropriately."""
     parser = ArgumentParser()
     action = parser.add_argument("--foo", action="extend", nargs="*")
     namespace = parser.parse_args(shlex.split("--foo bar --foo baz bif"))
@@ -593,6 +627,7 @@ def test__unparse_extend_action() -> None:
     ],
 )
 def test__unparse_boolean_optional_action(default, args, expected) -> None:
+    """Ensure ``BooleanOptionalAction`` actions are handled appropriately."""
     if sys.version_info.minor >= 9:
         parser = ArgumentParser()
         action = parser.add_argument(

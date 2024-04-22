@@ -15,6 +15,7 @@ from pathlib import Path
 
 
 def test_basic() -> None:
+    """Ensure ``basic.py`` produces the expected results."""
     example = Path(__file__).parent / "basic.py"
     result = subprocess.run(
         [example, "--foo", "bar"],
@@ -32,6 +33,7 @@ basic.py --foo bar
 
 
 def test_default_values() -> None:
+    """Ensure ``default_values.py`` produces the expected results."""
     example = Path(__file__).parent / "default_values.py"
     result = subprocess.run(
         [example, "--foo", "bar"],
@@ -49,6 +51,7 @@ default_values.py --foo bar --bar spam --baz 42
 
 
 def test_relative_references() -> None:
+    """Ensure ``relative_references.py`` produces the expected results."""
     example = Path(__file__).parent / "relative_references.py"
     result = subprocess.run(
         [example, "--src", "bar.txt"],
@@ -67,6 +70,7 @@ relative_references.py --bar spam --baz 42 --src
 
 
 def test_post_processing() -> None:
+    """Ensure ``post_processing.py`` produces the expected results."""
     example = Path(__file__).parent / "post_processing.py"
     result = subprocess.run(
         [example, "--before", "'30 minutes ago'"],
@@ -89,6 +93,7 @@ post_processing.py --bar spam --baz 42 --before
 
 
 def test_pretty_printing() -> None:
+    """Ensure ``pretty_printing.py`` produces the expected results."""
     example = Path(__file__).parent / "pretty_printing.py"
     result = subprocess.run(
         [example, "--foo", "eggs", "--src", "file.txt", "--before", "'today'"],
@@ -116,6 +121,7 @@ pretty_printing.py \\
 
 
 def test_subparsers() -> None:
+    """Ensure ``subparsers.py`` produces the expected results."""
     example = Path(__file__).parent / "subparsers.py"
     result = subprocess.run(
         [example, "foo", "--one", "eggs"],
