@@ -139,10 +139,11 @@ class ReverseArgumentParser:
         ):
             self._unparse_boolean_optional_action(action)
         else:  # pragma: no cover
-            raise NotImplementedError(
+            message = (
                 f"{self.__class__.__name__} does not yet support the "
                 f"unparsing of {action_type} objects."
             )
+            raise NotImplementedError(message)
 
     def _arg_is_default_and_help_is_suppressed(self, action: Action) -> bool:
         """
@@ -457,10 +458,11 @@ class ReverseArgumentParser:
         if action.choices is None or not isinstance(
             action.choices, dict
         ):  # pragma: no cover
-            raise RuntimeError(
+            message = (
                 "This subparser action is missing its dictionary of "
                 f"choices:  {action}"
             )
+            raise RuntimeError(message)
         for subcommand, subparser in action.choices.items():
             self._parsers.append(subparser)
             self._unparsed.append(False)
