@@ -2,6 +2,162 @@
 
 
 
+## v1.0.7 (2024-04-22)
+
+### Chore
+* chore: Ignore security findings in tests/examples ([`f18ece4`](https://github.com/sandialabs/reverse_argparse/commit/f18ece4a69291b96b84a80bd8eea0a5f51697026))
+* chore: Switch to Ruff ([`6112943`](https://github.com/sandialabs/reverse_argparse/commit/6112943ca3f2a74c0419d8d2452884dd144c8309))
+
+  Use Ruff to replace a variety of linters/formatters.
+* chore: Fix badge URLs ([`2c8dda1`](https://github.com/sandialabs/reverse_argparse/commit/2c8dda1315e1d1297acea0f41a827736258d1950))
+
+  Somehow it looks like some hidden character wound up copy/pasted in the
+  middle of the `https`.
+* chore: Add PR template ([`eb0b3b8`](https://github.com/sandialabs/reverse_argparse/commit/eb0b3b8da57b0c2a67b4928f4d3ae67890aa5bff))
+
+### Continuous Integration
+* ci: pre-commit auto-update ([`0b14008`](https://github.com/sandialabs/reverse_argparse/commit/0b14008f4a9d74095ef8d627998eb5166b2c0ed1))
+
+  updates:
+  - [github.com/commitizen-tools/commitizen: v3.22.0 → v3.24.0](https://github.com/commitizen-tools/commitizen/compare/v3.22.0...v3.24.0)
+* ci: Add OpenSSF Scorecard workflow ([`5f8f3cf`](https://github.com/sandialabs/reverse_argparse/commit/5f8f3cf299ff64890cbcbc9d0a780095edb337da))
+* ci: pre-commit auto-update ([`f184590`](https://github.com/sandialabs/reverse_argparse/commit/f1845904079290ee6d44bb920c9a9181f31e71b4))
+
+  updates:
+  - [github.com/commitizen-tools/commitizen: v3.21.3 → v3.22.0](https://github.com/commitizen-tools/commitizen/compare/v3.21.3...v3.22.0)
+  - [github.com/psf/black: 24.3.0 → 24.4.0](https://github.com/psf/black/compare/24.3.0...24.4.0)
+* ci: pre-commit auto-update ([`d91334d`](https://github.com/sandialabs/reverse_argparse/commit/d91334d003d9c6c387dc9951f9d0707fde27798d))
+
+  updates:
+  - [github.com/pre-commit/pre-commit-hooks: v4.5.0 → v4.6.0](https://github.com/pre-commit/pre-commit-hooks/compare/v4.5.0...v4.6.0)
+* ci: pre-commit auto-update ([`43b5104`](https://github.com/sandialabs/reverse_argparse/commit/43b51041bff35b96184899e3ec28af60f05869f4))
+
+  updates:
+  - [github.com/commitizen-tools/commitizen: v3.20.0 → v3.21.3](https://github.com/commitizen-tools/commitizen/compare/v3.20.0...v3.21.3)
+* ci: pre-commit auto-update ([`60cefa8`](https://github.com/sandialabs/reverse_argparse/commit/60cefa80a5c89ec7e7fb26355ce492d2af1ac3d9))
+
+  updates:
+  - [github.com/commitizen-tools/commitizen: v3.18.4 → v3.20.0](https://github.com/commitizen-tools/commitizen/compare/v3.18.4...v3.20.0)
+* ci: pre-commit auto-update ([`155240b`](https://github.com/sandialabs/reverse_argparse/commit/155240b6589d5ab9dbda33f1c3e3f9ad3a5f8e43))
+
+  updates:
+  - [github.com/commitizen-tools/commitizen: v3.15.0 → v3.18.4](https://github.com/commitizen-tools/commitizen/compare/v3.15.0...v3.18.4)
+  - [github.com/pre-commit/mirrors-mypy: v1.8.0 → v1.9.0](https://github.com/pre-commit/mirrors-mypy/compare/v1.8.0...v1.9.0)
+  - [github.com/psf/black: 24.2.0 → 24.3.0](https://github.com/psf/black/compare/24.2.0...24.3.0)
+  - [github.com/PyCQA/bandit: 1.7.7 → 1.7.8](https://github.com/PyCQA/bandit/compare/1.7.7...1.7.8)
+* ci: pre-commit auto-update ([`ef525b7`](https://github.com/sandialabs/reverse_argparse/commit/ef525b71056685d8eac17b49660706cec8307fd1))
+
+  updates:
+  - [github.com/commitizen-tools/commitizen: v3.14.1 → v3.15.0](https://github.com/commitizen-tools/commitizen/compare/v3.14.1...v3.15.0)
+* ci: pre-commit auto-update ([`5e0e1b4`](https://github.com/sandialabs/reverse_argparse/commit/5e0e1b471594634a92f8952e1ffe9b9628c85437))
+
+  updates:
+  - [github.com/psf/black: 24.1.1 → 24.2.0](https://github.com/psf/black/compare/24.1.1...24.2.0)
+* ci: pre-commit auto-update ([`b6e239d`](https://github.com/sandialabs/reverse_argparse/commit/b6e239decef5760449850b5e9d27c9b507346538))
+
+  updates:
+  - [github.com/commitizen-tools/commitizen: v3.13.0 → v3.14.1](https://github.com/commitizen-tools/commitizen/compare/v3.13.0...v3.14.1)
+* ci: auto fixes from pre-commit.com hooks ([`2d05e81`](https://github.com/sandialabs/reverse_argparse/commit/2d05e818be047a42cae0fabd0e42b77b2688c87e))
+
+  for more information, see https://pre-commit.ci
+* ci: pre-commit auto-update ([`5150bc1`](https://github.com/sandialabs/reverse_argparse/commit/5150bc19e6fe17acd7f5612146189f0bfdf4d4a1))
+
+  updates:
+  - [github.com/psf/black: 23.12.1 → 24.1.1](https://github.com/psf/black/compare/23.12.1...24.1.1)
+  - [github.com/PyCQA/bandit: 1.7.6 → 1.7.7](https://github.com/PyCQA/bandit/compare/1.7.6...1.7.7)
+
+### Documentation
+* docs: Add docstrings to test/example files ([`f0b7eb9`](https://github.com/sandialabs/reverse_argparse/commit/f0b7eb96cff1cd6a6360b1e9eba0b66c614c6ac1))
+* docs: Add OpenSSF Scorecard badge to ReadTheDocs ([`91c5557`](https://github.com/sandialabs/reverse_argparse/commit/91c5557f90b3f4ebd3eb71bd6d030133f4085376))
+* docs: Add CodeFactor badge ([`105a394`](https://github.com/sandialabs/reverse_argparse/commit/105a3948b4913ad83e38d718db23e4fecec17150))
+* docs: Adopt Conventional Comments ([`9d16c0c`](https://github.com/sandialabs/reverse_argparse/commit/9d16c0cef5b291710e32a57c788dc06669eee1e2))
+
+  Try to encourage effective communication via issues/PRs.
+* docs: Update link to latest GMS release ([`af2ce45`](https://github.com/sandialabs/reverse_argparse/commit/af2ce4549133ceb306d3f7516bc58a92b6656817))
+* docs: Move copyright/license text to comments ([`b355341`](https://github.com/sandialabs/reverse_argparse/commit/b3553415da40949f9ce496ca1363cb69424da791))
+
+  In all source files, move the copyright and license text from the module
+  docstring to comments immediately below it.  This is to avoid processing
+  this text when Sphinx is automatically generating documentation from
+  docstrings.
+* docs: Add contributor license agreement ([`9531c94`](https://github.com/sandialabs/reverse_argparse/commit/9531c944fed6acd3e5a6264343078a97c9e5f581))
+* docs: Update copyright text in source files ([`4cba3d0`](https://github.com/sandialabs/reverse_argparse/commit/4cba3d06877911ce93c7ae95b2fbb37960e10111))
+
+  Per guidance from Sandia Technology Transfer, the recommended text from
+  the Linux Foundation is insufficient for our purposes.
+* docs: Update copyright/license info ([`4d1d42a`](https://github.com/sandialabs/reverse_argparse/commit/4d1d42a140834293289c8cf7123a3230802935bb))
+
+  Update the copyright years in the `LICENSE.md` file and add copyright
+  and license information to all source files (part of the Gold level
+  OpenSSF Best Practices).
+* docs: Add coverage job steps ([`3b20a84`](https://github.com/sandialabs/reverse_argparse/commit/3b20a844bb4912e092d466ec1068726cbf989d56))
+
+  Add steps to the CI job to compute the documentation coverage for the
+  package and archive the results.
+
+### Patch
+* patch: Force `prefer_short` to be keyword-only ([`f02c7f2`](https://github.com/sandialabs/reverse_argparse/commit/f02c7f2eee4861904d3505fd7a6d2cc0fbc5cfc8))
+
+  Turning on `flake8-boolean-trap` linting via Ruff resulted in the
+  following findings:
+
+      reverse_argparse/reverse_argparse.py:242:31:
+      FBT002 Boolean default positional argument in function definition
+      reverse_argparse/reverse_argparse.py:242:31:
+      FBT001 Boolean-typed positional argument in function definition
+      Found 2 errors.
+
+  Switching `prefer_short` from a positional to a keyword-only argument
+  addresses the problem.
+
+  Note that this is technically a breaking change, but only for a
+  &#34;private&#34; method, not in the package&#39;s public API.  Therefore the change
+  is not registered as a breaking change via Conventional Commit syntax,
+  and no major version update will be created.  Instead, this commit will
+  force the creation of a patch release.  If users were relying on the
+  prior behavior of this internal method, they can simply switch to the
+  keyword syntax when calling it.
+
+### Refactor
+* refactor: Address Ruff-specific lint findings ([`076e199`](https://github.com/sandialabs/reverse_argparse/commit/076e19951c8fb2241c85d4da063d166292054f25))
+* refactor: Address Pylint findings ([`862bc62`](https://github.com/sandialabs/reverse_argparse/commit/862bc62bee7a61659cb69e668f4a1f1d1e9c0c1f))
+* refactor: Ignore particular type error ([`9d412dd`](https://github.com/sandialabs/reverse_argparse/commit/9d412ddc83a6b0ad5ad3acfb5a520eb0df20086b))
+* refactor: Remove unnecessary shebang lines ([`a7ae1f6`](https://github.com/sandialabs/reverse_argparse/commit/a7ae1f6813797f48f3889d6b362217c55a853079))
+* refactor: Assign exception messages to variables ([`844c71a`](https://github.com/sandialabs/reverse_argparse/commit/844c71ab25ce20ebb22b111524740b2c991f3f29))
+
+  Running `flake8-errmsg` via Ruff yielded the following findings:
+
+      reverse_argparse/reverse_argparse.py:143:17:
+      EM102 Exception must not use an f-string literal, assign to variable
+      first
+      reverse_argparse/reverse_argparse.py:461:17:
+      EM102 Exception must not use an f-string literal, assign to variable
+      first
+      Found 2 errors.
+
+  This changes resolves the issues.
+* refactor: Don&#39;t override Python builtins ([`9006adb`](https://github.com/sandialabs/reverse_argparse/commit/9006adbeefdbd08237325d91fbdf7ecf952b386d))
+
+### Test
+* test: Use tuples for parametrize variables ([`25d9be8`](https://github.com/sandialabs/reverse_argparse/commit/25d9be8d014f0159c4328594af84fc723fdad6f9))
+* test: Use UTC timezone with datetime ([`25ff30f`](https://github.com/sandialabs/reverse_argparse/commit/25ff30ff9c19378108db1cc31f367e0a98e189d9))
+
+  Running `flake8-datetimez` via Ruff yielded the following findings:
+
+      example/test_examples.py:88:25:
+      DTZ005 `datetime.datetime.now()` called without a `tz` argument
+      example/test_examples.py:89:25:
+      DTZ007 Naive datetime constructed using
+      `datetime.datetime.strptime()` without %z
+      example/test_examples.py:125:13:
+      DTZ005 `datetime.datetime.now()` called without a `tz` argument
+      example/test_examples.py:126:25:
+      DTZ007 Naive datetime constructed using
+      `datetime.datetime.strptime()` without %z
+      Found 4 errors.
+
+  Specifying timezone info resolves the issues.
+
 ## v1.0.6 (2024-01-15)
 
 ### Continuous Integration

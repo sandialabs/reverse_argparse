@@ -17,7 +17,7 @@ schema_pattern = "(?s)(build|chore|ci|docs|feat|fix|minor|patch|perf|refactor|st
 
 [tool.poetry]
 name = "reverse_argparse"
-version = "1.0.6"
+version = "1.0.7"
 license = "LICENSE.md"
 readme = "README.md"
 keywords = ["argparse", "argument", "parse", "parsing", "command line"]
