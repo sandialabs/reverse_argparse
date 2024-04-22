@@ -69,6 +69,7 @@ pre-commit install --hook-type commit-msg --hook-type pre-push
 [precommit]: https://pre-commit.com/
 
 The checks we perform are the following:
+* Use [ruff][ruff] to lint and format the code and docstrings.
 * Use [commitizen][commitizen] to ensure commit messages match the
   [Conventional Commits specification][conventional].  Use the
   [Conventional Commits extension for VS Code][extension] (or something
@@ -84,42 +85,18 @@ The checks we perform are the following:
 * Trim trailing whitespace.
 * Ensure we use [type-hinting][typing].
 * Check for common mistakes in [reStructuredText][rest] in our documentation.
-* Use [black][black] to automatically format the code.
-* Use [Bandit][bandit] to find common security issues.
 * Use [doc8][doc8] to enforce our style for our documentation.
-* Lint the code with [flake8][flake8].
-* Use [isort][isort] to ensure `import` statements are sorted correctly.
-* Use [prospector][prospector] to check for various errors, potential problems,
-  convention violations, complexity, etc.  This uses the following tools under
-  the hood:
-  * [dodgy][dodgy]
-  * [mccabe][mccabe]
-  * [pycodestyle][pycodestyle]
-  * [Pyflakes][pyflakes]
-  * [Pylint][pylint]
-* Use [pydocstyle][pydocstyle] to ensure our docstrings line up with
-  [PEP 257][pep257].
 * Use [pyroma][pyroma] to ensure our package complies with the best practices
   of the Python packaging ecosystem.
 
+[ruff]: https://docs.astral.sh/ruff/
 [commitizen]: https://github.com/commitizen-tools/commitizen
 [conventional]: https://www.conventionalcommits.org/en/v1.0.0/
 [extension]: https://marketplace.visualstudio.com/items?itemName=vivaxy.vscode-conventional-commits
 [mypy]: https://github.com/python/mypy
 [typing]: https://docs.python.org/3/library/typing.html
-[black]: https://github.com/psf/black
-[bandit]: https://github.com/PyCQA/bandit
+[rest]: https://www.sphinx-doc.org/en/master/usage/restructuredtext/basics.html
 [doc8]: https://github.com/PyCQA/doc8
-[flake8]: https://github.com/pyCQA/flake8
-[isort]: https://github.com/pyCQA/isort
-[prospector]: https://github.com/landscapeio/prospector
-[dodgy]: https://github.com/landscapeio/dodgy
-[mccabe]: https://github.com/PyCQA/mccabe
-[pycodestyle]: https://pycodestyle.pycqa.org/en/latest/
-[pyflakes]: https://launchpad.net/pyflakes
-[pylint]: https://www.pylint.org/
-[pydocstyle]: https://github.com/PyCQA/pydocstyle
-[pep257]: http://www.python.org/dev/peps/pep-0257/
 [pyroma]: https://github.com/regebro/pyroma
 
 ### VS Code
@@ -183,9 +160,8 @@ search for and install them.  These are the ones we recommend:
   editor.
 * **autoDocstring - Python Docstring Generator:**  Quickly generate docstrings
   for Python functions.
-* **Flake8:**  Linting support for Python files using flake8.
+* **Mpy Type Checker:**  Type checking support for Python.
 * **Pylance:**  Fast, feature-rich language support for Python.
-* **Pylint:**  Linting support for Python files.
 * **Pytest IntelliSense:**  Adds IntelliSense support for [pytest][pytest]
   fixtures.
 * **Python:**  Rich support for the Python language.
@@ -194,6 +170,7 @@ search for and install them.  These are the ones we recommend:
   or [testplan][testplan] tests with the Test Explorer UI (see **General**
   above).
 * **Python Type Hint:**  Type hint autocompletion.
+* **Ruff:**  Automatic linting and formatting.
 * **Sourcery:**  Automatic code review and refactoring.
 
 [unittest]: https://docs.python.org/3/library/unittest.html
@@ -233,13 +210,6 @@ After installing the various extensions, you'll also want to customize your
     * **Terminal Git Editor:**  Check.
   * pre-commit-helper
     * **Run On Save:**  Select "all hooks".
-  * Python
-    * **Formatting:**  Provider:  Select "black".
-    * **Linting:  Bandit Enabled:**  Check.
-    * **Linting:  Flake8 Enabled:**  Check.
-    * **Linting:  Lint On Save:**  Check.
-    * **Linting:  Mypy Enabled:**  Check.
-    * **Linting:  Prospector Enabled:**  Check.
   * Python Docstring Generator configuration
     * **Docstring Format:**  Select "google-notypes".
     * **Start On New Line:**  Check.
@@ -372,7 +342,6 @@ utilize [type-hinting][typing] wherever possible for clarity's sake.
 
 [docstrings]: https://www.python.org/dev/peps/pep-0257
 [google]: https://github.com/google/styleguide/blob/gh-pages/pyguide.md#38-comments-and-docstrings
-[rest]: https://www.sphinx-doc.org/en/master/usage/restructuredtext/basics.html
 [docs]: https://reverse-argparse.readthedocs.io
 [sphinx]: https://www.sphinx-doc.org/en/master/
 

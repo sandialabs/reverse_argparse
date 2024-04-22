@@ -1,4 +1,3 @@
-[![Code Style: black](https://img.shields.io/badge/Code%20Style-black-000000.svg)](https://github.com/psf/black)
 [![codecov](https://codecov.io/gh/sandialabs/reverse_argparse/branch/master/graph/badge.svg?token=FmDStZ6FVR)](https://codecov.io/gh/sandialabs/reverse_argparse)
 [![CodeFactor](https://www.codefactor.io/repository/github/sandialabs/reverse_argparse/badge/master)](https://www.codefactor.io/repository/github/sandialabs/reverse_argparse/overview/master)
 [![CodeQL](https://github.com/sandialabs/reverse_argparse/actions/workflows/github-code-scanning/codeql/badge.svg)](https://github.com/sandialabs/reverse_argparse/actions/workflows/github-code-scanning/codeql)
@@ -8,18 +7,17 @@
 [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](CODE_OF_CONDUCT.md)
 [![GitHub contributors](https://img.shields.io/github/contributors/sandialabs/reverse_argparse.svg)](https://github.com/sandialabs/reverse_argparse/graphs/contributors)
 [![Documentation Status](https://readthedocs.org/projects/reverse-argparse/badge/?version=latest)](https://reverse-argparse.readthedocs.io/en/latest/?badge=latest)
-[![Anaconda-Server Badge](https://anaconda.org/conda-forge/reverse-argparse/badges/license.svg)](LICENSE.md)
-[![Linting: Pylint](https://img.shields.io/badge/Linting-Pylint-yellowgreen)](https://github.com/pylint-dev/pylint)
+[![License](https://anaconda.org/conda-forge/reverse-argparse/badges/license.svg)](LICENSE.md)
 [![Merged PRs](https://img.shields.io/github/issues-pr-closed-raw/sandialabs/reverse_argparse.svg?label=merged+PRs)](https://github.com/sandialabs/reverse_argparse/pulls?q=is:pr+is:merged)
 [![OpenSSF Best Practices](https://bestpractices.coreinfrastructure.org/projects/7632/badge)](https://bestpractices.coreinfrastructure.org/projects/7632)
 [![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/sandialabs/reverse_argparse/badge)](https://securityscorecards.dev/viewer/?uri=github.com/sandialabs/reverse_argparse)
-![Anaconda-Server Badge](https://anaconda.org/conda-forge/reverse-argparse/badges/platforms.svg)
+![Platforms](https://anaconda.org/conda-forge/reverse-argparse/badges/platforms.svg)
 [![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit)](https://github.com/pre-commit/pre-commit)
 [![pre-commit.ci Status](https://results.pre-commit.ci/badge/github/sandialabs/reverse_argparse/master.svg)](https://results.pre-commit.ci/latest/github/sandialabs/reverse_argparse/master)
 [![PyPI - Version](https://img.shields.io/pypi/v/reverse-argparse?label=PyPI)](https://pypi.org/project/reverse-argparse/)
 ![PyPI - Downloads](https://img.shields.io/pypi/dm/reverse-argparse?label=PyPI%20downloads)
 ![Python Version](https://img.shields.io/badge/Python-3.8|3.9|3.10|3.11|3.12-blue.svg)
-[![Security: Bandit](https://img.shields.io/badge/Security-Bandit-yellow.svg)](https://github.com/PyCQA/bandit)
+[![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
 
 # reverse_argparse
 

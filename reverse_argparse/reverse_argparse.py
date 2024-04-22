@@ -91,7 +91,7 @@ class ReverseArgumentParser:
             self._unparse_action(action)
         self._unparsed[-1] = True
 
-    def _unparse_action(self, action: Action) -> None:
+    def _unparse_action(self, action: Action) -> None:  # noqa: C901
         """
         Unparse a single action.
 
