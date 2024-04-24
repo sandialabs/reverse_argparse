@@ -23,7 +23,7 @@ def test_basic() -> None:
         check=True,
         text=True,
     )
-    assert (  # noqa: S101
+    assert (
         result.stdout
         == """
 The effective command line invocation was:
@@ -41,7 +41,7 @@ def test_default_values() -> None:
         check=True,
         text=True,
     )
-    assert (  # noqa: S101
+    assert (
         result.stdout
         == """
 The effective command line invocation was:
@@ -59,14 +59,14 @@ def test_relative_references() -> None:
         check=True,
         text=True,
     )
-    assert (  # noqa: S101
+    assert (
         """
 The effective command line invocation was:
 relative_references.py --bar spam --baz 42 --src
 """.strip()
         in result.stdout
     )
-    assert re.search(r"--src /\S+/bar\.txt", result.stdout)  # noqa: S101
+    assert re.search(r"--src /\S+/bar\.txt", result.stdout)
 
 
 def test_post_processing() -> None:
@@ -78,7 +78,7 @@ def test_post_processing() -> None:
         check=True,
         text=True,
     )
-    assert (  # noqa: S101
+    assert (
         """
 The effective command line invocation was:
 post_processing.py --bar spam --baz 42 --before
@@ -89,9 +89,7 @@ post_processing.py --bar spam --baz 42 --before
     time_from_example = datetime.strptime(
         shlex.split(result.stdout)[-1], "%Y-%m-%d %H:%M:%S.%f"
     ).astimezone(timezone.utc)
-    assert (  # noqa: S101
-        thirty_miutes_ago - time_from_example < timedelta(seconds=1)
-    )
+    assert thirty_miutes_ago - time_from_example < timedelta(seconds=1)
 
 
 def test_pretty_printing() -> None:
@@ -111,7 +109,7 @@ def test_pretty_printing() -> None:
         check=True,
         text=True,
     )
-    assert (  # noqa: S101
+    assert (
         """
 The effective command line invocation was:
 pretty_printing.py \\
@@ -121,13 +119,13 @@ pretty_printing.py \\
 """.strip()
         in result.stdout
     )
-    assert re.search(r"--src /\S+/file\.txt", result.stdout)  # noqa: S101
+    assert re.search(r"--src /\S+/file\.txt", result.stdout)
     today = datetime.now(tz=timezone.utc)
     time_from_example = datetime.strptime(
         shlex.split(result.stdout.splitlines()[-1])[-1],
         "%Y-%m-%d %H:%M:%S.%f",
     ).astimezone(timezone.utc)
-    assert today - time_from_example < timedelta(seconds=1)  # noqa: S101
+    assert today - time_from_example < timedelta(seconds=1)
 
 
 def test_subparsers() -> None:
@@ -139,7 +137,7 @@ def test_subparsers() -> None:
         check=True,
         text=True,
     )
-    assert (  # noqa: S101
+    assert (
         result.stdout
         == """
 The effective command line invocation was:

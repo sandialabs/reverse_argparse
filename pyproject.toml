@@ -3,10 +3,6 @@ requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
 
-[tool.bandit.assert_used]
-skips = ["**/test_*.py"]
-
-
 [tool.commitizen]
 name = "cz_customize"
 
@@ -101,6 +97,10 @@ extend-select = [
 ignore = [
     "D212",
 ]
+
+
+[tool.ruff.lint.per-file-ignores]
+"**/test_*.py" = ["S101"]
 
 
 [tool.ruff.lint.pydocstyle]
