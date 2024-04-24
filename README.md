@@ -1,3 +1,4 @@
+![Lines of code](https://sloc.xyz/github/sandialabs/reverse_argparse/?category=code)
 [![codecov](https://codecov.io/gh/sandialabs/reverse_argparse/branch/master/graph/badge.svg?token=FmDStZ6FVR)](https://codecov.io/gh/sandialabs/reverse_argparse)
 [![CodeFactor](https://www.codefactor.io/repository/github/sandialabs/reverse_argparse/badge/master)](https://www.codefactor.io/repository/github/sandialabs/reverse_argparse/overview/master)
 [![CodeQL](https://github.com/sandialabs/reverse_argparse/actions/workflows/github-code-scanning/codeql/badge.svg)](https://github.com/sandialabs/reverse_argparse/actions/workflows/github-code-scanning/codeql)
