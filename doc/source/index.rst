@@ -10,6 +10,7 @@ reverse_argparse
    examples
    reference
 
+|Code lines|
 |codecov|
 |CodeFactor|
 |CodeQL|
@@ -31,6 +32,7 @@ reverse_argparse
 |Python Version|
 |Ruff|
 
+.. |Code lines| image:: https://sloc.xyz/github/sandialabs/reverse_argparse/?category=code
 .. |codecov| image:: https://codecov.io/gh/sandialabs/reverse_argparse/branch/master/graph/badge.svg?token=FmDStZ6FVR
    :target: https://codecov.io/gh/sandialabs/reverse_argparse
 .. |CodeFactor| image:: https://www.codefactor.io/repository/github/sandialabs/reverse_argparse/badge/master
