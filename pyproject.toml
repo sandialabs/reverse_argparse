@@ -3,14 +3,6 @@ requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
 
-[tool.commitizen]
-name = "cz_customize"
-
-
-[tool.commitizen.customize]
-schema_pattern = "(?s)(build|chore|ci|docs|feat|fix|minor|patch|perf|refactor|style|test|revert)(\\(\\S+\\))?!?:( [^\\n\\r]+)((\\n\\n.*)|(\\s*))?$"
-
-
 [tool.poetry]
 name = "reverse_argparse"
 version = "1.0.7"
