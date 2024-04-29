@@ -70,10 +70,6 @@ pre-commit install --hook-type commit-msg --hook-type pre-push
 
 The checks we perform are the following:
 * Use [ruff][ruff] to lint and format the code and docstrings.
-* Use [commitizen][commitizen] to ensure commit messages match the
-  [Conventional Commits specification][conventional].  Use the
-  [Conventional Commits extension for VS Code][extension] (or something
-  similar) to create commit messages that match the standard.
 * Use [mypy][mypy] to run static type checking on our type-hinted code.
 * Ensure no large files are added to the repository.
 * Ensure files parse as valid Python.
@@ -90,9 +86,6 @@ The checks we perform are the following:
   of the Python packaging ecosystem.
 
 [ruff]: https://docs.astral.sh/ruff/
-[commitizen]: https://github.com/commitizen-tools/commitizen
-[conventional]: https://www.conventionalcommits.org/en/v1.0.0/
-[extension]: https://marketplace.visualstudio.com/items?itemName=vivaxy.vscode-conventional-commits
 [mypy]: https://github.com/python/mypy
 [typing]: https://docs.python.org/3/library/typing.html
 [rest]: https://www.sphinx-doc.org/en/master/usage/restructuredtext/basics.html
@@ -153,6 +146,7 @@ search for and install them.  These are the ones we recommend:
 * **Vim:**  For when you can't truly leave vi behind (and who would want to?).
 * **vscode-icons:**  Icons for the file explorer.
 
+[conventional]: https://www.conventionalcommits.org/en/v1.0.0/
 [kraken]: https://www.gitkraken.com/
 
 **Python-Specific**
@@ -470,15 +464,9 @@ name would be `123-implement-awesome-new-feature`.
 ### As Work Continues
 
 Do whatever work is necessary to address the issue you're tackling.  Break your
-work into logical, working commits.  Use either the
-[Conventional Commit plugin for Pycharm][jetbrains] or the
-[Conventional Commits extension for VS Code][vscode] (or something similar) to
-ensure your commit messages adhere to the
-[Conventional Commits specification][conventionalcommits].
-
-[jetbrains]: https://plugins.jetbrains.com/plugin/13389-conventional-commit
-[vscode]: https://marketplace.visualstudio.com/items?itemName=vivaxy.vscode-conventional-commits
-[conventionalcommits]: https://www.conventionalcommits.org/en/v1.0.0/
+work into logical, working commits.  Use the **Conventional Commits** extension
+for VS Code (or something similar) to ensure your commit messages adhere to the
+[Conventional Commits specification][conventional].
 
 Feel free to commit and push small chunks early and often and then use `git
 rebase -i` to reorganize your commits before sharing.
