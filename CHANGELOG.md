@@ -2,6 +2,46 @@
 
 
 
+## v1.0.8 (2024-05-13)
+
+### Chore
+* chore: Remove commitizen configuration ([`73ceec1`](https://github.com/sandialabs/reverse_argparse/commit/73ceec1bdb5385744c29cef4eb85385603839ee7))
+* chore: Remove commitizen pre-commit hook ([`18c274f`](https://github.com/sandialabs/reverse_argparse/commit/18c274f5b42764b8bca3527bd49841ae7bc920da))
+
+  In order to enable a faster development workflow, remove the commitizen
+  pre-commit hook to allow commits messages that don&#39;t adhere to the
+  Conventional Commits specification.  Commit messages are still checked
+  in the Continuous Integration workflow, though, so a branch will need to
+  be clean before merging.
+
+### Continuous Integration
+* ci: pre-commit auto-update ([`31ce94a`](https://github.com/sandialabs/reverse_argparse/commit/31ce94a576e39bf6cad6cdace70030d3af4a7da6))
+
+  updates:
+  - [github.com/astral-sh/ruff-pre-commit: v0.4.2 → v0.4.3](https://github.com/astral-sh/ruff-pre-commit/compare/v0.4.2...v0.4.3)
+* ci: pre-commit auto-update ([`7438097`](https://github.com/sandialabs/reverse_argparse/commit/74380974d006c6f592955282fd51e75f5db3f4c9))
+
+  updates:
+  - [github.com/astral-sh/ruff-pre-commit: v0.4.1 → v0.4.2](https://github.com/astral-sh/ruff-pre-commit/compare/v0.4.1...v0.4.2)
+  - [github.com/pre-commit/mirrors-mypy: v1.9.0 → v1.10.0](https://github.com/pre-commit/mirrors-mypy/compare/v1.9.0...v1.10.0)
+
+### Documentation
+* docs: Fix license/copyright text in file ([`1d496c1`](https://github.com/sandialabs/reverse_argparse/commit/1d496c1b20da8ee373f41dd08863db222a15876c))
+
+  Should have been included in b3553415da40949f9ce496ca1363cb69424da791,
+  but was overlooked.
+* docs: Reword Conventional Commits guidelines ([`6659b11`](https://github.com/sandialabs/reverse_argparse/commit/6659b11ea4d855ec48667c5d0fc904ca9f027dbe))
+* docs: Add code lines badge ([`9e4953d`](https://github.com/sandialabs/reverse_argparse/commit/9e4953d7fd43d2f325bfdc66cd6c0c71f5fc454e))
+
+### Patch
+* patch: Indicate that the package is typed ([`bd89c55`](https://github.com/sandialabs/reverse_argparse/commit/bd89c55ded9b8d7982ff52b46155e4427ddf629e))
+
+  According to PEP 561, we need to add this file to static type checkers
+  can infer the types from the package.
+
+### Test
+* test: Ignore assert warnings in test files ([`01f97d0`](https://github.com/sandialabs/reverse_argparse/commit/01f97d037707378cf2fd7c86390c635dfbd5387b))
+
 ## v1.0.7 (2024-04-22)
 
 ### Chore

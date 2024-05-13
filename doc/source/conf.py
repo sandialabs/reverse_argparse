@@ -18,7 +18,7 @@ copyright = (  # noqa: A001
     "of Sandia, LLC (NTESS)"
 )
 author = "Jason M. Gates"
-version = "1.0.7"
+version = "1.0.8"
 release = version
 
 # -- General configuration ----------------------------------------------------
