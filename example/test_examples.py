@@ -18,7 +18,7 @@ def test_basic() -> None:
     """Ensure ``basic.py`` produces the expected results."""
     example = Path(__file__).parent / "basic.py"
     result = subprocess.run(
-        [example, "--foo", "bar"],  # noqa: S603
+        [example, "--foo", "bar"],
         capture_output=True,
         check=True,
         text=True,
@@ -36,7 +36,7 @@ def test_default_values() -> None:
     """Ensure ``default_values.py`` produces the expected results."""
     example = Path(__file__).parent / "default_values.py"
     result = subprocess.run(
-        [example, "--foo", "bar"],  # noqa: S603
+        [example, "--foo", "bar"],
         capture_output=True,
         check=True,
         text=True,
@@ -54,7 +54,7 @@ def test_relative_references() -> None:
     """Ensure ``relative_references.py`` produces the expected results."""
     example = Path(__file__).parent / "relative_references.py"
     result = subprocess.run(
-        [example, "--src", "bar.txt"],  # noqa: S603
+        [example, "--src", "bar.txt"],
         capture_output=True,
         check=True,
         text=True,
@@ -73,7 +73,7 @@ def test_post_processing() -> None:
     """Ensure ``post_processing.py`` produces the expected results."""
     example = Path(__file__).parent / "post_processing.py"
     result = subprocess.run(
-        [example, "--before", "'30 minutes ago'"],  # noqa: S603
+        [example, "--before", "'30 minutes ago'"],
         capture_output=True,
         check=True,
         text=True,
@@ -96,7 +96,7 @@ def test_pretty_printing() -> None:
     """Ensure ``pretty_printing.py`` produces the expected results."""
     example = Path(__file__).parent / "pretty_printing.py"
     result = subprocess.run(
-        [  # noqa: S603
+        [
             example,
             "--foo",
             "eggs",
@@ -132,7 +132,7 @@ def test_subparsers() -> None:
     """Ensure ``subparsers.py`` produces the expected results."""
     example = Path(__file__).parent / "subparsers.py"
     result = subprocess.run(
-        [example, "foo", "--one", "eggs"],  # noqa: S603
+        [example, "foo", "--one", "eggs"],
         capture_output=True,
         check=True,
         text=True,
