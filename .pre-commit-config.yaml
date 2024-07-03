@@ -12,6 +12,11 @@ repos:
         - id: ruff
         - id: ruff-format
 
+    - repo: https://github.com/gitleaks/gitleaks
+      rev: v8.16.3
+      hooks:
+        - id: gitleaks
+
     - repo: https://github.com/pre-commit/mirrors-mypy
       rev: v1.10.0
       hooks:
@@ -47,15 +52,8 @@ repos:
       hooks:
           - id: pyroma
             additional_dependencies: ["poetry"]
-    - repo: https://github.com/gitleaks/gitleaks
-      rev: v8.16.3
-      hooks:
-        - id: gitleaks
-    - repo: https://github.com/jumanjihouse/pre-commit-hooks
-      rev: 3.0.0
+
+    - repo: https://github.com/shellcheck-py/shellcheck-py
+      rev: v0.10.0.1
       hooks:
         - id: shellcheck
-    - repo: https://github.com/pylint-dev/pylint
-      rev: v2.17.2
-      hooks:
-        - id: pylint
