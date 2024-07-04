@@ -14,8 +14,7 @@ sys.path.append(str(Path.cwd().parents[2].resolve() / "reverse_argparse"))
 
 project = "reverse_argparse"
 copyright = (  # noqa: A001
-    "2023–2024, National Technology & Engineering Solutions "  # noqa: RUF001
-    "of Sandia, LLC (NTESS)"
+    "2023, National Technology & Engineering Solutions of Sandia, LLC (NTESS)"
 )
 author = "Jason M. Gates"
 version = "1.0.8"

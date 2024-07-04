@@ -85,9 +85,9 @@ we'd love to have your help :grinning:  Check out our
 
 [contributors]: https://github.com/sandialabs/reverse_argparse/graphs/contributors
 
-## License
+## License & Copyright
 
-See [LICENSE.md](LICENSE.md).
+See [LICENSE.md](LICENSE.md) and [COPYRIGHT.md](COPYRIGHT.md).
 
 ## Credits
 

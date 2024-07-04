@@ -1,9 +1,6 @@
-# 3-Clause BSD License
+# BSD 3-Clause "New" or "Revised" License
 
-_Copyright © 2023–2024, National Technology & Engineering Solutions of
-Sandia, LLC (NTESS).  Under the terms of Contract DE-NA0003525 with
-NTESS, the U.S.  Government retains certain rights in this software.
-All rights reserved._
+Copyright 2023 NTESS.
 
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are
@@ -14,7 +11,7 @@ met:
 2. Redistributions in binary form must reproduce the above copyright
    notice, this list of conditions and the following disclaimer in the
    documentation and/or other materials provided with the distribution.
-3. Neither the name of Sandia National Laboratories nor the names of its
+3. Neither the name of the copyright holder nor the names of its
    contributors may be used to endorse or promote products derived from
    this software without specific prior written permission.
 
