@@ -59,14 +59,16 @@ jobs:
         working-directory: ./doc
 
       - name: Check documentation coverage
-        run: make coverage
+        run: |
+          make coverage
+          mv build/coverage/python.txt ../docs-coverage-report-${{ matrix.version }}.txt
         working-directory: ./doc
 
       - name: Archive documentation coverage results
         uses: actions/upload-artifact@65462800fd760344b1a7b4382951275a0abb4808 # v4.3.3
         with:
-          name: docs-coverage-report
-          path: doc/build/coverage/python.txt
+          name: docs-coverage-report-${{ matrix.version }}
+          path: docs-coverage-report-${{ matrix.version }}.txt
 
       - name: Test uninstall
         run: python3 -m pip uninstall -y reverse_argparse
