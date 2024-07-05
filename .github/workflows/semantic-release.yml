@@ -38,7 +38,7 @@ jobs:
       if: steps.release.outputs.released == 'true'
 
     - name: Publish to GitHub Releases
-      uses: python-semantic-release/upload-to-gh-release@c7c3b69570cbd3011111d2673d8f07142473a871 # main
+      uses: python-semantic-release/upload-to-gh-release@ab38ab601e1cc0a20e26d1ab089e0b9d40d7faf0 # main
       if: steps.release.outputs.released == 'true'
       with:
         github_token: ${{ secrets.GH_TOKEN }}
