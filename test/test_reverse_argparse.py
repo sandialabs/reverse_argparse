@@ -22,7 +22,7 @@ if sys.version_info.minor >= BOOLEAN_OPTIONAL_ACTION_MINOR_VERSION:
     from argparse import BooleanOptionalAction
 
 
-@pytest.fixture()
+@pytest.fixture
 def parser() -> ArgumentParser:
     """
     Pre-populate an ``ArgumentParser`` with a variety of options.
