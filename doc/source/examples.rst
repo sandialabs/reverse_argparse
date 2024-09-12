@@ -16,13 +16,14 @@ straightforward it is to get up and running with it.
 .. literalinclude:: ../../example/basic.py
    :language: python
    :linenos:
+   :lines: 10-
    :caption: ``example/basic.py``
-   :emphasize-lines: 5,16-19
+   :emphasize-lines: 3,14-17
 
 .. note::
 
    The only thing you're adding to your script to take advantage of
-   ``reverse_argparse`` is lines 7 and 19--22.
+   ``reverse_argparse`` is lines 3 and 14--17.
 
 Running the script, and passing an argument to it, yields the following:
 
@@ -37,8 +38,9 @@ arguments, but this time with default values.
 .. literalinclude:: ../../example/default_values.py
    :language: python
    :linenos:
+   :lines: 10-
    :caption: ``example/default_values.py``
-   :emphasize-lines: 10-11
+   :emphasize-lines: 8-9
 
 Now running the script with the same command line arguments yields:
 
@@ -54,8 +56,9 @@ will be translated to an absolute path behind the scenes.
 .. literalinclude:: ../../example/relative_references.py
    :language: python
    :linenos:
+   :lines: 10-
    :caption: ``example/relative_references.py``
-   :emphasize-lines: 3,13
+   :emphasize-lines: 1,11
 
 Now running the script and pointing to a file in your current working directory
 yields:
@@ -73,8 +76,9 @@ standard format.
 .. literalinclude:: ../../example/post_processing.py
    :language: python
    :linenos:
+   :lines: 10-
    :caption: ``example/post_processing.py``
-   :emphasize-lines: 6,16,20-21
+   :emphasize-lines: 4,14,18-19
 
 Now running the script and specifying a relative date/time yields:
 
@@ -92,8 +96,9 @@ different flags and corresponding values are.
 .. literalinclude:: ../../example/pretty_printing.py
    :language: python
    :linenos:
+   :lines: 10-
    :caption: ``example/pretty_printing.py``
-   :emphasize-lines: 28
+   :emphasize-lines: 26
 
 Now running the script and specifying a relative date/time yields:
 
@@ -114,8 +119,9 @@ shows the subtle difference.
 .. literalinclude:: ../../example/subparsers.py
    :language: python
    :linenos:
+   :lines: 10-
    :caption: ``example/subparsers.py``
-   :emphasize-lines: 11-18
+   :emphasize-lines: 9-19
 
 Running this script and using the ``foo`` subcommand yields:
 
