@@ -3,24 +3,19 @@ updates:
   - package-ecosystem: github-actions
     directory: /
     schedule:
-      interval: daily
+      interval: weekly
+    groups:
+      github-actions-dependencies:
+        applies-to: version-updates
 
   - package-ecosystem: pip
-    directory: /doc
+    directories:
+      - /
+      - /doc
+      - /example
+      - /test
     schedule:
-      interval: daily
-
-  - package-ecosystem: pip
-    directory: /example
-    schedule:
-      interval: daily
-
-  - package-ecosystem: pip
-    directory: /
-    schedule:
-      interval: daily
-
-  - package-ecosystem: pip
-    directory: /test
-    schedule:
-      interval: daily
+      interval: weekly
+    groups:
+      python-dependencies:
+        applies-to: version-updates
