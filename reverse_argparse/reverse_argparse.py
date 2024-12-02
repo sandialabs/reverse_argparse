@@ -14,12 +14,10 @@ with spaces in them with quotes.
 # SPDX-License-Identifier: BSD-3-Clause
 
 import re
-import sys
 from argparse import SUPPRESS, Action, ArgumentParser, Namespace
-from typing import List, Sequence
+from typing import Sequence
 
 
-BOOLEAN_OPTIONAL_ACTION_MINOR_VERSION = 9
 SHORT_OPTION_LENGTH = 2
 
 
@@ -38,20 +36,20 @@ class ReverseArgumentParser:
     such that they're able to reproduce a prior run of a script exactly.
 
     Attributes:
-        _args (List[str]):  The list of arguments corresponding to each
+        _args (list[str]):  The list of arguments corresponding to each
             :class:`argparse.Action` in the given parser, which is built
             up as the arguments are unparsed.
         _indent (int):  The number of spaces with which to indent
             subsequent lines when pretty-printing the effective command
             line invocation.
         _namespace (Namespace):  The parsed arguments.
-        _parsers (List[argparse.ArgumentParser]):  The parser that was
+        _parsers (list[argparse.ArgumentParser]):  The parser that was
             used to generate the parsed arguments.  This is a ``list``
             (conceptually a stack) to allow for sub-parsers, so the
             outer-most parser is the first item in the list, and
             sub-parsers are pushed onto and popped off of the stack as
             they are processed.
-        _unparsed (List[bool]):  A list in which the elements indicate
+        _unparsed (list[bool]):  A list in which the elements indicate
             whether the corresponding parser in :attr:`parsers` has been
             unparsed.
     """
@@ -136,10 +134,7 @@ class ReverseArgumentParser:
             self._unparse_sub_parsers_action(action)
         elif action_type == "_VersionAction":  # pragma: no cover
             return
-        elif (
-            action_type == "BooleanOptionalAction"
-            and sys.version_info.minor >= BOOLEAN_OPTIONAL_ACTION_MINOR_VERSION
-        ):
+        elif action_type == "BooleanOptionalAction":
             self._unparse_boolean_optional_action(action)
         else:  # pragma: no cover
             message = (
@@ -202,7 +197,7 @@ class ReverseArgumentParser:
 
     def _get_long_option_strings(
         self, option_strings: Sequence[str]
-    ) -> List[str]:
+    ) -> list[str]:
         """
         Get the long options from a list of options strings.
 
@@ -224,7 +219,7 @@ class ReverseArgumentParser:
 
     def _get_short_option_strings(
         self, option_strings: Sequence[str]
-    ) -> List[str]:
+    ) -> list[str]:
         """
         Get the short options from a list of options strings.
 
@@ -278,7 +273,7 @@ class ReverseArgumentParser:
                 return short_options[0]
         return ""
 
-    def _append_list_of_list_of_args(self, args: List[List[str]]) -> None:
+    def _append_list_of_list_of_args(self, args: list[list[str]]) -> None:
         """
         Append to the list of unparsed arguments.
 
@@ -293,7 +288,7 @@ class ReverseArgumentParser:
         for line in args:
             self._args.append(self._indent_str + " ".join(line))
 
-    def _append_list_of_args(self, args: List[str]) -> None:
+    def _append_list_of_args(self, args: list[str]) -> None:
         """
         Append to the list of unparsed arguments.
 
