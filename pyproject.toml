@@ -5,7 +5,7 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry]
 name = "reverse_argparse"
-version = "1.0.8"
+version = "2.0.0"
 license = "LICENSE.md"
 readme = "README.md"
 keywords = ["argparse", "argument", "parse", "parsing", "command line"]
