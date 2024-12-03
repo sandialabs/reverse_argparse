@@ -17,7 +17,7 @@
 [![pre-commit.ci Status](https://results.pre-commit.ci/badge/github/sandialabs/reverse_argparse/master.svg)](https://results.pre-commit.ci/latest/github/sandialabs/reverse_argparse/master)
 [![PyPI - Version](https://img.shields.io/pypi/v/reverse-argparse?label=PyPI)](https://pypi.org/project/reverse-argparse/)
 ![PyPI - Downloads](https://img.shields.io/pypi/dm/reverse-argparse?label=PyPI%20downloads)
-![Python Version](https://img.shields.io/badge/Python-3.8|3.9|3.10|3.11|3.12-blue.svg)
+![Python Version](https://img.shields.io/badge/Python-3.9|3.10|3.11|3.12-blue.svg)
 [![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
 
 # reverse_argparse
