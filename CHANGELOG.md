@@ -2,6 +2,20 @@
 
 
 
+## v2.0.2 (2024-12-17)
+
+### Bug fixes
+* fix: Switch import location ([`7948fc2`](https://github.com/sandialabs/reverse_argparse/commit/7948fc2b0e1e9cdb6444be1d931e7f5a92ac26aa))
+
+  In Python 3.9, `typing.Sequence` was deprecated in favor of
+  `collections.abc.Sequence` (see PEP 585).
+
+### Continuous integration
+* ci: pre-commit auto-update ([`8f5df54`](https://github.com/sandialabs/reverse_argparse/commit/8f5df549cb5dcce2917a9f22b47520954882e78f))
+
+  updates:
+  - [github.com/astral-sh/ruff-pre-commit: v0.7.4 → v0.8.3](https://github.com/astral-sh/ruff-pre-commit/compare/v0.7.4...v0.8.3)
+
 ## v2.0.1 (2024-12-17)
 
 ### Chores
