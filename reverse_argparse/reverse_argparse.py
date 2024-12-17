@@ -15,7 +15,7 @@ with spaces in them with quotes.
 
 import re
 from argparse import SUPPRESS, Action, ArgumentParser, Namespace
-from typing import Sequence
+from collections.abc import Sequence
 
 
 SHORT_OPTION_LENGTH = 2
