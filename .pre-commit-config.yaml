@@ -7,13 +7,13 @@ ci:
 repos:
 
     - repo: https://github.com/astral-sh/ruff-pre-commit
-      rev: v0.8.6
+      rev: v0.9.1
       hooks:
         - id: ruff
         - id: ruff-format
 
     - repo: https://github.com/gitleaks/gitleaks
-      rev: v8.22.1
+      rev: v8.23.0
       hooks:
         - id: gitleaks
 
