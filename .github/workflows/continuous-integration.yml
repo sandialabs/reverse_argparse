@@ -50,7 +50,7 @@ jobs:
         run: python3 -m pytest --cov=reverse_argparse example/ test/
 
       - name: Upload coverage reports to Codecov
-        uses: codecov/codecov-action@1e68e06f1dbfde0e4cefc87efeba9e4643565303 # v5.1.2
+        uses: codecov/codecov-action@13ce06bfc6bbe3ecf90edbbf1bc32fe5978ca1d3 # v5.3.1
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
@@ -82,7 +82,7 @@ jobs:
           egress-policy: audit
 
       - name: Conventional Commits
-        uses: taskmedia/action-conventional-commits@cb0de258e7309e163ee353a8c38e24e609608cd6 # v1.1.19
+        uses: taskmedia/action-conventional-commits@a708bda25c04fc82b2acd5eeeb88d97f9a19beb9 # v1.1.20
         with:
           types: >
             build|chore|ci|docs|feat|fix|minor|patch|perf|style|refactor|test

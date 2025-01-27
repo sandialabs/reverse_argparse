@@ -29,12 +29,12 @@ jobs:
 
     - name: Python Semantic Release
       id: release
-      uses: python-semantic-release/python-semantic-release@d6a3be3386441a4f3a73df1bdd57ded251941739 # master
+      uses: python-semantic-release/python-semantic-release@cdfda70b6df73f3e4917cfd498f4bf9fed29ea08 # master
       with:
         github_token: ${{ secrets.GH_TOKEN }}
 
     - name: Publish to PyPI
-      uses: pypa/gh-action-pypi-publish@67339c736fd9354cd4f8cb0b744f2b82a74b5c70 # release/v1
+      uses: pypa/gh-action-pypi-publish@76f52bc884231f62b9a034ebfe128415bbaabdfc # release/v1
       if: steps.release.outputs.released == 'true'
 
     - name: Publish to GitHub Releases
