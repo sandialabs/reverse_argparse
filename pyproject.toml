@@ -121,7 +121,9 @@ match = "master"
 
 [tool.semantic_release.changelog]
 exclude_commit_patterns = [
+    "chore.*deps.*Bump",
     "Merge pull request",
+    "pre-commit auto-update",
 ]
 
 
