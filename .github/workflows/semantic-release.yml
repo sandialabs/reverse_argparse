@@ -29,7 +29,7 @@ jobs:
 
     - name: Python Semantic Release
       id: release
-      uses: python-semantic-release/python-semantic-release@0dc72ac9058a62054a45f6344c83a423d7f906a8 # v9.21.1
+      uses: python-semantic-release/python-semantic-release@917a2c730cb8f6c8cd3d00f23c876d724a4a844c # v10.0.1
       with:
         github_token: ${{ secrets.GH_TOKEN }}
 
@@ -38,7 +38,7 @@ jobs:
       if: steps.release.outputs.released == 'true'
 
     - name: Publish to GitHub Releases
-      uses: python-semantic-release/publish-action@1aa9f41fac5d531e6764e1991b536783337f3a56 # v9.21.1
+      uses: python-semantic-release/publish-action@d3a9934c4fff57f0d4df24450566d3dba7e7082a # v10.0.1
       if: steps.release.outputs.released == 'true'
       with:
         github_token: ${{ secrets.GH_TOKEN }}
