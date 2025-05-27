@@ -2,13 +2,15 @@
 
 
 
+## v2.0.5 (2025-05-27)
+
+### Patch
+* patch: Omit pre-commit updates from CHANGELOG ([`b6298d8`](https://github.com/sandialabs/reverse_argparse/commit/b6298d8eda0b0b5cc03c7c2be8bcd0d76931df46))
+
+  I thought 1aa9022a7c7796e85e342382f67b02434d4b544b was sufficient for
+  this, but apparently not. Trying again.
+
 ## v2.0.4 (2025-05-27)
-
-### Continuous integration
-* ci: pre-commit auto-update ([`6031382`](https://github.com/sandialabs/reverse_argparse/commit/603138221b12de18eeef931b6799513ab44dbade))
-
-  updates:
-  - [github.com/astral-sh/ruff-pre-commit: v0.11.10 → v0.11.11](https://github.com/astral-sh/ruff-pre-commit/compare/v0.11.10...v0.11.11)
 
 ### Patch
 * patch: Omit dependency auto-updates from CHANGELOG ([`1aa9022`](https://github.com/sandialabs/reverse_argparse/commit/1aa9022a7c7796e85e342382f67b02434d4b544b))
@@ -23,97 +25,6 @@
 
   The Best Practices Badge App suggests we should document what users can
   expect from our project in terms of security.
-
-### Continuous integration
-* ci: pre-commit auto-update ([`0204856`](https://github.com/sandialabs/reverse_argparse/commit/0204856246ed0d93865d380d6c88a01a09f77919))
-
-  updates:
-  - [github.com/astral-sh/ruff-pre-commit: v0.11.9 → v0.11.10](https://github.com/astral-sh/ruff-pre-commit/compare/v0.11.9...v0.11.10)
-  - [github.com/gitleaks/gitleaks: v8.25.1 → v8.26.0](https://github.com/gitleaks/gitleaks/compare/v8.25.1...v8.26.0)
-* ci: pre-commit auto-update ([`97dad19`](https://github.com/sandialabs/reverse_argparse/commit/97dad19ac409ca6acdfb6b933fc551df48aa94c3))
-
-  updates:
-  - [github.com/astral-sh/ruff-pre-commit: v0.11.8 → v0.11.9](https://github.com/astral-sh/ruff-pre-commit/compare/v0.11.8...v0.11.9)
-* ci: pre-commit auto-update ([`d38eeaf`](https://github.com/sandialabs/reverse_argparse/commit/d38eeaf557dbcf8f6719d080fcb42475a1e9b3a8))
-
-  updates:
-  - [github.com/astral-sh/ruff-pre-commit: v0.11.7 → v0.11.8](https://github.com/astral-sh/ruff-pre-commit/compare/v0.11.7...v0.11.8)
-  - [github.com/gitleaks/gitleaks: v8.24.3 → v8.25.1](https://github.com/gitleaks/gitleaks/compare/v8.24.3...v8.25.1)
-* ci: pre-commit auto-update ([`20d708d`](https://github.com/sandialabs/reverse_argparse/commit/20d708dc3dd5d2550e96e3a806769a865f324fc7))
-
-  updates:
-  - [github.com/astral-sh/ruff-pre-commit: v0.11.6 → v0.11.7](https://github.com/astral-sh/ruff-pre-commit/compare/v0.11.6...v0.11.7)
-* ci: pre-commit auto-update ([`bd24a43`](https://github.com/sandialabs/reverse_argparse/commit/bd24a43da186f61aba77982345cc14b83f3614f0))
-
-  updates:
-  - [github.com/astral-sh/ruff-pre-commit: v0.11.5 → v0.11.6](https://github.com/astral-sh/ruff-pre-commit/compare/v0.11.5...v0.11.6)
-* ci: pre-commit auto-update ([`c124cb4`](https://github.com/sandialabs/reverse_argparse/commit/c124cb478e9e4d25bc6dc1c528d74ebe2b2d157e))
-
-  updates:
-  - [github.com/astral-sh/ruff-pre-commit: v0.11.4 → v0.11.5](https://github.com/astral-sh/ruff-pre-commit/compare/v0.11.4...v0.11.5)
-  - [github.com/gitleaks/gitleaks: v8.24.2 → v8.24.3](https://github.com/gitleaks/gitleaks/compare/v8.24.2...v8.24.3)
-* ci: pre-commit auto-update ([`f5777a9`](https://github.com/sandialabs/reverse_argparse/commit/f5777a98522d555dee894591fa3f963b8841f644))
-
-  updates:
-  - [github.com/astral-sh/ruff-pre-commit: v0.11.2 → v0.11.4](https://github.com/astral-sh/ruff-pre-commit/compare/v0.11.2...v0.11.4)
-* ci: pre-commit auto-update ([`c2b267d`](https://github.com/sandialabs/reverse_argparse/commit/c2b267d1d7667aa80287f152f7c33658d3d6c510))
-
-  updates:
-  - [github.com/astral-sh/ruff-pre-commit: v0.11.0 → v0.11.2](https://github.com/astral-sh/ruff-pre-commit/compare/v0.11.0...v0.11.2)
-  - [github.com/gitleaks/gitleaks: v8.24.0 → v8.24.2](https://github.com/gitleaks/gitleaks/compare/v8.24.0...v8.24.2)
-* ci: pre-commit auto-update ([`8872267`](https://github.com/sandialabs/reverse_argparse/commit/887226796a2ac13fe024b7f7eea490562bd44897))
-
-  updates:
-  - [github.com/astral-sh/ruff-pre-commit: v0.9.10 → v0.11.0](https://github.com/astral-sh/ruff-pre-commit/compare/v0.9.10...v0.11.0)
-* ci: pre-commit auto-update ([`33e0a93`](https://github.com/sandialabs/reverse_argparse/commit/33e0a93666ba8448371ac57ee0a054bddb93c767))
-
-  updates:
-  - [github.com/astral-sh/ruff-pre-commit: v0.9.9 → v0.9.10](https://github.com/astral-sh/ruff-pre-commit/compare/v0.9.9...v0.9.10)
-* ci: pre-commit auto-update ([`0baa1f6`](https://github.com/sandialabs/reverse_argparse/commit/0baa1f61dfb6f6fe9dd0a9a9b9c00bef199ccfab))
-
-  updates:
-  - [github.com/astral-sh/ruff-pre-commit: v0.9.7 → v0.9.9](https://github.com/astral-sh/ruff-pre-commit/compare/v0.9.7...v0.9.9)
-* ci: pre-commit auto-update ([`8c1f5c5`](https://github.com/sandialabs/reverse_argparse/commit/8c1f5c5040abc98f28fe656fadbe7edee636d83c))
-
-  updates:
-  - [github.com/astral-sh/ruff-pre-commit: v0.9.6 → v0.9.7](https://github.com/astral-sh/ruff-pre-commit/compare/v0.9.6...v0.9.7)
-  - [github.com/gitleaks/gitleaks: v8.23.3 → v8.24.0](https://github.com/gitleaks/gitleaks/compare/v8.23.3...v8.24.0)
-* ci: pre-commit auto-update ([`4c3d41f`](https://github.com/sandialabs/reverse_argparse/commit/4c3d41f679c9cc3cb3de808cc80127d7d98588a2))
-
-  updates:
-  - [github.com/astral-sh/ruff-pre-commit: v0.9.4 → v0.9.6](https://github.com/astral-sh/ruff-pre-commit/compare/v0.9.4...v0.9.6)
-  - [github.com/pre-commit/mirrors-mypy: v1.14.1 → v1.15.0](https://github.com/pre-commit/mirrors-mypy/compare/v1.14.1...v1.15.0)
-* ci: pre-commit auto-update ([`48e4811`](https://github.com/sandialabs/reverse_argparse/commit/48e4811962d0149d9ad53a84660f2454e85351d6))
-
-  updates:
-  - [github.com/astral-sh/ruff-pre-commit: v0.9.3 → v0.9.4](https://github.com/astral-sh/ruff-pre-commit/compare/v0.9.3...v0.9.4)
-  - [github.com/gitleaks/gitleaks: v8.23.2 → v8.23.3](https://github.com/gitleaks/gitleaks/compare/v8.23.2...v8.23.3)
-* ci: pre-commit auto-update ([`76ad903`](https://github.com/sandialabs/reverse_argparse/commit/76ad903361102a47073f1aabed8de1a6a6cbce35))
-
-  updates:
-  - [github.com/astral-sh/ruff-pre-commit: v0.9.2 → v0.9.3](https://github.com/astral-sh/ruff-pre-commit/compare/v0.9.2...v0.9.3)
-  - [github.com/gitleaks/gitleaks: v8.23.1 → v8.23.2](https://github.com/gitleaks/gitleaks/compare/v8.23.1...v8.23.2)
-* ci: pre-commit auto-update ([`93d8b21`](https://github.com/sandialabs/reverse_argparse/commit/93d8b216b199f94586ddd32c5241f04c2642adb6))
-
-  updates:
-  - [github.com/astral-sh/ruff-pre-commit: v0.9.1 → v0.9.2](https://github.com/astral-sh/ruff-pre-commit/compare/v0.9.1...v0.9.2)
-  - [github.com/gitleaks/gitleaks: v8.23.0 → v8.23.1](https://github.com/gitleaks/gitleaks/compare/v8.23.0...v8.23.1)
-* ci: pre-commit auto-update ([`b603a49`](https://github.com/sandialabs/reverse_argparse/commit/b603a497069337b472f8b97999d1ac64798c31db))
-
-  updates:
-  - [github.com/astral-sh/ruff-pre-commit: v0.8.6 → v0.9.1](https://github.com/astral-sh/ruff-pre-commit/compare/v0.8.6...v0.9.1)
-  - [github.com/gitleaks/gitleaks: v8.22.1 → v8.23.0](https://github.com/gitleaks/gitleaks/compare/v8.22.1...v8.23.0)
-* ci: pre-commit auto-update ([`52a6525`](https://github.com/sandialabs/reverse_argparse/commit/52a652550f844e00d319c9bc8868b83337f03aa0))
-
-  updates:
-  - [github.com/astral-sh/ruff-pre-commit: v0.8.4 → v0.8.6](https://github.com/astral-sh/ruff-pre-commit/compare/v0.8.4...v0.8.6)
-  - [github.com/pre-commit/mirrors-mypy: v1.14.0 → v1.14.1](https://github.com/pre-commit/mirrors-mypy/compare/v1.14.0...v1.14.1)
-* ci: pre-commit auto-update ([`ceb5c6d`](https://github.com/sandialabs/reverse_argparse/commit/ceb5c6d00a5e8f5856827b074b858c96ee4cb3ca))
-
-  updates:
-  - [github.com/astral-sh/ruff-pre-commit: v0.8.3 → v0.8.4](https://github.com/astral-sh/ruff-pre-commit/compare/v0.8.3...v0.8.4)
-  - [github.com/gitleaks/gitleaks: v8.21.2 → v8.22.1](https://github.com/gitleaks/gitleaks/compare/v8.21.2...v8.22.1)
-  - [github.com/pre-commit/mirrors-mypy: v1.13.0 → v1.14.0](https://github.com/pre-commit/mirrors-mypy/compare/v1.13.0...v1.14.0)
 
 ### Documentation
 * docs: Switch to `project_copyright` ([`d0a21d5`](https://github.com/sandialabs/reverse_argparse/commit/d0a21d5ea5a1ed9a3988bf73f290a19ab3ae8786))
@@ -137,12 +48,6 @@
   In Python 3.9, `typing.Sequence` was deprecated in favor of
   `collections.abc.Sequence` (see PEP 585).
 
-### Continuous integration
-* ci: pre-commit auto-update ([`8f5df54`](https://github.com/sandialabs/reverse_argparse/commit/8f5df549cb5dcce2917a9f22b47520954882e78f))
-
-  updates:
-  - [github.com/astral-sh/ruff-pre-commit: v0.7.4 → v0.8.3](https://github.com/astral-sh/ruff-pre-commit/compare/v0.7.4...v0.8.3)
-
 ## v2.0.1 (2024-12-17)
 
 ### Patch
@@ -164,104 +69,10 @@
 * chore: Update LICENSE/COPYRIGHT info ([`aae82e5`](https://github.com/sandialabs/reverse_argparse/commit/aae82e52fccd0a40dba7fa23e73129b172f63ae7))
 
 ### Continuous integration
-* ci: pre-commit auto-update ([`3dc3489`](https://github.com/sandialabs/reverse_argparse/commit/3dc3489ecd98a9bc639f93f4420bb943f1c1573d))
-
-  updates:
-  - [github.com/astral-sh/ruff-pre-commit: v0.7.3 → v0.7.4](https://github.com/astral-sh/ruff-pre-commit/compare/v0.7.3...v0.7.4)
-* ci: pre-commit auto-update ([`65a6f19`](https://github.com/sandialabs/reverse_argparse/commit/65a6f1983c195080b8a0f30b578d1fcdb2656efd))
-
-  updates:
-  - [github.com/astral-sh/ruff-pre-commit: v0.7.2 → v0.7.3](https://github.com/astral-sh/ruff-pre-commit/compare/v0.7.2...v0.7.3)
-* ci: pre-commit auto-update ([`0abfbf4`](https://github.com/sandialabs/reverse_argparse/commit/0abfbf473fd686942899e8fa394373a1f56ae0cd))
-
-  updates:
-  - [github.com/astral-sh/ruff-pre-commit: v0.7.1 → v0.7.2](https://github.com/astral-sh/ruff-pre-commit/compare/v0.7.1...v0.7.2)
-* ci: pre-commit auto-update ([`6ef8c2d`](https://github.com/sandialabs/reverse_argparse/commit/6ef8c2d62186c6d2873e331ca0b948e69a8a0896))
-
-  updates:
-  - [github.com/astral-sh/ruff-pre-commit: v0.7.0 → v0.7.1](https://github.com/astral-sh/ruff-pre-commit/compare/v0.7.0...v0.7.1)
-  - [github.com/gitleaks/gitleaks: v8.21.1 → v8.21.2](https://github.com/gitleaks/gitleaks/compare/v8.21.1...v8.21.2)
-  - [github.com/pre-commit/mirrors-mypy: v1.12.1 → v1.13.0](https://github.com/pre-commit/mirrors-mypy/compare/v1.12.1...v1.13.0)
-* ci: pre-commit auto-update ([`e283c2c`](https://github.com/sandialabs/reverse_argparse/commit/e283c2c44a7fb1147a2afb639553e99d8d171eb9))
-
-  updates:
-  - [github.com/astral-sh/ruff-pre-commit: v0.6.9 → v0.7.0](https://github.com/astral-sh/ruff-pre-commit/compare/v0.6.9...v0.7.0)
-  - [github.com/gitleaks/gitleaks: v8.20.1 → v8.21.1](https://github.com/gitleaks/gitleaks/compare/v8.20.1...v8.21.1)
-  - [github.com/pre-commit/mirrors-mypy: v1.11.2 → v1.12.1](https://github.com/pre-commit/mirrors-mypy/compare/v1.11.2...v1.12.1)
-* ci: pre-commit auto-update ([`c852df2`](https://github.com/sandialabs/reverse_argparse/commit/c852df2f6a7795b2963ecb17a820576217c22f41))
-
-  updates:
-  - [github.com/astral-sh/ruff-pre-commit: v0.6.8 → v0.6.9](https://github.com/astral-sh/ruff-pre-commit/compare/v0.6.8...v0.6.9)
-  - [github.com/gitleaks/gitleaks: v8.19.3 → v8.20.1](https://github.com/gitleaks/gitleaks/compare/v8.19.3...v8.20.1)
-  - [github.com/pre-commit/pre-commit-hooks: v4.6.0 → v5.0.0](https://github.com/pre-commit/pre-commit-hooks/compare/v4.6.0...v5.0.0)
-* ci: pre-commit auto-update ([`6c82643`](https://github.com/sandialabs/reverse_argparse/commit/6c8264325c2c7f87be9df169a8d763ece151a9bf))
-
-  updates:
-  - [github.com/astral-sh/ruff-pre-commit: v0.6.7 → v0.6.8](https://github.com/astral-sh/ruff-pre-commit/compare/v0.6.7...v0.6.8)
-  - [github.com/gitleaks/gitleaks: v8.19.2 → v8.19.3](https://github.com/gitleaks/gitleaks/compare/v8.19.2...v8.19.3)
-* ci: pre-commit auto-update ([`d2bae0a`](https://github.com/sandialabs/reverse_argparse/commit/d2bae0a83a2f3e93bdc06aaefaef2eadc04a4677))
-
-  updates:
-  - [github.com/astral-sh/ruff-pre-commit: v0.6.5 → v0.6.7](https://github.com/astral-sh/ruff-pre-commit/compare/v0.6.5...v0.6.7)
-* ci: pre-commit auto-update ([`fa57321`](https://github.com/sandialabs/reverse_argparse/commit/fa573216d3fff54a0e4d3cf18b8fa0e1acbafddb))
-
-  updates:
-  - [github.com/astral-sh/ruff-pre-commit: v0.6.4 → v0.6.5](https://github.com/astral-sh/ruff-pre-commit/compare/v0.6.4...v0.6.5)
-  - [github.com/gitleaks/gitleaks: v8.18.4 → v8.19.2](https://github.com/gitleaks/gitleaks/compare/v8.18.4...v8.19.2)
-* ci: pre-commit auto-update ([`d3a4c2e`](https://github.com/sandialabs/reverse_argparse/commit/d3a4c2e78a152174551f1e47720bdf258411919f))
-
-  updates:
-  - [github.com/astral-sh/ruff-pre-commit: v0.6.3 → v0.6.4](https://github.com/astral-sh/ruff-pre-commit/compare/v0.6.3...v0.6.4)
-* ci: pre-commit auto-update ([`6cb4a5c`](https://github.com/sandialabs/reverse_argparse/commit/6cb4a5c74e6ab80f16d7e0fe1dedcdf8bbc1c662))
-
-  updates:
-  - [github.com/astral-sh/ruff-pre-commit: v0.6.2 → v0.6.3](https://github.com/astral-sh/ruff-pre-commit/compare/v0.6.2...v0.6.3)
-  - [github.com/PyCQA/doc8: v1.1.1 → v1.1.2](https://github.com/PyCQA/doc8/compare/v1.1.1...v1.1.2)
-* ci: pre-commit auto-update ([`96b371a`](https://github.com/sandialabs/reverse_argparse/commit/96b371a3c618f9a7d615c2b67409594224fe6b46))
-
-  updates:
-  - [github.com/astral-sh/ruff-pre-commit: v0.6.1 → v0.6.2](https://github.com/astral-sh/ruff-pre-commit/compare/v0.6.1...v0.6.2)
-  - [github.com/pre-commit/mirrors-mypy: v1.11.1 → v1.11.2](https://github.com/pre-commit/mirrors-mypy/compare/v1.11.1...v1.11.2)
-* ci: pre-commit auto-update ([`490f0df`](https://github.com/sandialabs/reverse_argparse/commit/490f0df05fb4ffc8bad24dcfdb851cb79ee7987e))
-
-  updates:
-  - [github.com/astral-sh/ruff-pre-commit: v0.5.7 → v0.6.1](https://github.com/astral-sh/ruff-pre-commit/compare/v0.5.7...v0.6.1)
-* ci: pre-commit auto-update ([`9d3be74`](https://github.com/sandialabs/reverse_argparse/commit/9d3be7443c11fc3c90d03d6b8f1fd627d269d43a))
-
-  updates:
-  - [github.com/astral-sh/ruff-pre-commit: v0.5.6 → v0.5.7](https://github.com/astral-sh/ruff-pre-commit/compare/v0.5.6...v0.5.7)
-* ci: pre-commit auto-update ([`31ccecb`](https://github.com/sandialabs/reverse_argparse/commit/31ccecb1e7620510e81c07de834b6af18ffc1fd1))
-
-  updates:
-  - [github.com/astral-sh/ruff-pre-commit: v0.5.5 → v0.5.6](https://github.com/astral-sh/ruff-pre-commit/compare/v0.5.5...v0.5.6)
-  - [github.com/pre-commit/mirrors-mypy: v1.11.0 → v1.11.1](https://github.com/pre-commit/mirrors-mypy/compare/v1.11.0...v1.11.1)
-* ci: pre-commit auto-update ([`1f75c05`](https://github.com/sandialabs/reverse_argparse/commit/1f75c055411e9595151adfe75b4c9edaa069e1f0))
-
-  updates:
-  - [github.com/astral-sh/ruff-pre-commit: v0.5.4 → v0.5.5](https://github.com/astral-sh/ruff-pre-commit/compare/v0.5.4...v0.5.5)
-* ci: pre-commit auto-update ([`5e9730f`](https://github.com/sandialabs/reverse_argparse/commit/5e9730fd339a16766fca0fea9bd807cd9f7f02de))
-
-  updates:
-  - [github.com/astral-sh/ruff-pre-commit: v0.5.2 → v0.5.4](https://github.com/astral-sh/ruff-pre-commit/compare/v0.5.2...v0.5.4)
-  - [github.com/pre-commit/mirrors-mypy: v1.10.1 → v1.11.0](https://github.com/pre-commit/mirrors-mypy/compare/v1.10.1...v1.11.0)
-* ci: pre-commit auto-update ([`6c9dc20`](https://github.com/sandialabs/reverse_argparse/commit/6c9dc20e5e6e4dafef838be08deac339ee12dcf8))
-
-  updates:
-  - [github.com/astral-sh/ruff-pre-commit: v0.5.1 → v0.5.2](https://github.com/astral-sh/ruff-pre-commit/compare/v0.5.1...v0.5.2)
-* ci: pre-commit auto-update ([`745c17a`](https://github.com/sandialabs/reverse_argparse/commit/745c17a99316b71f702e290f62fcf47ea28d7c86))
-
-  updates:
-  - [github.com/astral-sh/ruff-pre-commit: v0.5.0 → v0.5.1](https://github.com/astral-sh/ruff-pre-commit/compare/v0.5.0...v0.5.1)
-  - [github.com/gitleaks/gitleaks: v8.16.3 → v8.18.4](https://github.com/gitleaks/gitleaks/compare/v8.16.3...v8.18.4)
 * ci: Change documentation coverage file name ([`c487d94`](https://github.com/sandialabs/reverse_argparse/commit/c487d94f28f3a160e8d764cc5a7529fe42d3e744))
 * ci: Restrict token permissions ([`dfb85fd`](https://github.com/sandialabs/reverse_argparse/commit/dfb85fdc512526ad4c4513849a3839cb344af369))
 
   https://github.com/sandialabs/reverse_argparse/security/code-scanning/21
-* ci: pre-commit auto-update ([`3411062`](https://github.com/sandialabs/reverse_argparse/commit/3411062598f098394545112ec8ff4c2cc6dac6ad))
-
-  updates:
-  - [github.com/astral-sh/ruff-pre-commit: v0.4.10 → v0.5.0](https://github.com/astral-sh/ruff-pre-commit/compare/v0.4.10...v0.5.0)
-  - [github.com/pre-commit/mirrors-mypy: v1.10.0 → v1.10.1](https://github.com/pre-commit/mirrors-mypy/compare/v1.10.0...v1.10.1)
 * ci: Tweak automated suggestions ([`3a73bda`](https://github.com/sandialabs/reverse_argparse/commit/3a73bdabda6608d9bbc2b7f53c94cd12a3282848))
 * ci: Apply security best practices ([`27fd558`](https://github.com/sandialabs/reverse_argparse/commit/27fd5585e7629efed20650c3f134125ccc2efee6))
 
@@ -274,30 +85,6 @@
   merging. Additionally, when pre-commit doesn't automatically fix files,
   it shows the user what the issues are, thereby training them to avoid
   them in the future.
-* ci: pre-commit auto-update ([`4569007`](https://github.com/sandialabs/reverse_argparse/commit/4569007f24f9e26245a54a067ed0e3467c5d9139))
-
-  updates:
-  - [github.com/astral-sh/ruff-pre-commit: v0.4.9 → v0.4.10](https://github.com/astral-sh/ruff-pre-commit/compare/v0.4.9...v0.4.10)
-* ci: pre-commit auto-update ([`757151e`](https://github.com/sandialabs/reverse_argparse/commit/757151e5d06971c7b4dc7da648272cdffb9467f3))
-
-  updates:
-  - [github.com/astral-sh/ruff-pre-commit: v0.4.8 → v0.4.9](https://github.com/astral-sh/ruff-pre-commit/compare/v0.4.8...v0.4.9)
-* ci: pre-commit auto-update ([`5b92015`](https://github.com/sandialabs/reverse_argparse/commit/5b92015afb984a4fbb96ed002612ecd81972fdca))
-
-  updates:
-  - [github.com/astral-sh/ruff-pre-commit: v0.4.7 → v0.4.8](https://github.com/astral-sh/ruff-pre-commit/compare/v0.4.7...v0.4.8)
-* ci: pre-commit auto-update ([`c673c39`](https://github.com/sandialabs/reverse_argparse/commit/c673c3921954d541b86cad8fd0f6ee0ed8b5b41b))
-
-  updates:
-  - [github.com/astral-sh/ruff-pre-commit: v0.4.5 → v0.4.7](https://github.com/astral-sh/ruff-pre-commit/compare/v0.4.5...v0.4.7)
-* ci: pre-commit auto-update ([`8bbf5e7`](https://github.com/sandialabs/reverse_argparse/commit/8bbf5e72982f05e66848e61c8b94d6d69be1bb1f))
-
-  updates:
-  - [github.com/astral-sh/ruff-pre-commit: v0.4.4 → v0.4.5](https://github.com/astral-sh/ruff-pre-commit/compare/v0.4.4...v0.4.5)
-* ci: pre-commit auto-update ([`eedaade`](https://github.com/sandialabs/reverse_argparse/commit/eedaade31256a37336778ab76080867d2866b465))
-
-  updates:
-  - [github.com/astral-sh/ruff-pre-commit: v0.4.3 → v0.4.4](https://github.com/astral-sh/ruff-pre-commit/compare/v0.4.3...v0.4.4)
 
 ### Documentation
 * docs: Fix highlighting in examples ([`149e48c`](https://github.com/sandialabs/reverse_argparse/commit/149e48c6ef8adabbc11027da17cf88338f3d6318))
@@ -333,17 +120,6 @@
   in the Continuous Integration workflow, though, so a branch will need to
   be clean before merging.
 
-### Continuous integration
-* ci: pre-commit auto-update ([`31ce94a`](https://github.com/sandialabs/reverse_argparse/commit/31ce94a576e39bf6cad6cdace70030d3af4a7da6))
-
-  updates:
-  - [github.com/astral-sh/ruff-pre-commit: v0.4.2 → v0.4.3](https://github.com/astral-sh/ruff-pre-commit/compare/v0.4.2...v0.4.3)
-* ci: pre-commit auto-update ([`7438097`](https://github.com/sandialabs/reverse_argparse/commit/74380974d006c6f592955282fd51e75f5db3f4c9))
-
-  updates:
-  - [github.com/astral-sh/ruff-pre-commit: v0.4.1 → v0.4.2](https://github.com/astral-sh/ruff-pre-commit/compare/v0.4.1...v0.4.2)
-  - [github.com/pre-commit/mirrors-mypy: v1.9.0 → v1.10.0](https://github.com/pre-commit/mirrors-mypy/compare/v1.9.0...v1.10.0)
-
 ### Documentation
 * docs: Fix license/copyright text in file ([`1d496c1`](https://github.com/sandialabs/reverse_argparse/commit/1d496c1b20da8ee373f41dd08863db222a15876c))
 
@@ -375,55 +151,10 @@
 * chore: Add PR template ([`eb0b3b8`](https://github.com/sandialabs/reverse_argparse/commit/eb0b3b8da57b0c2a67b4928f4d3ae67890aa5bff))
 
 ### Continuous integration
-* ci: pre-commit auto-update ([`0b14008`](https://github.com/sandialabs/reverse_argparse/commit/0b14008f4a9d74095ef8d627998eb5166b2c0ed1))
-
-  updates:
-  - [github.com/commitizen-tools/commitizen: v3.22.0 → v3.24.0](https://github.com/commitizen-tools/commitizen/compare/v3.22.0...v3.24.0)
 * ci: Add OpenSSF Scorecard workflow ([`5f8f3cf`](https://github.com/sandialabs/reverse_argparse/commit/5f8f3cf299ff64890cbcbc9d0a780095edb337da))
-* ci: pre-commit auto-update ([`f184590`](https://github.com/sandialabs/reverse_argparse/commit/f1845904079290ee6d44bb920c9a9181f31e71b4))
-
-  updates:
-  - [github.com/commitizen-tools/commitizen: v3.21.3 → v3.22.0](https://github.com/commitizen-tools/commitizen/compare/v3.21.3...v3.22.0)
-  - [github.com/psf/black: 24.3.0 → 24.4.0](https://github.com/psf/black/compare/24.3.0...24.4.0)
-* ci: pre-commit auto-update ([`d91334d`](https://github.com/sandialabs/reverse_argparse/commit/d91334d003d9c6c387dc9951f9d0707fde27798d))
-
-  updates:
-  - [github.com/pre-commit/pre-commit-hooks: v4.5.0 → v4.6.0](https://github.com/pre-commit/pre-commit-hooks/compare/v4.5.0...v4.6.0)
-* ci: pre-commit auto-update ([`43b5104`](https://github.com/sandialabs/reverse_argparse/commit/43b51041bff35b96184899e3ec28af60f05869f4))
-
-  updates:
-  - [github.com/commitizen-tools/commitizen: v3.20.0 → v3.21.3](https://github.com/commitizen-tools/commitizen/compare/v3.20.0...v3.21.3)
-* ci: pre-commit auto-update ([`60cefa8`](https://github.com/sandialabs/reverse_argparse/commit/60cefa80a5c89ec7e7fb26355ce492d2af1ac3d9))
-
-  updates:
-  - [github.com/commitizen-tools/commitizen: v3.18.4 → v3.20.0](https://github.com/commitizen-tools/commitizen/compare/v3.18.4...v3.20.0)
-* ci: pre-commit auto-update ([`155240b`](https://github.com/sandialabs/reverse_argparse/commit/155240b6589d5ab9dbda33f1c3e3f9ad3a5f8e43))
-
-  updates:
-  - [github.com/commitizen-tools/commitizen: v3.15.0 → v3.18.4](https://github.com/commitizen-tools/commitizen/compare/v3.15.0...v3.18.4)
-  - [github.com/pre-commit/mirrors-mypy: v1.8.0 → v1.9.0](https://github.com/pre-commit/mirrors-mypy/compare/v1.8.0...v1.9.0)
-  - [github.com/psf/black: 24.2.0 → 24.3.0](https://github.com/psf/black/compare/24.2.0...24.3.0)
-  - [github.com/PyCQA/bandit: 1.7.7 → 1.7.8](https://github.com/PyCQA/bandit/compare/1.7.7...1.7.8)
-* ci: pre-commit auto-update ([`ef525b7`](https://github.com/sandialabs/reverse_argparse/commit/ef525b71056685d8eac17b49660706cec8307fd1))
-
-  updates:
-  - [github.com/commitizen-tools/commitizen: v3.14.1 → v3.15.0](https://github.com/commitizen-tools/commitizen/compare/v3.14.1...v3.15.0)
-* ci: pre-commit auto-update ([`5e0e1b4`](https://github.com/sandialabs/reverse_argparse/commit/5e0e1b471594634a92f8952e1ffe9b9628c85437))
-
-  updates:
-  - [github.com/psf/black: 24.1.1 → 24.2.0](https://github.com/psf/black/compare/24.1.1...24.2.0)
-* ci: pre-commit auto-update ([`b6e239d`](https://github.com/sandialabs/reverse_argparse/commit/b6e239decef5760449850b5e9d27c9b507346538))
-
-  updates:
-  - [github.com/commitizen-tools/commitizen: v3.13.0 → v3.14.1](https://github.com/commitizen-tools/commitizen/compare/v3.13.0...v3.14.1)
 * ci: auto fixes from pre-commit.com hooks ([`2d05e81`](https://github.com/sandialabs/reverse_argparse/commit/2d05e818be047a42cae0fabd0e42b77b2688c87e))
 
   for more information, see https://pre-commit.ci
-* ci: pre-commit auto-update ([`5150bc1`](https://github.com/sandialabs/reverse_argparse/commit/5150bc19e6fe17acd7f5612146189f0bfdf4d4a1))
-
-  updates:
-  - [github.com/psf/black: 23.12.1 → 24.1.1](https://github.com/psf/black/compare/23.12.1...24.1.1)
-  - [github.com/PyCQA/bandit: 1.7.6 → 1.7.7](https://github.com/PyCQA/bandit/compare/1.7.6...1.7.7)
 
 ### Documentation
 * docs: Add docstrings to test/example files ([`f0b7eb9`](https://github.com/sandialabs/reverse_argparse/commit/f0b7eb96cff1cd6a6360b1e9eba0b66c614c6ac1))
@@ -519,40 +250,6 @@
 
 ## v1.0.6 (2024-01-15)
 
-### Continuous integration
-* ci: pre-commit auto-update ([`47bb274`](https://github.com/sandialabs/reverse_argparse/commit/47bb274ce756e0846aef876acc083f363accf223))
-
-  updates:
-  - [github.com/PyCQA/flake8: 6.1.0 → 7.0.0](https://github.com/PyCQA/flake8/compare/6.1.0...7.0.0)
-* ci: pre-commit auto-update ([`9d3e11a`](https://github.com/sandialabs/reverse_argparse/commit/9d3e11a30ba2981456e86c936e49c1f81310ce71))
-
-  updates:
-  - [github.com/pre-commit/mirrors-mypy: v1.7.1 → v1.8.0](https://github.com/pre-commit/mirrors-mypy/compare/v1.7.1...v1.8.0)
-  - [github.com/psf/black: 23.11.0 → 23.12.1](https://github.com/psf/black/compare/23.11.0...23.12.1)
-  - [github.com/PyCQA/isort: 5.13.0 → 5.13.2](https://github.com/PyCQA/isort/compare/5.13.0...5.13.2)
-* ci: pre-commit auto-update ([`48da6a4`](https://github.com/sandialabs/reverse_argparse/commit/48da6a49cfd0c3d28fbcbf91f9344d99d703fbe6))
-
-  updates:
-  - [github.com/PyCQA/bandit: 1.7.5 → 1.7.6](https://github.com/PyCQA/bandit/compare/1.7.5...1.7.6)
-  - [github.com/PyCQA/isort: 5.12.0 → 5.13.0](https://github.com/PyCQA/isort/compare/5.12.0...5.13.0)
-* ci: pre-commit auto-update ([`a5591e4`](https://github.com/sandialabs/reverse_argparse/commit/a5591e4a92dd0ce9fb7b74ea414a7cac0ba88945))
-
-  updates:
-  - [github.com/commitizen-tools/commitizen: 3.12.0 → v3.13.0](https://github.com/commitizen-tools/commitizen/compare/3.12.0...v3.13.0)
-* ci: pre-commit auto-update ([`5d80e7d`](https://github.com/sandialabs/reverse_argparse/commit/5d80e7d9d79737623b20172c415c8afbf1322eb9))
-
-  updates:
-  - [github.com/pre-commit/mirrors-mypy: v1.7.0 → v1.7.1](https://github.com/pre-commit/mirrors-mypy/compare/v1.7.0...v1.7.1)
-* ci: pre-commit auto-update ([`bbc7a4e`](https://github.com/sandialabs/reverse_argparse/commit/bbc7a4e78cd5e8caba57fa73775a2d5730dfa7dd))
-
-  updates:
-  - [github.com/pre-commit/mirrors-mypy: v1.6.1 → v1.7.0](https://github.com/pre-commit/mirrors-mypy/compare/v1.6.1...v1.7.0)
-  - [github.com/psf/black: 23.10.1 → 23.11.0](https://github.com/psf/black/compare/23.10.1...23.11.0)
-* ci: pre-commit auto-update ([`4c5b060`](https://github.com/sandialabs/reverse_argparse/commit/4c5b06092015bd0ebddcb248ed45a17cc262041a))
-
-  updates:
-  - [github.com/psf/black: 23.10.0 → 23.10.1](https://github.com/psf/black/compare/23.10.0...23.10.1)
-
 ### Documentation
 * docs: Add more badges ([`629857d`](https://github.com/sandialabs/reverse_argparse/commit/629857dc1c926be7cb0aa41b155be42d502822ef))
 
@@ -592,54 +289,9 @@
   We switched to `black` back in #5.
 
 ### Continuous integration
-* ci: pre-commit auto-update ([`cb014b7`](https://github.com/sandialabs/reverse_argparse/commit/cb014b7de64273369a4edb1df26ece2458f19850))
-
-  updates:
-  - [github.com/commitizen-tools/commitizen: 3.10.1 → 3.12.0](https://github.com/commitizen-tools/commitizen/compare/3.10.1...3.12.0)
-  - [github.com/pre-commit/mirrors-mypy: v1.6.0 → v1.6.1](https://github.com/pre-commit/mirrors-mypy/compare/v1.6.0...v1.6.1)
-  - [github.com/psf/black: 23.9.1 → 23.10.0](https://github.com/psf/black/compare/23.9.1...23.10.0)
-  - [github.com/PyCQA/prospector: 1.10.2 → v1.10.3](https://github.com/PyCQA/prospector/compare/1.10.2...v1.10.3)
-* ci: pre-commit auto-update ([`568c816`](https://github.com/sandialabs/reverse_argparse/commit/568c816514b50c014edf9cae79e1079055ccc437))
-
-  updates:
-  - [github.com/commitizen-tools/commitizen: 3.10.0 → 3.10.1](https://github.com/commitizen-tools/commitizen/compare/3.10.0...3.10.1)
-  - [github.com/pre-commit/mirrors-mypy: v1.5.1 → v1.6.0](https://github.com/pre-commit/mirrors-mypy/compare/v1.5.1...v1.6.0)
-* ci: pre-commit auto-update ([`b57dc9f`](https://github.com/sandialabs/reverse_argparse/commit/b57dc9f2f062679c453a97af3366dad7693bd2f2))
-
-  updates:
-  - [github.com/pre-commit/pre-commit-hooks: v4.4.0 → v4.5.0](https://github.com/pre-commit/pre-commit-hooks/compare/v4.4.0...v4.5.0)
 * ci: Add Python 3.12 to CI ([`f03f4dc`](https://github.com/sandialabs/reverse_argparse/commit/f03f4dccde7188b8ea545d8bf3b626fefe652745))
 
   Also update the version badge to specify particular versions.
-* ci: pre-commit auto-update ([`d9fc077`](https://github.com/sandialabs/reverse_argparse/commit/d9fc0777c37d1041610b8f775da7ee510e7b9111))
-
-  updates:
-  - [github.com/commitizen-tools/commitizen: 3.9.0 → 3.10.0](https://github.com/commitizen-tools/commitizen/compare/3.9.0...3.10.0)
-* ci: pre-commit auto-update ([`e97c276`](https://github.com/sandialabs/reverse_argparse/commit/e97c2768ffe210167bdd565e907cb4d418eaa2de))
-
-  updates:
-  - [github.com/commitizen-tools/commitizen: 3.8.2 → 3.9.0](https://github.com/commitizen-tools/commitizen/compare/3.8.2...3.9.0)
-* ci: pre-commit auto-update ([`87d1f7e`](https://github.com/sandialabs/reverse_argparse/commit/87d1f7e09ce5acc57ca58a455954b3273fc351ad))
-
-  updates:
-  - [github.com/commitizen-tools/commitizen: 3.7.1 → 3.8.2](https://github.com/commitizen-tools/commitizen/compare/3.7.1...3.8.2)
-  - [github.com/psf/black: 23.7.0 → 23.9.1](https://github.com/psf/black/compare/23.7.0...23.9.1)
-* ci: pre-commit auto-update ([`b750046`](https://github.com/sandialabs/reverse_argparse/commit/b7500466de2d37dbb75df895a459749831a378c5))
-
-  updates:
-  - [github.com/commitizen-tools/commitizen: 3.7.0 → 3.7.1](https://github.com/commitizen-tools/commitizen/compare/3.7.0...3.7.1)
-* ci: pre-commit auto-update ([`b50b368`](https://github.com/sandialabs/reverse_argparse/commit/b50b368ea89d59fc8ba6f9ab1fac5971720af637))
-
-  updates:
-  - [github.com/commitizen-tools/commitizen: 3.6.0 → 3.7.0](https://github.com/commitizen-tools/commitizen/compare/3.6.0...3.7.0)
-* ci: pre-commit auto-update ([`989ba52`](https://github.com/sandialabs/reverse_argparse/commit/989ba523c4fe5bb93f0acc587f95805198352e7f))
-
-  updates:
-  - [github.com/pre-commit/mirrors-mypy: v1.5.0 → v1.5.1](https://github.com/pre-commit/mirrors-mypy/compare/v1.5.0...v1.5.1)
-* ci: Fix pre-commit auto-update message ([`6475b1f`](https://github.com/sandialabs/reverse_argparse/commit/6475b1f3ac2e5fff643a289859d452bbfa42099d))
-
-  Ensure the commit message used by the pre-commit auto-update bot adheres
-  to the Conventional Commits specification.
 * ci: pre-commit autoupdate ([`08fe531`](https://github.com/sandialabs/reverse_argparse/commit/08fe531db0d29044440649a5fee7787ba691858c))
 
   updates:
