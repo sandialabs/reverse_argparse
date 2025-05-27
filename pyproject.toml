@@ -123,7 +123,7 @@ match = "master"
 exclude_commit_patterns = [
     "chore.*deps.*Bump",
     "Merge pull request",
-    "pre-commit auto-update",
+    "ci.*pre-commit.*auto-update",
 ]
 
 
