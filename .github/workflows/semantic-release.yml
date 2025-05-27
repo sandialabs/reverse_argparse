@@ -27,11 +27,45 @@ jobs:
         fetch-depth: 0
         token: ${{ secrets.GH_TOKEN }}
 
+    - name: Capture Start Time
+      id: start
+      run: echo "START_TIME=$(date -u +"%Y-%m-%dT%H:%M:%SZ")" >> $GITHUB_ENV
+
     - name: Python Semantic Release
       id: release
       uses: python-semantic-release/python-semantic-release@917a2c730cb8f6c8cd3d00f23c876d724a4a844c # v10.0.1
       with:
         github_token: ${{ secrets.GH_TOKEN }}
+
+    - name: Generate Provenance
+      id: generate_provenance
+      run: |
+        cat <<EOF > provenance.json
+        {
+          "buildType": "https://slsa.dev/provenance/v0.2",
+          "invocation": {
+            "configSource": {
+              "uri": "${{ github.server_url }}/${{ github.repository }}",
+              "digest": {
+                "sha256": "${{ github.sha }}"
+              }
+            },
+            "parameters": {
+              "version": "${{ steps.release.outputs.version }}",
+              "source": "${{ github.server_url }}/${{ github.repository }}"
+            }
+          },
+          "builder": {
+            "id": "${{ github.server_url }}/${{ github.repository }}",
+            "name": "GitHub Actions"
+          },
+          "metadata": {
+            "buildInvocationId": "${{ github.run_id }}",
+            "buildStartedOn": "${START_TIME}",
+            "buildFinishedOn": "$(date -u +"%Y-%m-%dT%H:%M:%SZ")"
+          }
+        }
+        EOF
 
     - name: Publish to PyPI
       uses: pypa/gh-action-pypi-publish@76f52bc884231f62b9a034ebfe128415bbaabdfc # release/v1
