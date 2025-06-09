@@ -31,7 +31,11 @@ jobs:
       id: release
       uses: python-semantic-release/python-semantic-release@1a324000f2251a9e722e77b128bf72712653813f # v10.0.2
       with:
+        git_committer_email: "reverse-argparse-semantic-release@sandia.gov"
+        git_committer_name: "semantic-release"
         github_token: ${{ secrets.GH_TOKEN }}
+        ssh_private_signing_key: ${{ secrets.SEMANTIC_RELEASE_PRIVATE_KEY }}
+        ssh_public_signing_key: ${{ secrets.SEMANTIC_RELEASE_PUBLIC_KEY }}
 
     - name: Publish to PyPI
       uses: pypa/gh-action-pypi-publish@76f52bc884231f62b9a034ebfe128415bbaabdfc # release/v1
