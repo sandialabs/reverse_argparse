@@ -2,6 +2,11 @@
 
 
 
+## v2.0.6 (2025-06-09)
+
+### Patch
+* patch: Sign semantic release commits/tags ([`e7dcfc3`](https://github.com/sandialabs/reverse_argparse/commit/e7dcfc39d7f8f7fcbdb3a94bd2f090e2ea0c431c))
+
 ## v2.0.5 (2025-05-27)
 
 ### Patch
