@@ -55,8 +55,11 @@ class ReverseArgumentParser:
     """
 
     def __init__(
-        self, parser: ArgumentParser, namespace: Namespace, indent: int = 4
-    ):
+        self,
+        parser: ArgumentParser,
+        namespace: Namespace,
+        indent: int = 4,
+    ) -> None:
         """
         Initialize the object.
 
@@ -239,7 +242,10 @@ class ReverseArgumentParser:
         ]
 
     def _get_option_string(
-        self, action: Action, *, prefer_short: bool = False
+        self,
+        action: Action,
+        *,
+        prefer_short: bool = False,
     ) -> str:
         """
         Get the option string for the `action`.
