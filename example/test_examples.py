@@ -85,11 +85,11 @@ post_processing.py --bar spam --baz 42 --before
 """.strip()
         in result.stdout
     )
-    thirty_miutes_ago = datetime.now(tz=timezone.utc) - timedelta(minutes=30)
+    thirty_minutes_ago = datetime.now(tz=timezone.utc) - timedelta(minutes=30)
     time_from_example = datetime.strptime(
         shlex.split(result.stdout)[-1], "%Y-%m-%d %H:%M:%S.%f"
     ).astimezone(timezone.utc)
-    assert thirty_miutes_ago - time_from_example < timedelta(seconds=1)
+    assert thirty_minutes_ago - time_from_example < timedelta(seconds=1)
 
 
 def test_pretty_printing() -> None:

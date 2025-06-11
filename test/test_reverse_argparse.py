@@ -129,7 +129,7 @@ def test_strip_first_line() -> None:
 
 @pytest.mark.parametrize("args", COMPLETE_ARGS)
 def test_get_effective_command_line_invocation(parser, args) -> None:
-    """Ensure :func:`get_effective_command_line_invoation` works."""
+    """Ensure :func:`get_effective_command_line_invocation` works."""
     namespace = parser.parse_args(shlex.split(args))
     unparser = ReverseArgumentParser(parser, namespace)
     expected = (
@@ -148,7 +148,7 @@ def test_get_effective_command_line_invocation(parser, args) -> None:
 
 @pytest.mark.parametrize("args", COMPLETE_ARGS)
 def test_get_pretty_command_line_invocation(parser, args) -> None:
-    """Ensure :func:`get_pretty_command_line_invoation` works as expected."""
+    """Ensure :func:`get_pretty_command_line_invocation` works as expected."""
     namespace = parser.parse_args(shlex.split(args))
     unparser = ReverseArgumentParser(parser, namespace)
     expected = """    --opt1 opt1-val \\
