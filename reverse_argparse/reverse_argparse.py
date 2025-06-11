@@ -147,7 +147,8 @@ class ReverseArgumentParser:
             raise NotImplementedError(message)
 
     def _arg_is_default_and_help_is_suppressed(
-        self: "ReverseArgumentParser", action: Action
+        self: "ReverseArgumentParser",
+        action: Action,
     ) -> bool:
         """
         See if the argument should be skipped.
@@ -205,7 +206,8 @@ class ReverseArgumentParser:
         return " \\\n".join(_ for _ in self._args if _.strip())
 
     def _get_long_option_strings(
-        self: "ReverseArgumentParser", option_strings: Sequence[str]
+        self: "ReverseArgumentParser",
+        option_strings: Sequence[str],
     ) -> list[str]:
         """
         Get the long options from a list of options strings.
@@ -227,7 +229,8 @@ class ReverseArgumentParser:
         ]
 
     def _get_short_option_strings(
-        self: "ReverseArgumentParser", option_strings: Sequence[str]
+        self: "ReverseArgumentParser",
+        option_strings: Sequence[str],
     ) -> list[str]:
         """
         Get the short options from a list of options strings.
@@ -286,7 +289,8 @@ class ReverseArgumentParser:
         return ""
 
     def _append_list_of_list_of_args(
-        self: "ReverseArgumentParser", args: list[list[str]]
+        self: "ReverseArgumentParser",
+        args: list[list[str]],
     ) -> None:
         """
         Append to the list of unparsed arguments.
@@ -303,7 +307,8 @@ class ReverseArgumentParser:
             self._args.append(self._indent_str + " ".join(line))
 
     def _append_list_of_args(
-        self: "ReverseArgumentParser", args: list[str]
+        self: "ReverseArgumentParser",
+        args: list[str],
     ) -> None:
         """
         Append to the list of unparsed arguments.
@@ -341,7 +346,8 @@ class ReverseArgumentParser:
         return " " * self._indent * len(self._parsers)
 
     def _unparse_store_action(
-        self: "ReverseArgumentParser", action: Action
+        self: "ReverseArgumentParser",
+        action: Action,
     ) -> None:
         """
         Generate the list of arguments for a ``store`` action.
@@ -367,7 +373,8 @@ class ReverseArgumentParser:
         self._append_list_of_args(result)
 
     def _unparse_store_const_action(
-        self: "ReverseArgumentParser", action: Action
+        self: "ReverseArgumentParser",
+        action: Action,
     ) -> None:
         """
         Generate the argument for a ``store_const`` action.
@@ -380,7 +387,8 @@ class ReverseArgumentParser:
             self._append_arg(self._get_option_string(action))
 
     def _unparse_store_true_action(
-        self: "ReverseArgumentParser", action: Action
+        self: "ReverseArgumentParser",
+        action: Action,
     ) -> None:
         """
         Generate the argument for a ``store_true`` action.
@@ -393,7 +401,8 @@ class ReverseArgumentParser:
             self._append_arg(self._get_option_string(action))
 
     def _unparse_store_false_action(
-        self: "ReverseArgumentParser", action: Action
+        self: "ReverseArgumentParser",
+        action: Action,
     ) -> None:
         """
         Generate the argument for a ``store_false`` action.
@@ -406,7 +415,8 @@ class ReverseArgumentParser:
             self._append_arg(self._get_option_string(action))
 
     def _unparse_append_action(
-        self: "ReverseArgumentParser", action: Action
+        self: "ReverseArgumentParser",
+        action: Action,
     ) -> None:
         """
         Generate the list of arguments for an ``append`` action.
@@ -435,7 +445,8 @@ class ReverseArgumentParser:
         self._append_list_of_list_of_args(result)
 
     def _unparse_append_const_action(
-        self: "ReverseArgumentParser", action: Action
+        self: "ReverseArgumentParser",
+        action: Action,
     ) -> None:
         """
         Generate the argument for an ``append_const`` action.
@@ -448,7 +459,8 @@ class ReverseArgumentParser:
             self._append_arg(self._get_option_string(action))
 
     def _unparse_count_action(
-        self: "ReverseArgumentParser", action: Action
+        self: "ReverseArgumentParser",
+        action: Action,
     ) -> None:
         """
         Generate the list of arguments for a ``count`` action.
@@ -468,7 +480,8 @@ class ReverseArgumentParser:
             self._append_list_of_args([flag for _ in range(count)])
 
     def _unparse_sub_parsers_action(
-        self: "ReverseArgumentParser", action: Action
+        self: "ReverseArgumentParser",
+        action: Action,
     ) -> None:
         """
         Generate the list of arguments for a subparser action.
@@ -490,7 +503,8 @@ class ReverseArgumentParser:
                 dictionary of choices.
         """
         if action.choices is None or not isinstance(
-            action.choices, dict
+            action.choices,
+            dict,
         ):  # pragma: no cover
             message = (
                 "This subparser action is missing its dictionary of "
@@ -501,7 +515,7 @@ class ReverseArgumentParser:
             self._parsers.append(subparser)
             self._unparsed.append(False)
             self._args.append(
-                " " * self._indent * (len(self._parsers) - 1) + subcommand
+                " " * self._indent * (len(self._parsers) - 1) + subcommand,
             )
             args_before = self._args.copy()
             self._unparse_args()
@@ -511,7 +525,8 @@ class ReverseArgumentParser:
                 self._args.pop()
 
     def _unparse_extend_action(
-        self: "ReverseArgumentParser", action: Action
+        self: "ReverseArgumentParser",
+        action: Action,
     ) -> None:
         """
         Generate the list of arguments for an ``extend`` action.
@@ -522,11 +537,12 @@ class ReverseArgumentParser:
         values = getattr(self._namespace, action.dest)
         if values is not None:
             self._append_list_of_args(
-                [self._get_option_string(action), *values]
+                [self._get_option_string(action), *values],
             )
 
     def _unparse_boolean_optional_action(
-        self: "ReverseArgumentParser", action: Action
+        self: "ReverseArgumentParser",
+        action: Action,
     ) -> None:
         """
         Generate the list of arguments for a ``BooleanOptionalAction``.
