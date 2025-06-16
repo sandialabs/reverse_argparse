@@ -18,7 +18,7 @@ jobs:
 
     steps:
     - name: Harden Runner
-      uses: step-security/harden-runner@0634a2670c59f64b4a01f0f96f84700a4088b9f0 # v2.12.0
+      uses: step-security/harden-runner@002fdce3c6a235733a90a27c80493a3241e56863 # v2.12.1
       with:
         egress-policy: audit
 
@@ -29,7 +29,7 @@ jobs:
 
     - name: Python Semantic Release
       id: release
-      uses: python-semantic-release/python-semantic-release@1a324000f2251a9e722e77b128bf72712653813f # v10.0.2
+      uses: python-semantic-release/python-semantic-release@f9e152fb36cd2e590fe8c2bf85bbff08f7fc1c52 # v10.1.0
       with:
         git_committer_email: "reverse-argparse-semantic-release@sandia.gov"
         git_committer_name: "semantic-release"
@@ -42,7 +42,7 @@ jobs:
       if: steps.release.outputs.released == 'true'
 
     - name: Publish to GitHub Releases
-      uses: python-semantic-release/publish-action@e5e3010f6a207cd5d6f5d3dccedbea355484ca02 # v10.0.2
+      uses: python-semantic-release/publish-action@ca88900e4d435c6645d47e5f1e7f108e94c77f05 # v10.1.0
       if: steps.release.outputs.released == 'true'
       with:
         github_token: ${{ secrets.GH_TOKEN }}
