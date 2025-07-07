@@ -17,7 +17,6 @@ import re
 from argparse import SUPPRESS, Action, ArgumentParser, Namespace
 from collections.abc import Sequence
 
-
 SHORT_OPTION_LENGTH = 2
 
 
@@ -88,8 +87,8 @@ class ReverseArgumentParser:
             return
         psr = self._parsers[-1]
         actions = (
-            psr._get_optional_actions()  # pylint: disable=protected-access
-            + psr._get_positional_actions()  # pylint: disable=protected-access
+            psr._get_optional_actions()  # noqa: SLF001
+            + psr._get_positional_actions()  # noqa: SLF001
         )
         for action in actions:
             self._unparse_action(action)

@@ -59,33 +59,63 @@ line-length = 79
 [tool.ruff.lint]
 extend-select = [
     "A",
+    "AIR",
     "ANN",
+    "ARG",
+    "ASYNC",
     "B",
     "BLE",
     "C4",
     "C90",
     "D",
+    "DJ",
+    "DOC",
     "DTZ",
     "E",
     "EM",
     "ERA",
     "EXE",
+    "F",
+    "FA",
     "FBT",
+    "FIX",
+    "FLY",
+    "FURB",
+    "G",
+    "I",
+    "ICN",
+    "INP",
+    "INT",
+    "ISC",
+    "LOG",
+    "N",
     "NPY",
+    "PD",
+    "PERF",
     "PGH",
+    "PIE",
     "PL",
     "PT",
     "PTH",
+    "PYI",
+    "Q",
     "RET",
     "RSE",
     "RUF",
     "S",
     "SIM",
+    "SLF",
+    "SLOT",
+    "T10",
+    "T20",
+    "TC",
+    "TD",
     "TID",
     "TCH",
     "TRY",
     "UP",
     "W",
+    "YTT",
 ]
 ignore = [
     "D212",
@@ -93,12 +123,23 @@ ignore = [
 
 
 [tool.ruff.lint.per-file-ignores]
-"**/test_*.py" = ["S101"]
-"example/*.py" = ["S603"]
+"**/test_*.py" = [
+    "S101",
+    "SLF001",
+]
+"doc/source/conf.py" = ["INP001"]
+"example/*.py" = [
+    "S603",
+    "T201",
+]
 
 
 [tool.ruff.lint.pydocstyle]
 convention = "google"
+
+
+[tool.ruff.lint.pyupgrade]
+keep-runtime-typing = true
 
 
 [tool.semantic_release]
