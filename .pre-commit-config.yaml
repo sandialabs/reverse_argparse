@@ -7,7 +7,7 @@ ci:
 repos:
 
     - repo: https://github.com/astral-sh/ruff-pre-commit
-      rev: v0.12.1
+      rev: v0.12.2
       hooks:
         - id: ruff
         - id: ruff-format
@@ -48,7 +48,7 @@ repos:
           - id: doc8
 
     - repo: https://github.com/regebro/pyroma
-      rev: "4.2"
+      rev: "4.3.3"
       hooks:
           - id: pyroma
             additional_dependencies: ["poetry"]
