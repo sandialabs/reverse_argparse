@@ -17,7 +17,6 @@ import re
 from argparse import SUPPRESS, Action, ArgumentParser, Namespace
 from collections.abc import Sequence
 
-
 SHORT_OPTION_LENGTH = 2
 
 
@@ -55,8 +54,11 @@ class ReverseArgumentParser:
     """
 
     def __init__(
-        self, parser: ArgumentParser, namespace: Namespace, indent: int = 4
-    ):
+        self,
+        parser: ArgumentParser,
+        namespace: Namespace,
+        indent: int = 4,
+    ) -> None:
         """
         Initialize the object.
 
@@ -85,8 +87,8 @@ class ReverseArgumentParser:
             return
         psr = self._parsers[-1]
         actions = (
-            psr._get_optional_actions()  # pylint: disable=protected-access
-            + psr._get_positional_actions()  # pylint: disable=protected-access
+            psr._get_optional_actions()  # noqa: SLF001
+            + psr._get_positional_actions()  # noqa: SLF001
         )
         for action in actions:
             self._unparse_action(action)
@@ -239,7 +241,10 @@ class ReverseArgumentParser:
         ]
 
     def _get_option_string(
-        self, action: Action, *, prefer_short: bool = False
+        self,
+        action: Action,
+        *,
+        prefer_short: bool = False,
     ) -> str:
         """
         Get the option string for the `action`.
