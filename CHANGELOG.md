@@ -2,6 +2,25 @@
 
 
 
+## v2.0.9 (2025-07-16)
+
+### Bug fixes
+* fix: Rework release publishing ([`9c718b6`](https://github.com/sandialabs/reverse_argparse/commit/9c718b6c38b01266d2ecd55521265dc5ab1f2cf9))
+
+  The PyPI upload failed with:
+
+  Checking dist/reverse_argparse-2.0.8-py3-none-any.whl: PASSED
+  Checking dist/multiple.intoto.jsonl: ERROR InvalidDistribution:
+  Unknown distribution format:
+           'multiple.intoto.jsonl'
+
+  I suppose the provenance can't be included in the `dist` directory for
+  the PyPI upload, but it needs to be in there for python-semantic-release
+  publish to GitHub Releases action. This commit reorders things, such
+  that we publish to GitHub first, and save PyPI for last, and between the
+  two we remove the provenance from the `dist` directory. Hopefully this
+  works.
+
 ## v2.0.8 (2025-07-16)
 
 ### Bug fixes
