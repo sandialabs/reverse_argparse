@@ -99,10 +99,13 @@ jobs:
         name: ${{ needs.provenance.outputs.provenance-name }}
         path: dist
 
-    - name: Publish to PyPI
-      uses: pypa/gh-action-pypi-publish@76f52bc884231f62b9a034ebfe128415bbaabdfc # release/v1
-
     - name: Publish to GitHub Releases
       uses: python-semantic-release/publish-action@b717f67f7e7e9f709357bce5a542846503ce46ec # v10.2.0
       with:
         github_token: ${{ secrets.GH_TOKEN }}
+
+    - name: Remove Provenance for PyPI Upload
+      run: rm -f dist/${{ needs.provenance.outputs.provenance-name }}
+
+    - name: Publish to PyPI
+      uses: pypa/gh-action-pypi-publish@76f52bc884231f62b9a034ebfe128415bbaabdfc # release/v1
