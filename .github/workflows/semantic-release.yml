@@ -73,6 +73,9 @@ jobs:
     needs: [release, provenance]
     if: ${{ needs.release.outputs.released == 'true' && needs.provenance.outputs.outcome == 'success' }}
     environment: release
+    permissions:
+      id-token: write
+
     steps:
     - name: Harden Runner
       uses: step-security/harden-runner@6c439dc8bdf85cadbbce9ed30d1c7b959517bc49 # v2.12.2
