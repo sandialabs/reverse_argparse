@@ -2,6 +2,27 @@
 
 
 
+## v2.0.8 (2025-07-16)
+
+### Bug fixes
+* fix: Set sufficient permissions for publish job ([`4004ef2`](https://github.com/sandialabs/reverse_argparse/commit/4004ef2a9942faea962e0433356970408abbb27b))
+
+  When running the upload to PyPI action, we ran into:
+
+  Error: Trusted publishing exchange failure:
+  OpenID Connect token retrieval failed: GitHub: missing or
+  insufficient OIDC token permissions, the
+  ACTIONS_ID_TOKEN_REQUEST_TOKEN environment variable was unset
+
+  This generally indicates a workflow configuration error, such as
+  insufficient permissions. Make sure that your workflow has
+  `id-token: write` configured at the job level, e.g.:
+
+  ```yaml
+  permissions:
+    id-token: write
+  ```
+
 ## v2.0.7 (2025-07-16)
 
 ### Chores
