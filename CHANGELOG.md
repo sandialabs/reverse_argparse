@@ -2,6 +2,38 @@
 
 
 
+## v2.0.7 (2025-07-16)
+
+### Chores
+* chore: Update Ruff linters ([`c96eb19`](https://github.com/sandialabs/reverse_argparse/commit/c96eb1955180e719b1be069a44c50698bdb529a6))
+* chore: Fix typos ([`c0c3aea`](https://github.com/sandialabs/reverse_argparse/commit/c0c3aea9d4b62491bfb0480cd7cb7e395ca6870b))
+
+### Code style
+* style: Check flake8-annotations ([`9ceb68a`](https://github.com/sandialabs/reverse_argparse/commit/9ceb68a4da9d8ce1e2ae5e4ea6b0d2f2819957f3))
+
+  To ensure type-hinting is present in all possible locations.
+
+### Continuous integration
+* ci: Subdivide release job ([`60bca10`](https://github.com/sandialabs/reverse_argparse/commit/60bca1015cc44de46af03b17c5a8a55582cd32aa))
+
+  This is needed because the SLSA provenance reusable workflow cannot be
+  used as a step within a job, but must be used as a job on its own. This
+  commit therefore subdivides the `release` job into a `release` job,
+  which runs `python-semantic-release` to create a new release, if
+  applicable, and then a `publish` job, to publish the release to PyPI and
+  GitHub Releases, if one was created. We'll then be able to insert the
+  SLSA provenance job between the two.
+
+### Patch
+* patch: Add SLSA provenance to release assets ([`e4e6ebc`](https://github.com/sandialabs/reverse_argparse/commit/e4e6ebc04ae89d5af1ff7cf39ebe0e35d7cc3a78))
+
+  See https://slsa.dev/ for motivation.
+
+  Creating a patch release to ensure these additions to the automated
+  release process work.
+
+  Closes #260.
+
 ## v2.0.6 (2025-06-09)
 
 ### Patch
