@@ -7,18 +7,18 @@ ci:
 repos:
 
     - repo: https://github.com/astral-sh/ruff-pre-commit
-      rev: v0.12.3
+      rev: v0.12.4
       hooks:
         - id: ruff-check
         - id: ruff-format
 
     - repo: https://github.com/gitleaks/gitleaks
-      rev: v8.27.2
+      rev: v8.28.0
       hooks:
         - id: gitleaks
 
     - repo: https://github.com/pre-commit/mirrors-mypy
-      rev: v1.16.1
+      rev: v1.17.0
       hooks:
           - id: mypy
             additional_dependencies: ["dateparser", "types-dateparser"]
@@ -48,7 +48,7 @@ repos:
           - id: doc8
 
     - repo: https://github.com/regebro/pyroma
-      rev: "4.3.3"
+      rev: "5.0"
       hooks:
           - id: pyroma
             additional_dependencies: ["poetry"]
