@@ -31,7 +31,7 @@ jobs:
 
     - name: Python Semantic Release
       id: release
-      uses: python-semantic-release/python-semantic-release@2896129e02bb7809d2cf0c1b8e9e795ee27acbcf # v10.2.0
+      uses: python-semantic-release/python-semantic-release@5b9d941d5b29da138b933660ce1a9df75b54ce25 # v10.3.1
       with:
         git_committer_email: "reverse-argparse-semantic-release@sandia.gov"
         git_committer_name: "semantic-release"
@@ -88,19 +88,19 @@ jobs:
         token: ${{ secrets.GH_TOKEN }}
 
     - name: Download Build Artifacts
-      uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
+      uses: actions/download-artifact@634f93cb2916e3fdff6788551b99b062d0335ce0 # v5.0.0
       with:
         name: dist
         path: dist
 
     - name: Download Provenance
-      uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
+      uses: actions/download-artifact@634f93cb2916e3fdff6788551b99b062d0335ce0 # v5.0.0
       with:
         name: ${{ needs.provenance.outputs.provenance-name }}
         path: dist
 
     - name: Publish to GitHub Releases
-      uses: python-semantic-release/publish-action@b717f67f7e7e9f709357bce5a542846503ce46ec # v10.2.0
+      uses: python-semantic-release/publish-action@f8a3b2efc2282bc5219b83ba78ac64b69d6e05b9 # v10.3.1
       with:
         github_token: ${{ secrets.GH_TOKEN }}
 
