@@ -7,7 +7,7 @@ ci:
 repos:
 
     - repo: https://github.com/astral-sh/ruff-pre-commit
-      rev: v0.12.7
+      rev: v0.12.9
       hooks:
         - id: ruff-check
         - id: ruff-format
@@ -24,7 +24,7 @@ repos:
             additional_dependencies: ["dateparser", "types-dateparser"]
 
     - repo: https://github.com/pre-commit/pre-commit-hooks
-      rev: v5.0.0
+      rev: v6.0.0
       hooks:
           - id: check-added-large-files
           - id: check-ast
@@ -54,6 +54,6 @@ repos:
             additional_dependencies: ["poetry"]
 
     - repo: https://github.com/shellcheck-py/shellcheck-py
-      rev: v0.10.0.1
+      rev: v0.11.0.1
       hooks:
         - id: shellcheck
