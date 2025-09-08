@@ -31,7 +31,7 @@ jobs:
 
     - name: Python Semantic Release
       id: release
-      uses: python-semantic-release/python-semantic-release@5b9d941d5b29da138b933660ce1a9df75b54ce25 # v10.3.1
+      uses: python-semantic-release/python-semantic-release@9293da56b24a9bd1a97acd4e9b1aabda4ef89fd6 # v10.3.2
       with:
         git_committer_email: "reverse-argparse-semantic-release@sandia.gov"
         git_committer_name: "semantic-release"
@@ -100,7 +100,7 @@ jobs:
         path: dist
 
     - name: Publish to GitHub Releases
-      uses: python-semantic-release/publish-action@f8a3b2efc2282bc5219b83ba78ac64b69d6e05b9 # v10.3.1
+      uses: python-semantic-release/publish-action@63a952936fa65b0942a64427d3636fa691d676ce # v10.3.2
       with:
         github_token: ${{ secrets.GH_TOKEN }}
 
@@ -108,4 +108,4 @@ jobs:
       run: rm -f dist/${{ needs.provenance.outputs.provenance-name }}
 
     - name: Publish to PyPI
-      uses: pypa/gh-action-pypi-publish@76f52bc884231f62b9a034ebfe128415bbaabdfc # release/v1
+      uses: pypa/gh-action-pypi-publish@ed0c53931b1dc9bd32cbe73a98c7f6766f8a527e # release/v1
