@@ -2,6 +2,20 @@
 
 
 
+## v2.0.10 (2025-10-20)
+
+### Patch
+* patch: Drop support for Python 3.9 ([`b9e5ffb`](https://github.com/sandialabs/reverse_argparse/commit/b9e5ffb3b3472a29b3585950a2de40863ce1f6d2))
+
+  Undo the last of 8d15f4ab124bb067f5422538050dd7c70b414aa8.
+
+  * Use a match case statement in place of an if block.
+  * Replace Union types with X | Y syntax.
+
+  Also introduce support for Python 3.14.
+
+  Closes #16.
+
 ## v2.0.9 (2025-07-16)
 
 ### Bug fixes

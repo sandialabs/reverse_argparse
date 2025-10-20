@@ -17,7 +17,7 @@ project_copyright = (
     "2023, National Technology & Engineering Solutions of Sandia, LLC (NTESS)"
 )
 author = "Jason M. Gates"
-version = "2.0.9"
+version = "2.0.10"
 release = version
 
 # -- General configuration ----------------------------------------------------
