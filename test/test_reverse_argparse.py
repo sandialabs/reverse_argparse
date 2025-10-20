@@ -6,9 +6,11 @@
 
 # SPDX-License-Identifier: BSD-3-Clause
 
+from __future__ import annotations
+
 import shlex
 from argparse import SUPPRESS, ArgumentParser, BooleanOptionalAction, Namespace
-from typing import Any, Optional
+from typing import Any
 
 import pytest
 
@@ -128,6 +130,31 @@ def test_strip_first_line() -> None:
     assert strip_first_line("foo\nbar\nbaz") == "bar\nbaz"
 
 
+def remove_pytest_prefix(input_string: str) -> str:
+    """
+    Remove ``-m pytest`` from the start of a space-delimited string.
+
+    In Python 3.14, pytest now uses the ``__main__`` module's
+    ``__file__`` attribute to determine the entry point of the test run.
+    This causes a command line invocation to include the pytest runner's
+    arguments, which we then need to remove before comparing to expected
+    output.
+
+    Args:
+        input_string:  The string to remove the prefix from.
+
+    Returns:
+        The string without the prefix.
+    """
+    return input_string.removeprefix("-m pytest").strip()
+
+
+def test_remove_pytest_prefix() -> None:
+    """Ensure :func:`remove_pytest_prefix` works as expected."""
+    assert remove_pytest_prefix("-m pytest foo bar baz") == "foo bar baz"
+    assert remove_pytest_prefix("-m pytest") == ""
+
+
 @pytest.mark.parametrize("args", COMPLETE_ARGS)
 def test_get_effective_command_line_invocation(
     parser: ArgumentParser, args: str
@@ -143,8 +170,8 @@ def test_get_effective_command_line_invocation(
         "app-nargs2-val --const --app-const1 --app-const2 -vv --ext ext-val1 "
         "ext-val2 ext-val3 --no-bool-opt pos1-val1 pos1-val2 pos2-val"
     )
-    result = strip_first_entry(
-        unparser.get_effective_command_line_invocation()
+    result = remove_pytest_prefix(
+        strip_first_entry(unparser.get_effective_command_line_invocation())
     )
     assert result == expected
 
@@ -293,8 +320,8 @@ def test__arg_is_default_and_help_is_suppressed() -> None:
     parser.add_argument("--suppressed", default=10, help=SUPPRESS)
     namespace = parser.parse_args(shlex.split(""))
     unparser = ReverseArgumentParser(parser, namespace)
-    result = strip_first_entry(
-        unparser.get_effective_command_line_invocation()
+    result = remove_pytest_prefix(
+        strip_first_entry(unparser.get_effective_command_line_invocation())
     )
     assert result == ""
 
@@ -435,7 +462,7 @@ def test__unparse_store_const_action(
     ("args", "expected"), [(shlex.split("--foo"), "    --foo"), ([], None)]
 )
 def test__unparse_store_true_action(
-    args: list[str], expected: Optional[str]
+    args: list[str], expected: str | None
 ) -> None:
     """Ensure ``store_true`` actions are handled appropriately."""
     parser = ArgumentParser()
@@ -450,7 +477,7 @@ def test__unparse_store_true_action(
     ("args", "expected"), [(shlex.split("--foo"), "    --foo"), ([], None)]
 )
 def test__unparse_store_false_action(
-    args: list[str], expected: Optional[str]
+    args: list[str], expected: str | None
 ) -> None:
     """Ensure ``store_false`` actions are handled appropriately."""
     parser = ArgumentParser()
@@ -496,9 +523,7 @@ def test__unparse_append_action(
 @pytest.mark.parametrize(
     ("args", "expected"), [("--foo", "    --foo"), ("", None)]
 )
-def test__unparse_append_const_action(
-    args: str, expected: Optional[str]
-) -> None:
+def test__unparse_append_const_action(args: str, expected: str | None) -> None:
     """Ensure ``append_const`` actions are handled appropriately."""
     parser = ArgumentParser()
     action = parser.add_argument(
@@ -570,8 +595,8 @@ def test__unparse_sub_parsers_action(
     namespace = parser.parse_args(shlex.split(args))
     unparser = ReverseArgumentParser(parser, namespace)
     unparser._unparse_args()
-    result = strip_first_entry(
-        unparser.get_effective_command_line_invocation()
+    result = remove_pytest_prefix(
+        strip_first_entry(unparser.get_effective_command_line_invocation())
     )
     assert result == expected
     result = strip_first_line(unparser.get_pretty_command_line_invocation())
@@ -612,8 +637,8 @@ def test__unparse_sub_parsers_action_nested() -> None:
     namespace = parser.parse_args(shlex.split(args))
     unparser = ReverseArgumentParser(parser, namespace)
     unparser._unparse_args()
-    result = strip_first_entry(
-        unparser.get_effective_command_line_invocation()
+    result = remove_pytest_prefix(
+        strip_first_entry(unparser.get_effective_command_line_invocation())
     )
     assert result == args
     result = strip_first_line(unparser.get_pretty_command_line_invocation())
@@ -646,9 +671,9 @@ def test__unparse_extend_action() -> None:
     ],
 )
 def test__unparse_boolean_optional_action(
-    default: Optional[bool],  # noqa: FBT001
+    default: bool | None,  # noqa: FBT001
     args: str,
-    expected: Optional[str],
+    expected: str | None,
 ) -> None:
     """Ensure ``BooleanOptionalAction`` actions are handled appropriately."""
     parser = ArgumentParser()

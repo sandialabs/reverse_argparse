@@ -114,36 +114,37 @@ class ReverseArgumentParser:
             or self._arg_is_default_and_help_is_suppressed(action)
         ):
             return
-        if action_type == "_AppendAction":
-            self._unparse_append_action(action)
-        elif action_type == "_AppendConstAction":
-            self._unparse_append_const_action(action)
-        elif action_type == "_CountAction":
-            self._unparse_count_action(action)
-        elif action_type == "_ExtendAction":
-            self._unparse_extend_action(action)
-        elif action_type == "_HelpAction":  # pragma: no cover
-            return
-        elif action_type == "_StoreAction":
-            self._unparse_store_action(action)
-        elif action_type == "_StoreConstAction":
-            self._unparse_store_const_action(action)
-        elif action_type == "_StoreFalseAction":
-            self._unparse_store_false_action(action)
-        elif action_type == "_StoreTrueAction":
-            self._unparse_store_true_action(action)
-        elif action_type == "_SubParsersAction":
-            self._unparse_sub_parsers_action(action)
-        elif action_type == "_VersionAction":  # pragma: no cover
-            return
-        elif action_type == "BooleanOptionalAction":
-            self._unparse_boolean_optional_action(action)
-        else:  # pragma: no cover
-            message = (
-                f"{self.__class__.__name__} does not yet support the "
-                f"unparsing of {action_type} objects."
-            )
-            raise NotImplementedError(message)
+        match action_type:
+            case "_AppendAction":
+                self._unparse_append_action(action)
+            case "_AppendConstAction":
+                self._unparse_append_const_action(action)
+            case "_CountAction":
+                self._unparse_count_action(action)
+            case "_ExtendAction":
+                self._unparse_extend_action(action)
+            case "_HelpAction":  # pragma: no cover
+                return
+            case "_StoreAction":
+                self._unparse_store_action(action)
+            case "_StoreConstAction":
+                self._unparse_store_const_action(action)
+            case "_StoreFalseAction":
+                self._unparse_store_false_action(action)
+            case "_StoreTrueAction":
+                self._unparse_store_true_action(action)
+            case "_SubParsersAction":
+                self._unparse_sub_parsers_action(action)
+            case "_VersionAction":  # pragma: no cover
+                return
+            case "BooleanOptionalAction":
+                self._unparse_boolean_optional_action(action)
+            case _:  # pragma: no cover
+                message = (
+                    f"{self.__class__.__name__} does not yet support the "
+                    f"unparsing of {action_type} objects."
+                )
+                raise NotImplementedError(message)
 
     def _arg_is_default_and_help_is_suppressed(self, action: Action) -> bool:
         """
