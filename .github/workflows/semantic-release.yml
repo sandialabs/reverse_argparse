@@ -19,39 +19,42 @@ jobs:
       id-token: write
 
     steps:
-    - name: Harden Runner
-      uses: step-security/harden-runner@95d9a5deda9de15063e7595e9719c11c38c90ae2 # v2.13.2
-      with:
-        egress-policy: audit
+      - name: Harden Runner
+        uses: step-security/harden-runner@95d9a5deda9de15063e7595e9719c11c38c90ae2 # v2.13.2
+        with:
+          egress-policy: audit
 
-    - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
-      with:
-        fetch-depth: 0
-        token: ${{ secrets.GH_TOKEN }}
+      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GH_TOKEN }}
 
-    - name: Python Semantic Release
-      id: release
-      uses: python-semantic-release/python-semantic-release@eb841f9a95650921ff7e7fc94208b6560366a854 # v10.5.0
-      with:
-        git_committer_email: "reverse-argparse-semantic-release@sandia.gov"
-        git_committer_name: "semantic-release"
-        github_token: ${{ secrets.GH_TOKEN }}
-        ssh_private_signing_key: ${{ secrets.SEMANTIC_RELEASE_PRIVATE_KEY }}
-        ssh_public_signing_key: ${{ secrets.SEMANTIC_RELEASE_PUBLIC_KEY }}
+      - name: Install openssh-client
+        run: sudo apt-get update && sudo apt-get install -y openssh-client
 
-    - name: Hash Build Artifacts
-      if: steps.release.outputs.released == 'true'
-      id: hash
-      run: |
-        cd dist
-        echo "hashes=$(find . -type f -exec sha256sum {} + | sort | base64 | tr -d '\n')" >> "$GITHUB_OUTPUT"
+      - name: Python Semantic Release
+        id: release
+        uses: python-semantic-release/python-semantic-release@eb841f9a95650921ff7e7fc94208b6560366a854 # v10.5.0
+        with:
+          git_committer_email: "reverse-argparse-semantic-release@sandia.gov"
+          git_committer_name: "semantic-release"
+          github_token: ${{ secrets.GH_TOKEN }}
+          ssh_private_signing_key: ${{ secrets.SEMANTIC_RELEASE_PRIVATE_KEY }}
+          ssh_public_signing_key: ${{ secrets.SEMANTIC_RELEASE_PUBLIC_KEY }}
 
-    - name: Upload Build Artifacts
-      if: steps.release.outputs.released == 'true'
-      uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5.0.0
-      with:
-        name: dist
-        path: dist/
+      - name: Hash Build Artifacts
+        if: steps.release.outputs.released == 'true'
+        id: hash
+        run: |
+          cd dist
+          echo "hashes=$(find . -type f -exec sha256sum {} + | sort | base64 | tr -d '\n')" >> "$GITHUB_OUTPUT"
+
+      - name: Upload Build Artifacts
+        if: steps.release.outputs.released == 'true'
+        uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5.0.0
+        with:
+          name: dist
+          path: dist/
 
     outputs:
       hashes: ${{ steps.hash.outputs.hashes }}
@@ -77,35 +80,35 @@ jobs:
       id-token: write
 
     steps:
-    - name: Harden Runner
-      uses: step-security/harden-runner@95d9a5deda9de15063e7595e9719c11c38c90ae2 # v2.13.2
-      with:
-        egress-policy: audit
+      - name: Harden Runner
+        uses: step-security/harden-runner@95d9a5deda9de15063e7595e9719c11c38c90ae2 # v2.13.2
+        with:
+          egress-policy: audit
 
-    - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
-      with:
-        fetch-depth: 0
-        token: ${{ secrets.GH_TOKEN }}
+      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GH_TOKEN }}
 
-    - name: Download Build Artifacts
-      uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 # v6.0.0
-      with:
-        name: dist
-        path: dist
+      - name: Download Build Artifacts
+        uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 # v6.0.0
+        with:
+          name: dist
+          path: dist
 
-    - name: Download Provenance
-      uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 # v6.0.0
-      with:
-        name: ${{ needs.provenance.outputs.provenance-name }}
-        path: dist
+      - name: Download Provenance
+        uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 # v6.0.0
+        with:
+          name: ${{ needs.provenance.outputs.provenance-name }}
+          path: dist
 
-    - name: Publish to GitHub Releases
-      uses: python-semantic-release/publish-action@ae6462adc12bd3d1738070d784b65b5189b955a9 # v10.4.1
-      with:
-        github_token: ${{ secrets.GH_TOKEN }}
+      - name: Publish to GitHub Releases
+        uses: python-semantic-release/publish-action@ae6462adc12bd3d1738070d784b65b5189b955a9 # v10.4.1
+        with:
+          github_token: ${{ secrets.GH_TOKEN }}
 
-    - name: Remove Provenance for PyPI Upload
-      run: rm -f dist/${{ needs.provenance.outputs.provenance-name }}
+      - name: Remove Provenance for PyPI Upload
+        run: rm -f dist/${{ needs.provenance.outputs.provenance-name }}
 
-    - name: Publish to PyPI
-      uses: pypa/gh-action-pypi-publish@ed0c53931b1dc9bd32cbe73a98c7f6766f8a527e # release/v1
+      - name: Publish to PyPI
+        uses: pypa/gh-action-pypi-publish@ed0c53931b1dc9bd32cbe73a98c7f6766f8a527e # release/v1
