@@ -20,7 +20,7 @@ jobs:
 
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@df199fb7be9f65074067a9eb93f12bb4c5547cf2 # v2.13.3
+        uses: step-security/harden-runner@20cf305ff2072d973412fa9b1e3a4f227bda3c76 # v2.14.0
         with:
           egress-policy: audit
 
@@ -34,7 +34,7 @@ jobs:
 
       - name: Python Semantic Release
         id: release
-        uses: python-semantic-release/python-semantic-release@02f2a5c74dbb6aa2989f10fc4af12cd8e6bf025f # v10.5.2
+        uses: python-semantic-release/python-semantic-release@350c48fcb3ffcdfd2e0a235206bc2ecea6b69df0 # v10.5.3
         with:
           git_committer_email: "reverse-argparse-semantic-release@sandia.gov"
           git_committer_name: "semantic-release"
@@ -51,7 +51,7 @@ jobs:
 
       - name: Upload Build Artifacts
         if: steps.release.outputs.released == 'true'
-        uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5.0.0
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0
         with:
           name: dist
           path: dist/
@@ -81,7 +81,7 @@ jobs:
 
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@df199fb7be9f65074067a9eb93f12bb4c5547cf2 # v2.13.3
+        uses: step-security/harden-runner@20cf305ff2072d973412fa9b1e3a4f227bda3c76 # v2.14.0
         with:
           egress-policy: audit
 
@@ -91,19 +91,19 @@ jobs:
           token: ${{ secrets.GH_TOKEN }}
 
       - name: Download Build Artifacts
-        uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 # v6.0.0
+        uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131 # v7.0.0
         with:
           name: dist
           path: dist
 
       - name: Download Provenance
-        uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 # v6.0.0
+        uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131 # v7.0.0
         with:
           name: ${{ needs.provenance.outputs.provenance-name }}
           path: dist
 
       - name: Publish to GitHub Releases
-        uses: python-semantic-release/publish-action@948bb8fccc5e8072f2c52464b45c76a8bb3878e6 # v10.5.2
+        uses: python-semantic-release/publish-action@310a9983a0ae878b29f3aac778d7c77c1db27378 # v10.5.3
         with:
           github_token: ${{ secrets.GH_TOKEN }}
 
