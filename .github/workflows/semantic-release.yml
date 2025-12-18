@@ -29,9 +29,6 @@ jobs:
           fetch-depth: 0
           token: ${{ secrets.GH_TOKEN }}
 
-      - name: Install openssh-client
-        run: sudo apt-get update && sudo apt-get install -y openssh-client
-
       - name: Python Semantic Release
         id: release
         uses: python-semantic-release/python-semantic-release@350c48fcb3ffcdfd2e0a235206bc2ecea6b69df0 # v10.5.3
