@@ -24,14 +24,14 @@ jobs:
         with:
           egress-policy: audit
 
-      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
         with:
           fetch-depth: 0
           token: ${{ secrets.GH_TOKEN }}
 
       - name: Python Semantic Release
         id: release
-        uses: python-semantic-release/python-semantic-release@350c48fcb3ffcdfd2e0a235206bc2ecea6b69df0 # v10.5.3
+        uses: python-semantic-release/python-semantic-release@37a30a7987cfebb6d49240bf1c4e9cd9817d0673 # v10.6.0
         with:
           git_committer_email: "reverse-argparse-semantic-release@sandia.gov"
           git_committer_name: "semantic-release"
@@ -82,7 +82,7 @@ jobs:
         with:
           egress-policy: audit
 
-      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
         with:
           fetch-depth: 0
           token: ${{ secrets.GH_TOKEN }}
@@ -100,7 +100,7 @@ jobs:
           path: dist
 
       - name: Publish to GitHub Releases
-        uses: python-semantic-release/publish-action@310a9983a0ae878b29f3aac778d7c77c1db27378 # v10.5.3
+        uses: python-semantic-release/publish-action@4f3c5d7f5caddf6535050c4bcb55f033f000a7dd # v10.6.0
         with:
           github_token: ${{ secrets.GH_TOKEN }}
 
