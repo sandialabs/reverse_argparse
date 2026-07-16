@@ -503,6 +503,7 @@ def test__unparse_store_false_action(
             "--foo bar baz --foo bif",
             ["    --foo bar baz", "    --foo bif"],
         ),
+        (["--foo"], {"action": "append", "default": []}, "", []),
     ],
 )
 def test__unparse_append_action(
@@ -556,10 +557,16 @@ def test__unparse_append_const_action(args: str, expected: str | None) -> None:
             "-vv",
             "    -vv",
         ),
+        (["--verbose", "-v"], {"action": "count"}, "", None),
+        (["--verbose", "-v"], {"action": "count", "default": 0}, "", None),
+        (["--verbose", "-v"], {"action": "count", "default": 2}, "", None),
     ],
 )
 def test__unparse_count_action(
-    add_args: list[str], add_kwargs: dict[str, Any], args: str, expected: str
+    add_args: list[str],
+    add_kwargs: dict[str, Any],
+    args: str,
+    expected: str | None,
 ) -> None:
     """Ensure ``count`` actions are handled appropriately."""
     parser = ArgumentParser()
@@ -567,7 +574,7 @@ def test__unparse_count_action(
     namespace = parser.parse_args(shlex.split(args))
     unparser = ReverseArgumentParser(parser, namespace)
     unparser._unparse_count_action(action)
-    assert unparser._args[1:] == [expected]
+    assert unparser._args[1:] == ([expected] if expected is not None else [])
 
 
 @pytest.mark.parametrize(
@@ -645,13 +652,40 @@ def test__unparse_sub_parsers_action_nested() -> None:
     assert result == pretty
 
 
-def test__unparse_extend_action() -> None:
+@pytest.mark.parametrize(
+    ("add_args", "add_kwargs", "args", "expected"),
+    [
+        (
+            ["--foo"],
+            {"action": "extend", "nargs": "*"},
+            "--foo bar --foo baz bif",
+            "    --foo bar baz bif",
+        ),
+        (
+            ["--nums"],
+            {"action": "extend", "nargs": "+", "type": int},
+            "--nums 1 2",
+            "    --nums 1 2",
+        ),
+        (
+            ["--words"],
+            {"action": "extend", "nargs": "+"},
+            "--words 'a b' c",
+            "    --words 'a b' c",
+        ),
+    ],
+)
+def test__unparse_extend_action(
+    add_args: list[str],
+    add_kwargs: dict[str, Any],
+    args: str,
+    expected: str,
+) -> None:
     """Ensure ``extend`` actions are handled appropriately."""
     parser = ArgumentParser()
-    action = parser.add_argument("--foo", action="extend", nargs="*")
-    namespace = parser.parse_args(shlex.split("--foo bar --foo baz bif"))
+    action = parser.add_argument(*add_args, **add_kwargs)
+    namespace = parser.parse_args(shlex.split(args))
     unparser = ReverseArgumentParser(parser, namespace)
-    expected = "    --foo bar baz bif"
     unparser._unparse_extend_action(action)
     assert unparser._args[1:] == [expected]
 
