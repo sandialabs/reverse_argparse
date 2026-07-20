@@ -400,6 +400,8 @@ class ReverseArgumentParser:
         flag = self._get_option_string(action)
         if not isinstance(values, list):
             values = [values]
+        if not values:
+            return
         result = []
         if isinstance(values[0], list):
             for entry in values:
@@ -433,7 +435,11 @@ class ReverseArgumentParser:
             action:  The :class:`_CountAction` in question.
         """
         value = getattr(self._namespace, action.dest)
+        if value is None:
+            return
         count = value if action.default is None else (value - action.default)
+        if count <= 0:
+            return
         flag = self._get_option_string(action, prefer_short=True)
         if (
             len(flag) == SHORT_OPTION_LENGTH
@@ -494,7 +500,10 @@ class ReverseArgumentParser:
         values = getattr(self._namespace, action.dest)
         if values is not None:
             self._append_list_of_args(
-                [self._get_option_string(action), *values]
+                [
+                    self._get_option_string(action),
+                    *(quote_arg_if_necessary(str(value)) for value in values),
+                ]
             )
 
     def _unparse_boolean_optional_action(self, action: Action) -> None:
