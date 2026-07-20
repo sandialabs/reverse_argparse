@@ -2,6 +2,46 @@
 
 
 
+## v2.0.11 (2026-07-20)
+
+### Bug fixes
+* fix: prevent crashes when unparsing count, extend, and append actions ([`47a714c`](https://github.com/sandialabs/reverse_argparse/commit/47a714c16be9382c20abd1604023762049307d78))
+
+  Three action unparsers raised on valid input reachable through the
+  public get_effective_command_line_invocation():
+
+  - _unparse_count_action multiplied the flag body by the stored value.
+    When a count option was not given and its default was None, the value
+    was None and the multiplication raised TypeError. A default of 0 (or a
+    value equal to a nonzero default) produced a bare prefix character like
+    "-" instead of omitting the unused flag.
+  - _unparse_extend_action passed the stored values straight into
+    " ".join, so a typed option (for example type=int) raised TypeError,
+    and unlike the append unparser it never quoted values, so entries
+    containing spaces broke the round trip.
+  - _unparse_append_action indexed values[0] to detect nested lists, which
+    raised IndexError when an append option with default=[] was not given.
+
+  Each case now emits the correct effective invocation or nothing when the
+  option was not supplied. Added regression tests covering all three.
+
+  Signed-off-by: arpitjain099 <arpitjain099@gmail.com>
+
+### Continuous integration
+* ci: Ensure SSH client is installed ([`1993c3d`](https://github.com/sandialabs/reverse_argparse/commit/1993c3d6d66838354b26e92ea1518b0a3bbe23b9))
+
+  It's needed by the Semantic Release workflow to sign the releases. I'm
+  not sure why this step wasn't needed in the past, but within the past
+  week the Semantic Release job has failed intermittently, meaning certain
+  runners using ubuntu-latest have it installed, while others do not.
+
+### Unknown
+* Revert "ci: Ensure SSH client is installed" ([`bfbe079`](https://github.com/sandialabs/reverse_argparse/commit/bfbe07995a3eba2451a7a9b8fd6cd1872e928387))
+
+  This reverts commit 1993c3d6d66838354b26e92ea1518b0a3bbe23b9.
+
+  The real fix is in 1c21dd3b48e52af24c07fe9d0c83c2bf78606985.
+
 ## v2.0.10 (2025-10-20)
 
 ### Patch
