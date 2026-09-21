@@ -9,6 +9,13 @@ updates:
         applies-to: version-updates
         patterns:
           - "*"
+    ignore:
+      # v1.2.x removed the bundled dist/index.js entrypoint, breaking the
+      # pinned-commit usage of this action. Stay on v1.1.26 until upstream
+      # ships a working release. See:
+      # https://github.com/taskmedia/action-conventional-commits
+      - dependency-name: taskmedia/action-conventional-commits
+        versions: [">= 1.2.0"]
 
   - package-ecosystem: pip
     directories:
