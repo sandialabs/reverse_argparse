@@ -23,3 +23,16 @@ updates:
         applies-to: version-updates
         patterns:
           - "*"
+
+  # Manage .pre-commit-config.yaml hook versions here instead of via
+  # pre-commit.ci autoupdate. Dependabot only proposes stable/official
+  # releases (it skips alpha/beta/rc pre-releases such as pyroma 5.1b1).
+  - package-ecosystem: pre-commit
+    directory: /
+    schedule:
+      interval: weekly
+    groups:
+      pre-commit-dependencies:
+        applies-to: version-updates
+        patterns:
+          - "*"

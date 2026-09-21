@@ -3,6 +3,11 @@
 ci:
     autofix_prs: false
     autoupdate_commit_msg: "ci: pre-commit auto-update"
+    # Hook versions are managed by Dependabot (see .github/dependabot.yml),
+    # which only proposes stable releases. Disable pre-commit.ci autoupdates
+    # (quarterly is the least-frequent option) so it doesn't pull in
+    # pre-release versions (e.g. pyroma betas).
+    autoupdate_schedule: quarterly
 
 repos:
 
@@ -48,7 +53,7 @@ repos:
           - id: doc8
 
     - repo: https://github.com/regebro/pyroma
-      rev: "5.1b1"
+      rev: "5.0.1"
       hooks:
           - id: pyroma
             additional_dependencies: ["poetry"]
