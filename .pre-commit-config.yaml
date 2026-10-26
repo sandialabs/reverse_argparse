@@ -18,7 +18,7 @@ repos:
         - id: ruff-format
 
     - repo: https://github.com/gitleaks/gitleaks
-      rev: v8.30.1
+      rev: v8.30.0
       hooks:
         - id: gitleaks
 
@@ -53,12 +53,12 @@ repos:
           - id: doc8
 
     - repo: https://github.com/regebro/pyroma
-      rev: "5.0.1"
+      rev: "5.1b1"
       hooks:
           - id: pyroma
             additional_dependencies: ["poetry"]
 
     - repo: https://github.com/shellcheck-py/shellcheck-py
-      rev: v0.11.0.1
+      rev: v0.11.0.1-1
       hooks:
         - id: shellcheck
